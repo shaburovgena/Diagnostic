@@ -18,7 +18,7 @@ public class Metric {
     public Metric() {
     }
 
-    public Metric(String serverUrl, long interval) {
+    public Metric(String serverUrl, int interval) {
         this.interval = interval;
     }
 

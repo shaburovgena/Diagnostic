@@ -6,11 +6,11 @@ import java.util.regex.Pattern;
 public class DiskUsageMetric extends Metric {
     int value;
 
-    public DiskUsageMetric(int value) {
-        this.value = value;
+    public DiskUsageMetric(String value) {
+        this.value = Integer.parseInt(value);
     }
 
-    public DiskUsageMetric(String serverUrl, long interval) {
+    public DiskUsageMetric(String serverUrl, int interval) {
         super(serverUrl, interval);
     }
 
