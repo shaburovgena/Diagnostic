@@ -20,6 +20,7 @@ public class Metric {
 
     public Metric(String serverUrl, int interval) {
         this.interval = interval;
+        this.serverUrl = serverUrl;
     }
 
     public long getInterval() {
