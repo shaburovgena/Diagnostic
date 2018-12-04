@@ -1,6 +1,7 @@
 package ru.server;
 
 import ru.agent.DiskUsageMetric;
+import ru.agent.FileValueMetric;
 import ru.agent.Metric;
 import ru.services.PushService;
 
@@ -53,8 +54,12 @@ public class Server {
                         case "DiskUsageMetric":
                             metric = new DiskUsageMetric(parts[1]);
                             break;
+                        case "FileValueMetric":
+                            metric = new FileValueMetric(parts[1]);
+                            break;
                     }
                     if (metric != null && metric.alert()){
+                        System.out.println(metric);
                         pushService.notify(metric);
                     }
                 }

@@ -6,9 +6,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.Buffer;
 import java.nio.charset.StandardCharsets;
-import java.rmi.server.ExportException;
 
 public class Metric {
     String serverUrl;
@@ -29,7 +27,7 @@ public class Metric {
 
 
     public boolean alert() {
-        return true;
+        return false;
     }
 
     public void post() throws IOException {
@@ -54,8 +52,12 @@ public class Metric {
                 new InputStreamReader(con.getInputStream()));
 
         String inputLine;
-        StringBuffer response = new StringBuffer();
-
+        StringBuffer response;
+        response = new StringBuffer();
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        System.out.println(response.toString());
     }
 
     public String getMetric() {
