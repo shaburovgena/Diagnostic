@@ -82,7 +82,7 @@ public class Metric {
             while ((line = reader.readLine()) != null) {
                 output.append(line + "\n");
             }
-
+//            System.out.println(output);
         } catch (Exception e) {
             e.printStackTrace();
         }

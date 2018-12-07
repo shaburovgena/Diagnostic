@@ -1,10 +1,5 @@
 package ru.agent;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class FileValueMetric extends Metric {
     int value;
 
@@ -18,26 +13,14 @@ public class FileValueMetric extends Metric {
 
     @Override
     public boolean alert() {
-        return value > 70;
+        return true;
     }
 
     @Override
     public String getMetric() {
-        return "77";
-//        String result = "";
-//        try {
-//            FileReader fin = new FileReader("value");
-//            result = String.valueOf(fin.read());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        Pattern pattern = Pattern.compile("(\\d+)%");
-//        Matcher m = pattern.matcher(result);
-//        while (m.find()) {
-//            return m.group(1);
-//        }
-//        return "-----";
+        String result = executeCommand("cmd /c echo cmd.exe && dir ").replaceAll("\n", " ");
+        System.out.println(result);
+        return result;
     }
 
     @Override

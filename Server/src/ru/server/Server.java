@@ -8,6 +8,7 @@ import ru.services.PushService;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -44,7 +45,6 @@ public class Server {
                 String[] lines = new BufferedReader(
                         new InputStreamReader(t.getRequestBody())
                 ).lines().toArray(String[]::new);
-
                 System.out.println("\n\n request");
                 for (String line : lines) {
                     System.out.println(line);
@@ -57,10 +57,19 @@ public class Server {
                         case "FileValueMetric":
                             metric = new FileValueMetric(parts[1]);
                             break;
+
                     }
-                    if (metric != null && metric.alert()){
+                    if (metric != null && metric.alert()) {
                         System.out.println(metric);
                         pushService.notify(metric);
+                    }
+
+                    if (parts[1] !="admin"||parts[0] !="admin"){
+                        String response = "falure";
+                        t.sendResponseHeaders(401, response.length());
+                        OutputStream os = t.getResponseBody();
+                        os.write(response.getBytes());
+                        os.flush();
                     }
                 }
             }
