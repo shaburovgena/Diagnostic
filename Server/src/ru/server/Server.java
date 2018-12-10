@@ -42,15 +42,16 @@ public class Server {
         public void handle(HttpExchange t) throws IOException {
             String metricName = t.getRequestURI().getPath().replace("/", "");
 
-            //Получаем пост запрос от агента
+            //Получаем пост запрос от агента или клиента
 
             Metric metric = null;
             StringBuffer jb = new StringBuffer();
             String line = null;
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(t.getRequestBody()));
-            while ((line = reader.readLine()) != null)
+            while ((line = reader.readLine()) != null) {
                 jb.append(line);
+            }
             JSONObject jsonRequest = new JSONObject(jb.toString());
             System.out.println(jb);
 
@@ -65,6 +66,11 @@ public class Server {
             switch (jsonRequest.getString("label")) {
                 case "login":
                     //TODO Проверка пользователя
+                    String response = "ok";
+                    t.sendResponseHeaders(200, response.length());
+                    OutputStream os = t.getResponseBody();
+                    os.write(response.getBytes());
+                    os.flush();
                     break;
                 case "register":
                     //TODO Регистрация нового пользователя

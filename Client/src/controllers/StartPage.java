@@ -63,7 +63,7 @@ public class StartPage {
             request.put("label", "login");
             request.put("login", textLoginField.getText());
             request.put("password", textPasswField.getText());
-//            send.post(request);
+            send.post(request);
 
             //TODO Добавить проверку пользователя
 

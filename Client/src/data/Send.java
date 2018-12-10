@@ -44,7 +44,7 @@ public class Send {
         return responseCode;
     }
 
-    //TODO переделать под json
+    //TODO не получает response
     public String post(JSONObject request) {
 
         StringBuffer response = null;
@@ -56,18 +56,17 @@ public class Send {
 
             ByteArrayOutputStream byteStream = new
                     ByteArrayOutputStream(400);
-            PrintWriter out = new PrintWriter(byteStream, true);
+            PrintWriter out = new PrintWriter(byteStream);
             out.write(request.toString());
             out.flush();
 
-            //add reuqest header
+
             con.setRequestMethod("POST");
-            con.setRequestProperty("Content-Length", String.valueOf(byteStream.size()));
+            con.setRequestProperty("Content-Length",
+                    String.valueOf(byteStream.size()));
             con.setRequestProperty("Content-Type",
                     "application/json");
             byteStream.writeTo(con.getOutputStream());
-            // Send post request
-
 
             responseCode = con.getResponseCode();
 
@@ -88,7 +87,7 @@ public class Send {
             e.printStackTrace();
         }
 
-        return response.toString();
+        return response.toString() + " ";
     }
 
 
