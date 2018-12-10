@@ -39,39 +39,52 @@ public class Server {
 
         @Override
         public void handle(HttpExchange t) throws IOException {
-            String metricName = t.getRequestURI().getPath().replace("/", "");
+
+//            String metricName = t.getRequestURI().getPath().replace("/", "");
+
             if (t.getRequestMethod().equalsIgnoreCase("POST")) {
+
                 String[] lines = new BufferedReader(
                         new InputStreamReader(t.getRequestBody())
                 ).lines().toArray(String[]::new);
+
                 System.out.println("\n\n request");
+
                 for (String line : lines) {
+
                     System.out.println(line);
 
                     Metric metric = null;
-                    JSONObject jsonRequest = new JSONObject(line);
-                    String response = "ok";
-                    t.sendResponseHeaders(200, response.length());
-                    OutputStream os = t.getResponseBody();
-                    os.write(response.getBytes());
-                    os.flush();
-                    switch (jsonRequest.getString("metricName")) {
-                        case "DiskUsageMetric":
-                            metric = new DiskUsageMetric(jsonRequest.getString("value"));
-                            break;
-                        case "FileValueMetric":
-                            metric = new FileValueMetric(jsonRequest.getString("value"));
-                            break;
-                    }
-                    switch (jsonRequest.getString("label")) {
-                        case "login":
-                            //TODO Проверка пользователя
 
-                            break;
-                        case "register":
-                            //TODO Регистрация нового пользователя
-                            break;
+                    JSONObject jsonRequest = new JSONObject(line);
+                    System.out.println(jsonRequest.getString("metricName"));
+                    if (jsonRequest.getString("metricName") == "DiskUsageMetric"){
+                        metric = new DiskUsageMetric(jsonRequest.getString("value"));
+                        System.out.println(jsonRequest.getString("metricName") + " " +
+                                jsonRequest.getString("value"));
+                    }else if (jsonRequest.getString("metricName") == "FileValueMetric"){
+                        metric = new FileValueMetric(jsonRequest.getString("value"));
+                            System.out.println(jsonRequest.getString("metricName") + " " +
+                                    jsonRequest.getString("value"));
                     }
+//                    switch (jsonRequest.getString("metricName")) {
+//                        case "DiskUsageMetric":
+//                            metric = new DiskUsageMetric(jsonRequest.getString("value"));
+//                            System.out.println("DiskUsageMetric");
+//                            break;
+//                        case "FileValueMetric":
+//                            metric = new FileValueMetric(jsonRequest.getString("value"));
+//                            System.out.println("FileValueMetric");
+//                            break;
+//                    }
+//                    switch (jsonRequest.getString("label")) {
+//                        case "login":
+//                            //TODO Проверка пользователя
+//                            break;
+//                        case "register":
+//                            //TODO Регистрация нового пользователя
+//                            break;
+//                    }
                     if (metric != null && metric.alert()) {
 
                         //При превышении значения отправляем пуш уведомление
@@ -82,6 +95,11 @@ public class Server {
                 }
             }
 
+            String response = "ok";
+            t.sendResponseHeaders(200, response.length());
+            OutputStream os = t.getResponseBody();
+            os.write(response.getBytes());
+            os.flush();
 
         }
     }
