@@ -11,7 +11,6 @@ import ru.services.PushService;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
 /**
  * Created by Gena on 23.07.2018.
  * Обработка запрос/ответ

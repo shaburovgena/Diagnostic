@@ -29,7 +29,7 @@ public class Metric {
         return false;
     }
 
-    //Отправка запроса вида "Имя_метрики значение_метрики"
+    //Отправка запроса вида " {metricName":"FileValueMetric","label":"metric","value":"cmd.exe ...}"
 
     public void post() throws IOException {
         URL obj = new URL(serverUrl);
