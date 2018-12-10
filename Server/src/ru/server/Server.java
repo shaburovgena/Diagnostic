@@ -1,5 +1,6 @@
 package ru.server;
 
+import org.json.JSONObject;
 import ru.agent.DiskUsageMetric;
 import ru.agent.FileValueMetric;
 import ru.agent.Metric;
@@ -41,37 +42,40 @@ public class Server {
         public void handle(HttpExchange t) throws IOException {
             String metricName = t.getRequestURI().getPath().replace("/", "");
 
-            if (t.getRequestMethod().equalsIgnoreCase("POST")) {
-                String[] lines = new BufferedReader(
-                        new InputStreamReader(t.getRequestBody())
-                ).lines().toArray(String[]::new);
-                System.out.println("\n\n request");
-                for (String line : lines) {
-                    System.out.println(line);
-                    String[] parts = line.split(" ");
-                    Metric metric = null;
-                    switch (parts[0]) {
-                        case "DiskUsageMetric":
-                            metric = new DiskUsageMetric(parts[1]);
-                            break;
-                        case "FileValueMetric":
-                            metric = new FileValueMetric(parts[1]);
-                            break;
+            //Получаем пост запрос от агента
 
-                    }
-                    if (metric != null && metric.alert()) {
-                        System.out.println(metric);
-                        pushService.notify(metric);
-                    }
+            Metric metric = null;
+            StringBuffer jb = new StringBuffer();
+            String line = null;
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(t.getRequestBody()));
+            while ((line = reader.readLine()) != null)
+                jb.append(line);
+            JSONObject jsonRequest = new JSONObject(jb.toString());
+            System.out.println(jb);
 
-                    if (parts[1] !="admin"||parts[0] !="admin"){
-                        String response = "falure";
-                        t.sendResponseHeaders(401, response.length());
-                        OutputStream os = t.getResponseBody();
-                        os.write(response.getBytes());
-                        os.flush();
-                    }
-                }
+            switch (jsonRequest.getString("metricName")) {
+                case "DiskUsageMetric":
+                    metric = new DiskUsageMetric(jsonRequest.getString("value"));
+                    break;
+                case "FileValueMetric":
+                    metric = new FileValueMetric(jsonRequest.getString("value"));
+                    break;
+            }
+            switch (jsonRequest.getString("label")) {
+                case "login":
+                    //TODO Проверка пользователя
+                    break;
+                case "register":
+                    //TODO Регистрация нового пользователя
+                    break;
+            }
+            if (metric != null && metric.alert()) {
+
+                //При превышении значения отправляем пуш уведомление
+
+                System.out.println(metric);
+                pushService.notify(metric);
             }
 
             String response = "ok";
@@ -79,6 +83,41 @@ public class Server {
             OutputStream os = t.getResponseBody();
             os.write(response.getBytes());
             os.flush();
+
+//            if (t.getRequestMethod().equalsIgnoreCase("POST")) {
+//                String[] lines = new BufferedReader(
+//                        new InputStreamReader(t.getRequestBody())
+//                ).lines().toArray(String[]::new);
+//                System.out.println("\n\n request");
+//                for (String line : lines) {
+//                    System.out.println(line);
+//
+//                    //Разделяем строки используя разделитель пробел
+//
+//                    String[] parts = line.split(" ");
+//                    Metric metric = null;
+//                    switch (parts[0]) {
+//
+//                        //Если 1 часть совпадает с именем сенсора, создаем метрику со значением во 2 части
+//
+//                        case "DiskUsageMetric":
+//                            metric = new DiskUsageMetric(parts[1]);
+//                            break;
+//                        case "FileValueMetric":
+//                            metric = new FileValueMetric(parts[1]);
+//                            break;
+//
+//                    }
+//                    if (metric != null && metric.alert()) {
+//
+//                        //При превышении значения отправляем пуш уведомление
+//
+//                        System.out.println(metric);
+//                        pushService.notify(metric);
+//                    }
+//                }
+//            }
+
         }
     }
 }

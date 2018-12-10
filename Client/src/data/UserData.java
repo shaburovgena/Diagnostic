@@ -11,7 +11,6 @@ public class UserData {
     public UserData() {
     }
 
-
     public UserData(String login, String password) {
         this.setLogin(login);
         this.setPassword(password);
@@ -24,6 +23,7 @@ public class UserData {
         this.setPhone(phone);
         this.setMail(mail);
     }
+
     public UserData(String id, String login, String password, String name, String phone, String mail) {
         this.setId(id);
         this.setLogin(login);
@@ -36,7 +36,6 @@ public class UserData {
     public String getLogin() {
         return login;
     }
-
     public String getPassw() {
         return password;
     }

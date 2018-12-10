@@ -21,7 +21,13 @@ public class DiskUsageMetric extends Metric {
 
     @Override
     public String getMetric() {
+
+        //Выполнение консольной команды
+
         String result = executeCommand("df");
+
+        //Получение результата в виде чисел
+
         Pattern pattern = Pattern.compile("(\\d+)%");
         Matcher m = pattern.matcher(result);
         while (m.find()) {

@@ -10,5 +10,6 @@
     <orderEntry type="module" module-name="Services" />
     <orderEntry type="module" module-name="Agent" />
     <orderEntry type="library" name="info.cukes:cucumber-java:1.2.5" level="project" />
+    <orderEntry type="library" name="org.json:json:20180813" level="project" />
   </component>
 </module>

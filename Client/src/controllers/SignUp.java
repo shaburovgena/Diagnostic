@@ -1,13 +1,13 @@
 package controllers;
 
 import data.Send;
-import data.UserData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import org.json.JSONObject;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -42,26 +42,34 @@ public class SignUp {
 
     @FXML
     void initialize() {
-//todo Обработка данных при регистрации
+
+        //Регистрация нового пользователя
+
         Send send = new Send();
-            btnSignUp.setOnAction(value ->{
-                UserData user = new UserData(textLoginField.getText(), textPasswField.getText(), textNameField.getText(),
-                        textPhoneField.getText(), textMailField.getText());
-                int response = send.sendPost(user, "add");
-               //todo RESPONSE CODE ON SERVER
-                if (response==409){
-                    labelReg.setText("User exist");
-                }else if(response==200){
-                    btnSignUp.getScene().getWindow().hide();
-                    send.openWindow("StartPage");
-                }else if(response==400){
-                    labelReg.setText("Wrong login/password");
-                }
-            });
-            btnSignIn.setOnAction(value -> {
-                btnSignIn.getScene().getWindow().hide();
+        JSONObject request = new JSONObject();
+        btnSignIn.setOnAction(value -> {
+
+            request.put("label", "login");
+            request.put("login", textLoginField.getText());
+            request.put("password", textPasswField.getText());
+            request.put("mail", textMailField.getText());
+            request.put("phone", textPhoneField.getText());
+            request.put("name", textNameField.getText());
+            send.post(request);
+            int responseCode = send.getResponseCode();
+            if (responseCode == 409) {//Пользователь существует
+                labelReg.setText("User exist");
+            } else if (responseCode == 200) {//Успешная регистрация
+                btnSignUp.getScene().getWindow().hide();
                 send.openWindow("StartPage");
-            });
-        }
+            } else if (responseCode == 400) {//Ошибка ввода логин-пароля
+                labelReg.setText("Wrong login/password");
+            }
+        });
+        btnSignIn.setOnAction(value -> {
+            btnSignIn.getScene().getWindow().hide();
+            send.openWindow("StartPage");
+        });
+    }
 
 }

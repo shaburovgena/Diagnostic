@@ -1,37 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
+
 <AnchorPane fx:id="panel" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #046852;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.WelcomePage">
     <children>
         <AnchorPane fx:id="loginPanel" layoutX="-3.0" layoutY="103.0" prefHeight="297.0" prefWidth="607.0" style="-fx-background-color: #dddddd;">
             <children>
-                <Label alignment="CENTER" layoutX="8.0" prefHeight="75.0" prefWidth="596.0" text="Welcome" textAlignment="CENTER" textFill="#ffa641">
-                    <font>
-                        <Font name="Imprint MT Shadow" size="30.0" />
-                    </font>
-                </Label>
-                <Button fx:id="btnSignOut" layoutX="198.0" layoutY="177.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="215.0" style="-fx-background-color: #046852;" text="Sign Out" textFill="WHITE">
-                    <font>
-                        <Font name="Imprint MT Shadow" size="20.0" />
-                    </font>
-                </Button>
-            <Button fx:id="btnChPass" layoutX="198.0" layoutY="122.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="215.0" style="-fx-background-color: #046852;" text="Change Password" textFill="WHITE">
+            <Button fx:id="btnRefresh" layoutX="211.0" layoutY="235.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="180.0" style="-fx-background-color: #ffa641;" text="Refresh" textFill="WHITE">
                <font>
                   <Font name="Imprint MT Shadow" size="20.0" />
                </font>
             </Button>
-            <Button fx:id="btnChData" layoutX="198.0" layoutY="66.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="215.0" style="-fx-background-color: #046852;" text="Modify Account" textFill="WHITE">
-               <font>
-                  <Font name="Imprint MT Shadow" size="20.0" />
-               </font>
-            </Button>
-            <Button fx:id="btnRem" layoutX="211.0" layoutY="235.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="180.0" style="-fx-background-color: #ffa641;" text="Remove Account" textFill="WHITE">
-               <font>
-                  <Font name="Imprint MT Shadow" size="20.0" />
-               </font>
-            </Button>
+            <TextArea fx:id="txtView" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="580.0" />
+            <Slider layoutX="579.0" layoutY="14.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="14.0" />
             </children>
         </AnchorPane>
         <Label fx:id="label" alignment="CENTER" layoutX="190.0" layoutY="14.0" prefHeight="75.0" prefWidth="224.0" text="DiagTool" textAlignment="CENTER" textFill="WHITE">
@@ -39,7 +24,7 @@
                 <Font name="Imprint MT Shadow" size="46.0" />
             </font>
         </Label>
-        <Button fx:id="btnView" layoutX="408.0" layoutY="33.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="180.0" style="-fx-background-color: #ffa641;" text="View All" textFill="WHITE">
+        <Button fx:id="btnSignOut" layoutX="408.0" layoutY="33.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="180.0" style="-fx-background-color: #ffa641;" text="Sign Out" textFill="WHITE">
             <font>
                 <Font name="Imprint MT Shadow" size="20.0" />
             </font>

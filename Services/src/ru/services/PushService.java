@@ -25,13 +25,17 @@ public class PushService {
         System.out.println("Notification");
         URL obj = new URL(FCM_URL);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        //add request header
+
+        //Добавляем заголовок запроса
+
         con.setRequestMethod("POST");
         con.setRequestProperty("Authorization", "key=" + SERVER_KEY);
         con.setRequestProperty("Content-Type", "application/json");
 
-        //send post request
+        //Отправка пост запроса
         con.setDoOutput(true);
+
+        //Создание запроса
 
         byte[] out = ("{\n" +
                 " \"notification\": {\n" +
@@ -62,7 +66,7 @@ public class PushService {
             response.append(inputLine);
         }
 
-        //print result
+        //Получение результата
         System.out.println(response.toString());
 
     }

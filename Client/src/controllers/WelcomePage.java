@@ -4,16 +4,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import data.Send;
-import data.UserData;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
-/**
- * Created by Gena on 22.07.2018.
- * Окно приветсвия + основные функции (просмотр/обновление данных/выход)
- */
+import org.json.JSONObject;
+
 public class WelcomePage {
 
     @FXML
@@ -26,10 +23,13 @@ public class WelcomePage {
     private AnchorPane loginPanel;
 
     @FXML
+    private Button btnRefresh;
+
+    @FXML
     private Button btnSignOut;
 
     @FXML
-    private Button btnView;
+    private TextArea txtView;
 
     @FXML
     private Label label;
@@ -38,43 +38,19 @@ public class WelcomePage {
     private AnchorPane panel;
 
     @FXML
-    private Button btnChData;
-
-    @FXML
-    private Button btnChPass;
-
-    @FXML
-    private Button btnRem;
-
-    @FXML
-    void ffa641(ActionEvent event) {
-    }
-
-    @FXML
     void initialize() {
-        Send send = new Send();
-        UserData user = StartPage.handler.getUser();
-        btnChPass.setOnAction(value ->{
-            btnChPass.getScene().getWindow().hide();
-            send.openWindow("ChPassPage");
-        });
-        btnRem.setOnAction(value ->{
-            btnRem.getScene().getWindow().hide();
-            send.sendPost(user, "remove");
+    Send send = new Send();
+        JSONObject request = new JSONObject();
+        btnSignOut.setOnAction(value -> {
+            btnSignOut.getScene().getWindow().hide();
             send.openWindow("StartPage");
         });
-        btnSignOut.setOnAction(value ->{
-                btnSignOut.getScene().getWindow().hide();
-                send.openWindow("StartPage");
-        });
-        btnChData.setOnAction(value ->{
-            btnChData.getScene().getWindow().hide();
-            send.openWindow("ChDataPage");
-        });
-        btnView.setOnAction(value ->{
-            btnView.getScene().getWindow().hide();
-            send.openWindow("ViewPage");
-        });
-    }
 
+        btnRefresh.setOnAction(value -> {
+            request.put("label", "view");
+            String response = send.post(request);
+            txtView.setText( response);
+        });
+
+    }
 }

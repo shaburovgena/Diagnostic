@@ -33,14 +33,12 @@ public class Unauthorized {
     @FXML
     private Button btnSignIn;
 
-    @FXML
-    void ffa641(ActionEvent event) {
 
-    }
 
 
     @FXML
     void initialize() {
+        //Информационное окно об отсутствие учетных данных
         Send send = new Send ();
         btnSignIn.setOnAction(value ->{
             btnSignIn.getScene().getWindow().hide();

@@ -1,9 +1,8 @@
 package ru.agent;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import org.json.JSONObject;
+
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -30,24 +29,37 @@ public class Metric {
         return false;
     }
 
+    //Отправка запроса вида "Имя_метрики значение_метрики"
+
     public void post() throws IOException {
         URL obj = new URL(serverUrl);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
-        con.setRequestMethod("POST");
+
+//        byte[] out = (this.getClass().getSimpleName() + " " + getMetric()).getBytes(StandardCharsets.UTF_8);
+
+        JSONObject json = new JSONObject();
+        json.put("label", "metric"); //Маркер для сервера что данные пришли от агента
+        json.put("metricName", this.getClass().getSimpleName());
+        json.put("value", getMetric());
+
         con.setDoOutput(true);
 
-        byte[] out = (this.getClass().getSimpleName() + " " + getMetric()).getBytes(StandardCharsets.UTF_8);
+        ByteArrayOutputStream byteStream = new
+                ByteArrayOutputStream(400);
+        PrintWriter out = new PrintWriter(byteStream, true);
+        out.write(json.toString());
+        out.flush();
 
-        con.setFixedLengthStreamingMode(out.length);
-        con.connect();
+        con.setRequestMethod("POST");
+        con.setRequestProperty("Content-Length", String.valueOf(byteStream.size()));
+        con.setRequestProperty("Content-Type",
+                "application/json");
+        byteStream.writeTo(con.getOutputStream());
 
-        OutputStream os = con.getOutputStream();
-        os.write(out);
-
-        int responseCode = con.getResponseCode();
-        System.out.println("Response Code " + responseCode);
-
+        System.out.println("\nSending 'POST' request to URL : " + serverUrl);
+        System.out.println("Post parameters : " + json.toString());
+        System.out.println("Response Code : " + con.getResponseCode());
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
 
@@ -69,6 +81,7 @@ public class Metric {
     }
 
     //Выполняет команду на сервере и считывает результат
+
     protected String executeCommand(String command) {
         StringBuffer output = new StringBuffer();
 
@@ -82,7 +95,6 @@ public class Metric {
             while ((line = reader.readLine()) != null) {
                 output.append(line + "\n");
             }
-//            System.out.println(output);
         } catch (Exception e) {
             e.printStackTrace();
         }

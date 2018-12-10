@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class Client extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -15,7 +15,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("/samples/StartPage.fxml"));
-        primaryStage.setTitle("Web App");
+        primaryStage.setTitle("Diagnostic Tool");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
