@@ -47,16 +47,17 @@ public class SignUp {
 
         Send send = new Send();
         JSONObject request = new JSONObject();
-        btnSignIn.setOnAction(value -> {
+        btnSignUp.setOnAction(value -> {
 
-            request.put("label", "login");
+            request.put("label", "register");
             request.put("login", textLoginField.getText());
             request.put("password", textPasswField.getText());
             request.put("mail", textMailField.getText());
             request.put("phone", textPhoneField.getText());
             request.put("name", textNameField.getText());
             send.post(request);
-            int responseCode = send.getResponseCode();
+//            int responseCode = send.getResponseCode();
+            int responseCode = 200;
             if (responseCode == 409) {//Пользователь существует
                 labelReg.setText("User exist");
             } else if (responseCode == 200) {//Успешная регистрация

@@ -22,7 +22,7 @@ public class Send {
     private String serverURL;
 
     public Send() {
-        serverURL = PushService.SERVER_URL;
+        serverURL = PushService.SERVER_URL + "/client";
     }
 
     public void openWindow(String window) {
