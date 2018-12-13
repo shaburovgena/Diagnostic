@@ -56,8 +56,9 @@ public class SignUp {
             request.put("phone", textPhoneField.getText());
             request.put("name", textNameField.getText());
             send.post(request);
-//            int responseCode = send.getResponseCode();
-            int responseCode = 200;
+            int responseCode = send.getResponseCode();
+            System.out.println("SignUp Page response code " + responseCode);
+//            int responseCode = 200;
             if (responseCode == 409) {//Пользователь существует
                 labelReg.setText("User exist");
             } else if (responseCode == 200) {//Успешная регистрация

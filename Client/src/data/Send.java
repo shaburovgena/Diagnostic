@@ -11,6 +11,7 @@ import ru.services.PushService;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
 /**
  * Created by Gena on 23.07.2018.
  * Обработка запрос/ответ
@@ -39,11 +40,12 @@ public class Send {
         stage.show();
     }
 
+
+
     public int getResponseCode() {
         return responseCode;
     }
 
-    //TODO не получает response
     public String post(JSONObject request) {
 
         StringBuffer response = null;
@@ -67,12 +69,11 @@ public class Send {
                     "application/json");
             byteStream.writeTo(con.getOutputStream());
 
-            responseCode = con.getResponseCode();
+            this.responseCode = con.getResponseCode();
 
             System.out.println("\nSending 'POST' request to URL : " + url);
             System.out.println("Post parameters : " + request);
             System.out.println("Response Code : " + responseCode);
-
             BufferedReader in = null;
             in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()));
@@ -82,11 +83,11 @@ public class Send {
                 response.append(inputLine);
             }
             System.out.println(response.toString());
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return response.toString() + " ";
+        return String.valueOf(response);
     }
 
 

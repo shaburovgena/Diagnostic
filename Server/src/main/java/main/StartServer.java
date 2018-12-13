@@ -1,36 +1,42 @@
 package main;
 
 import db.DBService;
+import db.Executor;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import service.Checker;
+import service.RandomUsers;
 import servlet.AgentServlet;
 import servlet.ClientServlet;
 
+import java.sql.SQLException;
+
 class StartServer {
+    private final Checker checker;
     Server server;
     DBService dbService;
+    RandomUsers randomUsers;
 
     StartServer() {
-//        dbService = new DBService();
-//        try {
-//            long userId = dbService.addUser("test", "testPsw", "Ivanov Ivan Ivanovich", "89101234567", "ivanov@example.com");
-//            userId = dbService.addUser("admin", "adminPsw", "Sidorov Sidr", "123456", "sidorov@example.com");
-//            userId = dbService.addUser("user", "userPsw", "Petrov petr", "654321", "petrov@example.com");
-//            dbService.printConnectInfo();
-//        } catch (
-//                DBException e) {
-//            e.printStackTrace();
-//        }
+        Executor executor = null;
+        dbService = new DBService();
+        randomUsers = new RandomUsers();
+        try {
+            executor = new Executor(dbService.connection());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        checker = new Checker(executor);
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         //Сервер для приема данных с агента
         context.addServlet(new ServletHolder(new AgentServlet()), "/agent");
         //Сервер обработки данных  с клиента
-        context.addServlet(new ServletHolder(new ClientServlet()), "/client");
+        context.addServlet(new ServletHolder(new ClientServlet(checker, dbService)), "/client");
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setResourceBase("public_html");
 

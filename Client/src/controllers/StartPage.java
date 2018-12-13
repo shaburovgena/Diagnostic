@@ -67,8 +67,10 @@ public class StartPage {
 
             //TODO Добавить проверку пользователя
 
-            //  int responseCode = send.getResponseCode();
-            int responseCode = 200;
+              int responseCode = send.getResponseCode();
+            System.out.println("SignIn Page response code " + responseCode);
+
+//            int responseCode = 200;
             if (responseCode == 401) { //Не авторизован
                 btnSignIn.getScene().getWindow().hide();
                 send.openWindow("Unauthorized");
@@ -76,8 +78,10 @@ public class StartPage {
             } else if (responseCode == 200) {//Авторизован
                 btnSignIn.getScene().getWindow().hide();
                 send.openWindow("WelcomePage");
+                System.out.println("авторизован");
             } else if (responseCode == 400) {//Не указан логин-пароль
                 labelAuth.setText("Please enter login/password");
+                System.out.println("не указан логин-пароль");
             }
         });
         btnSignUp.setOnAction(value -> {

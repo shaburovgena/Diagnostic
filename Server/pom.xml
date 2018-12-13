@@ -57,9 +57,10 @@
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
-            <version>7.1.0.jre10-preview</version>
+            <version>7.1.1.jre10-preview</version>
             <scope>test</scope>
         </dependency>
+
 
 
         <dependency>
@@ -85,12 +86,14 @@
             <artifactId>hibernate-core</artifactId>
             <version>${org.hibernate.hibernate-core.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
-            <version>RELEASE</version>
+            <version>7.1.1.jre10-preview</version>
             <scope>compile</scope>
         </dependency>
+
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
