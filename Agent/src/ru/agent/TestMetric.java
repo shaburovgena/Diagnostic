@@ -1,7 +1,7 @@
 package ru.agent;
 
 /**
-Для тестирования работы сервера
+ * Для тестирования работы сервера
  */
 
 public class TestMetric extends Metric {
@@ -11,8 +11,8 @@ public class TestMetric extends Metric {
         this.value = Integer.parseInt(value);
     }
 
-     TestMetric(String serverUrl, int interval) {
-        super(serverUrl, interval);
+    TestMetric(int interval) {
+        super(interval);
     }
 
     @Override

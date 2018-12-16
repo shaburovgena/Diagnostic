@@ -17,8 +17,8 @@ public class Checker {
     public boolean ifExist(JSONObject jsonObject) throws IOException, SQLException {
         String login = jsonObject.getString("login");
         String password = jsonObject.getString("password");
-        String query = "SELECT login,password FROM " + Const.USER_TABLE + " WHERE login = '" + login + "' AND password = '" + password + "';";
-//        String query = "SELECT * FROM users";
+        String query = "SELECT login,password FROM " + Const.USER_TABLE + " WHERE login = '" + login +
+                "' AND password = '" + password + "';";
         System.out.println(query);
         boolean value = executor.execQuery(query, resultSet -> {
             boolean val = false;

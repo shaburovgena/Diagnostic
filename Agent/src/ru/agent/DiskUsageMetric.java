@@ -10,8 +10,8 @@ public class DiskUsageMetric extends Metric {
         this.value = Integer.parseInt(value);
     }
 
-    public DiskUsageMetric(String serverUrl, int interval) {
-        super(serverUrl, interval);
+    public DiskUsageMetric(int interval) {
+        super(interval);
     }
 
     @Override

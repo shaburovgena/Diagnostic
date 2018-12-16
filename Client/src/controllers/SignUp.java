@@ -1,6 +1,6 @@
 package controllers;
 
-import data.Send;
+import data.NewWindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -8,6 +8,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import org.json.JSONObject;
+import ru.services.Send;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -44,8 +45,8 @@ public class SignUp {
     void initialize() {
 
         //Регистрация нового пользователя
-
         Send send = new Send();
+        NewWindow newWindow = new NewWindow();
         JSONObject request = new JSONObject();
         btnSignUp.setOnAction(value -> {
 
@@ -55,7 +56,7 @@ public class SignUp {
             request.put("mail", textMailField.getText());
             request.put("phone", textPhoneField.getText());
             request.put("name", textNameField.getText());
-            send.post(request);
+            send.post(request,"client");
             int responseCode = send.getResponseCode();
             System.out.println("SignUp Page response code " + responseCode);
 //            int responseCode = 200;
@@ -63,14 +64,14 @@ public class SignUp {
                 labelReg.setText("User exist");
             } else if (responseCode == 200) {//Успешная регистрация
                 btnSignUp.getScene().getWindow().hide();
-                send.openWindow("StartPage");
+                newWindow.openWindow("StartPage");
             } else if (responseCode == 400) {//Ошибка ввода логин-пароля
                 labelReg.setText("Wrong login/password");
             }
         });
         btnSignIn.setOnAction(value -> {
             btnSignIn.getScene().getWindow().hide();
-            send.openWindow("StartPage");
+            newWindow.openWindow("StartPage");
         });
     }
 

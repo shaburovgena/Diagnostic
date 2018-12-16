@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 public class PushService {
     static final String SERVER_KEY = "AAAAwdY-Xhg:APA91bGxi6uBHz9FeylHx4ShyeFPpjTcBUbOWLVhmey6VG3gTnGxWBAncIfP892pqjN1PXumOyQO4hKPWnsjstEnHhRqj7NRo-aw6rZDfmDSo65kVYJN3hiZNafuVllV35LOu8QnDstx";//TODO: get firebase google server  key
     static final String ID_TOKEN = "3vfoqFGAwfeSO5ZskUEyMYXOHss1";  //TODO: get token
-    public static final String SERVER_URL = "http://localhost:8443";
+    public static final String SERVER_URL = "http://localhost:8443/";
     static final String FCM_URL = "https://fcm.googleapis.com/fcm/send";
 
     public void notify(Metric metric) throws IOException {

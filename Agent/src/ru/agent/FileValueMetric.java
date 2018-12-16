@@ -7,8 +7,8 @@ public class FileValueMetric extends Metric {
         this.value = Integer.parseInt(value);
     }
 
-    public FileValueMetric(String serverUrl, int interval) {
-        super(serverUrl, interval);
+    public FileValueMetric(int interval) {
+        super(interval);
     }
 
     @Override

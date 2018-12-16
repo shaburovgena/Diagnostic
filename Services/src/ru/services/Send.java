@@ -1,12 +1,11 @@
-package data;
+package ru.services;
 
-import data.UserData;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.json.JSONObject;
-import ru.services.PushService;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -20,38 +19,57 @@ import java.net.URL;
 public class Send {
 
     private int responseCode;
-    private String serverURL;
+    private String response;
 
     public Send() {
-        serverURL = PushService.SERVER_URL + "/client";
-    }
 
-    public void openWindow(String window) {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/samples/" + window + ".fxml"));
-        try {
-            loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Parent root = loader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
     }
-
 
 
     public int getResponseCode() {
         return responseCode;
     }
 
-    public String post(JSONObject request) {
+    public String getResponse() {
+        return response;
+    }
 
-        StringBuffer response = null;
-
+    public void post(String serverURL) {
+        StringBuffer sb = null;
         try {
             URL url = new URL(serverURL);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
+            int responseCode = con.getResponseCode();
+
+            System.out.println("\nSending 'GET' request to URL : " + url);
+            System.out.println("Response Code : " + responseCode);
+            BufferedReader rd = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            sb = new StringBuffer();
+            String line;
+            while ((line = rd.readLine()) != null) {
+                sb.append(line);
+            }
+            rd.close();
+            System.out.println(sb.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        response = String.valueOf(sb);
+
+    }
+
+    public void post(JSONObject request) {
+        this.post(request, PushService.SERVER_URL);
+    }
+
+    public void post(JSONObject request, String serverURL) {
+        String URL = PushService.SERVER_URL + serverURL;
+        StringBuffer sb = null;
+
+        try {
+            URL url = new URL(URL);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setDoOutput(true);
 
@@ -78,16 +96,17 @@ public class Send {
             in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()));
             String inputLine;
-            response = new StringBuffer();
+            sb = new StringBuffer();
             while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
+                sb.append(inputLine);
             }
-            System.out.println(response.toString());
+            System.out.println(sb.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return String.valueOf(response);
+        response = String.valueOf(sb);
+
     }
 
 

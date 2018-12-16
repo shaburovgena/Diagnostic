@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.time.Instant;
+import java.util.Date;
 
 /**
  * Created by Gena on 17.12.2018.
@@ -32,6 +35,7 @@ public class ClientServlet extends HttpServlet {
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws IOException {
         // TODO: 11.12.2018 обработка данных с клиента
+        long oldTime = new Date().getTime();
         jsonRequest = null;
         StringBuffer sb = new StringBuffer();
         String line = null;
@@ -44,18 +48,18 @@ public class ClientServlet extends HttpServlet {
             jsonRequest = new JSONObject(sb.toString());
             String label = jsonRequest.getString("label");
             //Проверка указания логина и пароля
-            if (!jsonRequest.getString("login").equals("")||!jsonRequest.getString("password").equals("") ){
+            if (!jsonRequest.getString("login").equals("") || !jsonRequest.getString("password").equals("")) {
 
                 //Проверяем метки (вход или регистрация)
                 if (label.equals("login")) {
                     //TODO проверка логин пароля
                     //Проверяем есть ли пользователь в базе
                     if (checker.ifExist(jsonRequest)) {
+                        System.out.println("ClientServlet login apply " + (new Date().getTime() - oldTime));
                         response.setContentType("text/html;charset=utf-8");
-                        System.out.println("ClientServlet login apply");
                         response.setStatus(HttpServletResponse.SC_OK); //200
-                    }else {
-                        System.out.println("ClientServlet login denied");
+                    } else {
+                        System.out.println("ClientServlet login denied " + (new Date().getTime() - oldTime));
                         response.setContentType("text/html;charset=utf-8");
                         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); //401
                     }
@@ -74,14 +78,14 @@ public class ClientServlet extends HttpServlet {
                         System.out.println("ClientServlet register apply");
                         response.setContentType("text/html;charset=utf-8");
                         response.setStatus(HttpServletResponse.SC_OK); //200
-                    }else{
+                    } else {
                         System.out.println("ClientServlet register failed");
                         response.setContentType("text/html;charset=utf-8");
                         response.setStatus(HttpServletResponse.SC_CONFLICT); //409
                     }
 
                 }
-            }else{
+            } else {
                 System.out.println("Login or password field is empty");
                 response.setContentType("text/html;charset=utf-8");
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST); //400
@@ -92,10 +96,7 @@ public class ClientServlet extends HttpServlet {
         } catch (Exception e) {
 
         }
-//
-//        response.setContentType("text/html;charset=utf-8");
-//        System.out.println("ClientServlet working");
-//        response.setStatus(HttpServletResponse.SC_OK);
+
     }
 
 }

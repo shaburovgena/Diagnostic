@@ -24,7 +24,9 @@ class StartServer {
     StartServer() {
         Executor executor = null;
         dbService = new DBService();
-        randomUsers = new RandomUsers();
+        //Вызывается однократно для заполнения базы
+        randomUsers = new RandomUsers(dbService);
+        randomUsers.getRandomUserData();
         try {
             executor = new Executor(dbService.connection());
         } catch (SQLException e) {
