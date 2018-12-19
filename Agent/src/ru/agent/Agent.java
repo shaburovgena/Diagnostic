@@ -8,10 +8,12 @@ import java.io.IOException;
 public class Agent {
     public static void main(String[] args) {
         Metric testMetric = new TestMetric(5000);
+//        Metric testMetric = new FileValueMetric(2000);
         Send send = new Send();
         while (true) {
             try {
                 Thread.sleep(testMetric.getInterval());
+
                 send.post(testMetric.getJSONMetric(), "agent");
 
             } catch (InterruptedException e) {

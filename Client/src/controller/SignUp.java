@@ -1,4 +1,4 @@
-package controllers;
+package controller;
 
 import data.NewWindow;
 import javafx.fxml.FXML;

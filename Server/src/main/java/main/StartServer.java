@@ -10,35 +10,36 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import service.Checker;
 import service.RandomUsers;
-import servlet.AgentServlet;
-import servlet.ClientServlet;
+import controller.AgentServlet;
+import controller.ClientServlet;
 
 import java.sql.SQLException;
 
 class StartServer {
-    private final Checker checker;
+//    private final Checker checker;
     Server server;
-    DBService dbService;
-    RandomUsers randomUsers;
+//    DBService dbService;
+//    RandomUsers randomUsers;
 
     StartServer() {
-        Executor executor = null;
-        dbService = new DBService();
-        //Вызывается однократно для заполнения базы
-        randomUsers = new RandomUsers(dbService);
-        randomUsers.getRandomUserData();
-        try {
-            executor = new Executor(dbService.connection());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        checker = new Checker(executor);
-
+//        Executor executor = null;
+//        dbService = new DBService();
+//        //Вызывается однократно для заполнения базы
+//        randomUsers = new RandomUsers(dbService);
+//        randomUsers.getRandomUserData();
+//        try {
+//            executor = new Executor(dbService.connection());
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        checker = new Checker(executor);
+//
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        //Сервер для приема данных с агента
+//        //Сервер для приема данных с агента
+//        context.addServlet(new ServletHolder(new AgentServlet(dbService)), "/agent");
+//        //Сервер обработки данных  с клиента
+//        context.addServlet(new ServletHolder(new ClientServlet(checker, dbService)), "/client");
         context.addServlet(new ServletHolder(new AgentServlet()), "/agent");
-        //Сервер обработки данных  с клиента
-        context.addServlet(new ServletHolder(new ClientServlet(checker, dbService)), "/client");
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setResourceBase("public_html");
 

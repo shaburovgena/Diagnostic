@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Created by Gena on 16.07.2018.
+ * Created by Gena on 16.12.2018.
  */
 @Entity
 @Table(name = "users")
@@ -32,7 +32,6 @@ public class UsersDataSet implements Serializable {
 
 
     public UsersDataSet(String login, String password) {
-//        this.setId(id);
         this.setLogin(login);
         this.setPassword(password);
 

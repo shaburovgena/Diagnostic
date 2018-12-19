@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * Created by Gena on 16.07.2018.
+ * Created by Gena on 10.12.2018.
  */
 public class Executor {
     private final Connection connection;

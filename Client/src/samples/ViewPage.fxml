@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #046852;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.View">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #046852;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.View">
     <children>
         <Button fx:id="btnCancel" layoutX="403.0" layoutY="33.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="180.0" style="-fx-background-color: ffa641;" text="Cancel" textFill="WHITE">
             <font>

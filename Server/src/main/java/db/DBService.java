@@ -19,8 +19,8 @@ import java.sql.SQLException;
 
 
 /*
- TODO: 11.12.2018 сервис для создания БД мониторинга данных с агента, создание @Entity
-
+    TODO: 11.12.2018 сервис для создания БД мониторинга данных с агента, создание @Entity
+    не работает с таблицей metrics
   */
 
 public class DBService {
@@ -33,9 +33,10 @@ public class DBService {
         sessionFactory = createSessionFactory(configuration);
     }
 
-    private Configuration getSqlConfiguration() {
+    protected Configuration getSqlConfiguration() {
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(UsersDataSet.class);
+        configuration.addAnnotatedClass(MetricsDataSet.class);
         try {
             DriverManager.registerDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver());
         } catch (SQLException e) {
@@ -75,6 +76,21 @@ public class DBService {
             throw new DBException(e);
         }
     }
+
+    public long addMetric(long time, String title, String value) throws DBException {
+        try {
+            Session session = sessionFactory.openSession();
+            Transaction transaction = session.beginTransaction();
+            MetricDAO dao = new MetricDAO(session);
+            long id = dao.insertMetric(time, title, value);
+            transaction.commit();
+            session.close();
+            return id;
+        } catch (HibernateException e) {
+            throw new DBException(e);
+        }
+    }
+
     public long addUser(String login, String password, String name, String phone, String mail) throws DBException {
         try {
             Session session = sessionFactory.openSession();
@@ -88,6 +104,7 @@ public class DBService {
             throw new DBException(e);
         }
     }
+
     public void delUser(UsersDataSet usersDataSet) throws DBException {
         try {
             Session session = sessionFactory.openSession();
@@ -101,6 +118,7 @@ public class DBService {
             throw new DBException(e);
         }
     }
+
     public void updateUser(UsersDataSet usersDataSet) throws DBException {
         try {
             Session session = sessionFactory.openSession();
@@ -114,6 +132,7 @@ public class DBService {
             throw new DBException(e);
         }
     }
+
     public Connection connection() throws SQLException {
         DriverManager.registerDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver());
         return ((SessionFactoryImpl) sessionFactory).getConnectionProvider().getConnection();
@@ -132,7 +151,7 @@ public class DBService {
         }
     }
 
-    private static SessionFactory createSessionFactory(Configuration configuration) {
+    static SessionFactory createSessionFactory(Configuration configuration) {
         StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
         builder.applySettings(configuration.getProperties());
         ServiceRegistry serviceRegistry = builder.build();

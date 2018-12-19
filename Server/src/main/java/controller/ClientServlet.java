@@ -1,7 +1,7 @@
-package servlet;
+package controller;
 
+import db.DBException;
 import db.DBService;
-import db.Executor;
 import org.json.JSONException;
 import org.json.JSONObject;
 import service.Checker;
@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.time.Instant;
 import java.util.Date;
 
 /**
@@ -34,7 +32,6 @@ public class ClientServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws IOException {
-        // TODO: 11.12.2018 обработка данных с клиента
         long oldTime = new Date().getTime();
         jsonRequest = null;
         StringBuffer sb = new StringBuffer();
@@ -52,7 +49,6 @@ public class ClientServlet extends HttpServlet {
 
                 //Проверяем метки (вход или регистрация)
                 if (label.equals("login")) {
-                    //TODO проверка логин пароля
                     //Проверяем есть ли пользователь в базе
                     if (checker.ifExist(jsonRequest)) {
                         System.out.println("ClientServlet login apply " + (new Date().getTime() - oldTime));
@@ -66,7 +62,6 @@ public class ClientServlet extends HttpServlet {
                 }
                 //Метка регистрации в запросе
                 if (label.equals("register")) {
-                    // TODO: 13.12.2018 Проверка записи в базе и регистрация
                     //Если не найден в базе, создаем
                     if (!checker.ifExist(jsonRequest)) {
                         long id = dbService.addUser(jsonRequest.getString("login"),
@@ -93,8 +88,10 @@ public class ClientServlet extends HttpServlet {
 
         } catch (JSONException e) {
             throw new IOException("Error parsing JSON request string");
-        } catch (Exception e) {
-
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (DBException e) {
+            e.printStackTrace();
         }
 
     }

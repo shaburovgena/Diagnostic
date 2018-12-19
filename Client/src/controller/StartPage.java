@@ -1,4 +1,4 @@
-package controllers;
+package controller;
 
 import java.net.*;
 import java.util.ResourceBundle;
@@ -11,11 +11,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import org.json.JSONObject;
-import ru.services.PushService;
 import ru.services.Send;
 
 /**
- * Created by Gena on 23.07.2018.
+ * Created by Gena on 23.11.2018.
  * Стартовая страница
  */
 public class StartPage {
@@ -62,7 +61,6 @@ public class StartPage {
             request.put("password", textPasswField.getText());
             send.post(request, "client");
 
-            //TODO Добавить проверку пользователя
 
             int responseCode = send.getResponseCode();
             System.out.println("SignIn Page response code " + responseCode);
