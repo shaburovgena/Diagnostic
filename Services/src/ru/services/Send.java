@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -21,7 +22,6 @@ public class Send {
 
     }
 
-
     public int getResponseCode() {
         return responseCode;
     }
@@ -30,7 +30,27 @@ public class Send {
         return response;
     }
 
-    public void post(String serverURL) {
+    public void get (JSONObject request, String serverURL){
+
+        serverURL  = PushService.SERVER_URL + serverURL + "?time=" + request.getLong("time") +
+                "&title=" + request.getString("title") +
+                "&value=" + request.getString("value");
+
+        try {
+            URL  url = new URL(serverURL);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            int responseCode = con.getResponseCode();
+            System.out.println("\nSending 'GET' request to URL : " + url);
+            System.out.println("Response Code : " + responseCode);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public void get(String serverURL) {
         StringBuffer sb = null;
         try {
             URL url = new URL(serverURL);
@@ -75,7 +95,6 @@ public class Send {
             out.write(request.toString());
             out.flush();
 
-
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Length",
                     String.valueOf(byteStream.size()));
@@ -88,6 +107,7 @@ public class Send {
             System.out.println("\nSending 'POST' request to URL : " + url);
             System.out.println("Post parameters : " + request);
             System.out.println("Response Code : " + responseCode);
+
             BufferedReader in = null;
             in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()));

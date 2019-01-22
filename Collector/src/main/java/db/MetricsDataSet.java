@@ -9,11 +9,11 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "metric")
-public class MetricsDataSet{
+public class MetricsDataSet {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-            private long id;
+    private long id;
     @Column(name = "time", unique = false)
     private long time;
     @Column(name = "title", unique = false)

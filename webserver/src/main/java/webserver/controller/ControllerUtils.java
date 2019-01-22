@@ -15,7 +15,7 @@ public class ControllerUtils {
                 fieldError -> fieldError.getField() + "Error",
                 FieldError::getDefaultMessage
         );
-        System.out.println("Validation error" + bindingResult.getFieldErrors().stream().collect(collector));
+        System.out.println("Validation error " + bindingResult.getFieldErrors().stream().collect(collector));
         //Возвращаем коллекцию ошибок
         return bindingResult.getFieldErrors().stream().collect(collector);
     }

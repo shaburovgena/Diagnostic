@@ -18,10 +18,6 @@ import java.sql.SQLException;
  */
 
 
-/*
-    TODO: 11.12.2018 сервис для создания БД мониторинга данных с агента, создание @Entity
-    не работает с таблицей metrics
-  */
 
 public class DBService {
     private static final String hibernate_show_sql = "true";
@@ -44,7 +40,7 @@ public class DBService {
         }
         configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.SQLServerDialect");
         configuration.setProperty("hibernate.connection.driver_class", "com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        configuration.setProperty("hibernate.connection.url", "jdbc:sqlserver://localhost:1433;database=master;");
+        configuration.setProperty("hibernate.connection.url", "jdbc:sqlserver://localhost:1433;database=testdb;");
         configuration.setProperty("hibernate.connection.username", "admin");
         configuration.setProperty("hibernate.connection.password", "Qwery123");
         configuration.setProperty("hibernate.show_sql", hibernate_show_sql);

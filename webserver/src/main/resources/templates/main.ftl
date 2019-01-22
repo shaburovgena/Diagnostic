@@ -14,7 +14,7 @@
 <#--Отображаем кнопку на скрываемую группу со ссылкой на href="#collapseExample"-->
  <a class="btn btn-primary ml-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
     aria-controls="collapseExample">
-     Add new Message
+     Добавить сообщение
  </a>
 <#--Скрываемая группа откликается по id="collapseExample"-->
         <div class="collapse <#if message??>show</#if>" id="collapseExample">
@@ -70,7 +70,7 @@
                 <i>#${message.tag}</i>
             </div>
             <div>
-                <a href="/message/${message.id}">Message</a>
+                <a href="/message/${message.id}">Просмотр</a>
             </div>
             <footer class="blockquote-footer">Author is <cite title="${message.authorName}">${message.authorName}</cite>
             </footer>

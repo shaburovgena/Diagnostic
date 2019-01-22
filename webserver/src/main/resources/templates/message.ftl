@@ -15,7 +15,7 @@
     </footer>
     </div>
     <div>
-        <a class="btn btn-primary" role="button" href="/message/${message.id}/edit">Edit</a>
+        <a class="btn btn-primary" role="button" href="/message/${message.id}/edit">Редактировать</a>
     </div>
 </div>
 

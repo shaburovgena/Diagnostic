@@ -15,21 +15,27 @@ collapse- на маленьких экранах будет схлопывать
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="/">На главную</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/main">Messages</a>
+                <a class="nav-link" href="/main">Сообщения</a>
             </li>
+             <#if user?? && known><#--Просмотр метрик доступен только авторизованному пользователю-->
+            <li class="nav-item">
+                <a class="nav-link" href="/agent">Метрики</a>
+            </li>
+             </#if>
             <#if isAdmin><#--Список пользователей доступен только Админу-->
             <li class="nav-item">
-                <a class="nav-link" href="/user">User list</a>
+                <a class="nav-link" href="/user">Пользователи</a>
             </li>
             </#if>
              <#if user?? && known><#--Редактирование профиля доступно только авторизованному пользователю-->
             <li class="nav-item">
-                <a class="nav-link" href="/user/profile">Edit profile</a>
+                <a class="nav-link" href="/user/profile">Профиль</a>
             </li>
              </#if>
+
         </ul>
     </div>
     <div class="navbar-text mr-3">${name}</div>

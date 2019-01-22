@@ -12,7 +12,7 @@
     </content>
     <content url="file://$MODULE_DIR$/../Server/src/main/resources" />
     <content url="file://$MODULE_DIR$/../Server/src/test/java" />
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="10" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="com.microsoft.sqlserver:mssql-jdbc:7.1.0.jre10-preview" level="project" />
     <orderEntry type="module" module-name="Services" />

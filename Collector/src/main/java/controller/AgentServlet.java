@@ -20,12 +20,12 @@ import java.io.IOException;
  */
 public class AgentServlet extends HttpServlet {
     private DBService dbService;
-    private Executor executor;
     private JSONObject jsonRequest;
 
     public AgentServlet(DBService dbService) {
         this.dbService = dbService;
     }
+
     public AgentServlet(){}
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws IOException, ServletException {
@@ -42,7 +42,6 @@ public class AgentServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws IOException {
-        // TODO: 11.12.2018 обработка приема данных с агента
         jsonRequest = null;
         StringBuffer sb = new StringBuffer();
         String line = null;

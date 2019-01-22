@@ -6,10 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import ru.services.Send;
 
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 public class RandomUsers {
     //получение списка пользователей с сайта randomuser.me
     private final DBService dbService;
@@ -24,7 +20,7 @@ public class RandomUsers {
     }
 
     public void getRandomUserData() {
-        send.post(urlRandomUser);
+        send.get(urlRandomUser);
         result = send.getResponse();
         JSONArray jsonArray = (JSONArray) new JSONObject(result).get("results");
 //        addUserAuto(jsonArray);

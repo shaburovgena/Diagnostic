@@ -13,7 +13,7 @@
     <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Web Content</title>
+    <title>Web</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <#--Добавление статических стилей-->
     <link rel="stylesheet" href="/static/style.css">
