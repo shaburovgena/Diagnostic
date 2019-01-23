@@ -40,7 +40,7 @@ public class DBService {
         }
         configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.SQLServerDialect");
         configuration.setProperty("hibernate.connection.driver_class", "com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        configuration.setProperty("hibernate.connection.url", "jdbc:sqlserver://localhost:1433;database=testdb;");
+        configuration.setProperty("hibernate.connection.url", "jdbc:sqlserver://localhost:1433;database=newdb;");
         configuration.setProperty("hibernate.connection.username", "admin");
         configuration.setProperty("hibernate.connection.password", "Qwery123");
         configuration.setProperty("hibernate.show_sql", hibernate_show_sql);

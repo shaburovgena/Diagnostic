@@ -51,6 +51,7 @@ public class AgentServlet extends HttpServlet {
             sb.append(line);
         }
         jsonRequest = new JSONObject(sb.toString());
+
         String label = jsonRequest.getString("label");
 
         if (label.equals("metric")) {

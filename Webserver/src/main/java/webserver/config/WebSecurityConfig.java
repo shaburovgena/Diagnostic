@@ -28,10 +28,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+//                .requestMatcher(new AntPathRequestMatcher("/agent")).csrf().disable()
                 .authorizeRequests()//Авторизовывать все запросы, кроме указанных ниже
-                .antMatchers("/", "/registration", "/static/**", "/activate/*").permitAll()
+                .antMatchers("/", "/registration", "/static/**", "/activate/*", "/agent").permitAll()
                 .anyRequest().authenticated()
                 .and()
+//                .authorizeRequests()
+//                .antMatchers(HttpMethod.POST, "/agent").anonymous()
+//                .anyRequest().authenticated()
+//                .and()
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()

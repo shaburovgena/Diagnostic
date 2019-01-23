@@ -7,14 +7,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Collector" />
-        <module name="webserver" />
+        <module name="Webserver" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Collector" target="1.8" />
       <module name="server" target="1.8" />
       <module name="WebApp" target="1.6" />
-      <module name="webserver" target="1.8" />
+      <module name="Webserver" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

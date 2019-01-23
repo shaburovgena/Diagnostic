@@ -17,7 +17,7 @@ public class Agent {
             try {
                 Thread.sleep(testMetric.getInterval());
                 System.out.println(testMetric.getJSONMetric());
-                send.post(testMetric.getJSONMetric(), "agent");
+                send.get(testMetric.getJSONMetric(), "agent");
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
