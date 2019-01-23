@@ -8,13 +8,14 @@ import webserver.domain.Metric;
 import webserver.domain.MetricJson;
 import webserver.repos.MetricRepo;
 
+@RequestMapping("/agent")
 @Controller
 public class AgentController {
 
     @Autowired
     private MetricRepo metricRepo;
 
-    @GetMapping("/agent")
+    @GetMapping
     public String metricsView(Model model,
                               @RequestParam(name = "time", required = false) Long time,
                               @RequestParam(name = "title", required = false) String title,
@@ -31,17 +32,19 @@ public class AgentController {
         return "metrics";
     }
 
-    @RequestMapping(value = "/agent", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    @ResponseBody
-    @PostMapping()
+
+    @PostMapping
     public String fromAgent(
-            @RequestBody MetricJson metricJson
+            Model model,
+            @RequestParam(name = "time", required = false) Long time,
+            @RequestParam(name = "title", required = false) String title,
+            @RequestParam(name = "value", required = false) String value
     ) {
-        Metric metric = new Metric(metricJson.getTime(), metricJson.getTitle(), metricJson.getValue());
+
+        Metric metric = new Metric(time, title, value);
 
         metricRepo.save(metric);
-        System.out.println("Receive post request from Agent " + metricJson.toString());
-
+        model.addAttribute("metrics", metricRepo.findAll());
         return "metrics";
     }
 }
