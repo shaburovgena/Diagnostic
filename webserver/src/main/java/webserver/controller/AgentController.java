@@ -38,11 +38,13 @@ public class AgentController {
             Model model,
             @RequestParam(name = "time", required = false) Long time,
             @RequestParam(name = "title", required = false) String title,
-            @RequestParam(name = "value", required = false) String value
+            @RequestParam(name = "value", required = false) String value,
+            @RequestBody (required = false) MetricJson metricJson
+
     ) {
 
         Metric metric = new Metric(time, title, value);
-
+        System.out.println(metricJson.toString());
         metricRepo.save(metric);
         model.addAttribute("metrics", metricRepo.findAll());
         return "metrics";
