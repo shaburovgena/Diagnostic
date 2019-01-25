@@ -44,7 +44,7 @@ public class UserServiceTest {
         Assert.assertTrue(isUserCreated == null); //Ожидаем true
         Assert.assertNotNull(user.getActivationCode());
         Assert.assertTrue(CoreMatchers.is(user.getRoles()).matches(Collections.singleton(Role.USER)));
-
+        //Spy объект Mockito для проверки факта обращений к указанному методу
         Mockito.verify(userRepo, Mockito.times(1)).save(user);//Счетчик обращений к методу сохранения
         Mockito.verify(mailSender, Mockito.times(1))//Счетчик обращений к методу отправки сообщения
                 .send(
@@ -60,9 +60,9 @@ public class UserServiceTest {
 
         user.setUsername("Ivan");
 
-        Mockito.doReturn(new User())
-                .when(userRepo)
-                .findByUsername("Ivan");
+        Mockito.doReturn(new User())    //Должен вернуть пользователя User
+                .when(userRepo)         //когда в репозитории userRepo
+                .findByUsername("Ivan");//вызывается метод findByUsername
 
         User isUserCreated = userService.addUser(user);
 
