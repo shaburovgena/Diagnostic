@@ -1,6 +1,10 @@
 package webserver.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,15 +24,17 @@ public class AgentController {
     public String metricsView(Model model,
                               @RequestParam(name = "time", required = false) Long time,
                               @RequestParam(name = "title", required = false) String title,
-                              @RequestParam(name = "value", required = false) String value
-    ) {
+                              @RequestParam(name = "value", required = false) String value,
+                              @PageableDefault (sort = {"id"}, direction = Sort.Direction.DESC
+                              )Pageable pageable
+                              ) {
         if (time != null || title != null || value != null) {
             Metric metric = new Metric(time, title, value);
             metricRepo.save(metric);
         }
-        Iterable<Metric> metrics = metricRepo.findAll();
-
-        model.addAttribute("metrics", metrics);
+        Page<Metric> page = metricRepo.findAll(pageable);
+        model.addAttribute("url", "/agent");
+        model.addAttribute("page", page);
 
         return "metrics";
     }

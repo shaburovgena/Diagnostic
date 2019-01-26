@@ -56,7 +56,7 @@ public class LoginTest {
 
     @Test
     public void badLoginTest() throws Exception {
-        this.mockMvc.perform(post("/login").param("username", "user3"))//Передаем в форму логина имя пользователя user3
+        this.mockMvc.perform(post("/login").param("username", "user2"))//Передаем в форму логина имя пользователя user3
                 .andDo(print())
                 .andExpect(status().isForbidden());//Ожидаем "доступ заперещен"
     }
