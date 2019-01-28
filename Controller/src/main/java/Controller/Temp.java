@@ -21,7 +21,7 @@ public class Temp {
         config[0] = 0x00;
         config[1] = 0x00;
         device.write(0x01, config, 0, 2);
-        // Select resolution rgister
+        // Select resolution register
         // Resolution = +0.0625 / C
         device.write(0x08, (byte)0x03);
         Thread.sleep(300);
