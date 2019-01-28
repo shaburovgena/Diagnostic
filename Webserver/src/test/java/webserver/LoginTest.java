@@ -55,8 +55,18 @@ public class LoginTest {
     }
 
     @Test
+    //Перед тестом пользователь должен быть добавлен в базу
+    @Sql(value = {"/create-user-before.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    public void falseLoginTest() throws Exception {
+        this.mockMvc.perform(formLogin().user("user3").password("1"))//Передаем в форму УЗ
+                .andExpect(redirectedUrl("/login?error"));//ожидаем ошибку входа
+    }
+
+    @Test
     public void badLoginTest() throws Exception {
-        this.mockMvc.perform(post("/login").param("username", "user2"))//Передаем в форму логина имя пользователя user3
+        this.mockMvc.perform(post("/login")//Передаем в теле запроса(не в форму логина)
+                .param("username", "user2")// имя пользователя user2
+                .param("password", "1"))// и его пароль
                 .andDo(print())
                 .andExpect(status().isForbidden());//Ожидаем "доступ заперещен"
     }

@@ -12,6 +12,7 @@
         <option value="$PROJECT_DIR$/Server/pom.xml" />
         <option value="$PROJECT_DIR$/Collector/pom.xml" />
         <option value="$PROJECT_DIR$/webserver/pom.xml" />
+        <option value="$PROJECT_DIR$/Controller/pom.xml" />
       </list>
     </option>
   </component>
