@@ -63,7 +63,6 @@ public class UserController {
     @GetMapping("/profile")
     public String getProfile(
             Model model,
-
             //Позволяет получить пользователя из контекста, а не из базы
             @AuthenticationPrincipal User user
     ) {

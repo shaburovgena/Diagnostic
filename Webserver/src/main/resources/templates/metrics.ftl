@@ -1,4 +1,7 @@
 <#import "parts/common.ftl" as common>
+<#import "parts/pager.ftl" as pager>
+
+
 
 <@common.page>
 <h5>Это страница с результатами</h5>
@@ -28,12 +31,13 @@
     </div>
     <input type="hidden" name="_csrf" value="${_csrf.token}"/>
 </form>
-    <#list metrics as metric>
+    <@pager.pager url page />
+    <#list page.content  as metric>
     <div class="my-5">
         <span>${metric.time}</span><br/>
         <span>${metric.title}</span>
         <span>${metric.value}</span>
     </div>
     </#list>
-
+    <@pager.pager url page />
 </@common.page>
