@@ -15,8 +15,11 @@ import webserver.repos.UserRepo;
 import java.util.*;
 import java.util.stream.Collectors;
 
+//Класс будет просканирован как компонент Spring и помещен в контекст приложения
 @Service
 public class UserService implements UserDetailsService {
+
+    //Аналог конструктора с переданным параметром userRepo
     @Autowired
     private UserRepo userRepo;
 
@@ -29,13 +32,6 @@ public class UserService implements UserDetailsService {
     @Value("${server.add}")
     private String serverAddress;
 
-//    Как вариант вместо @Autowired можно использовать конструктор
-//    private final UserRepo userRepo;
-//    public UserService(UserRepo userRepo) {
-//    this.userRepo = userRepo;
-//      }
-
-
     public UserService() {
     }
 
@@ -43,7 +39,7 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findByUsername(username);
 
-        if(user == null){
+        if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
 
@@ -77,20 +73,20 @@ public class UserService implements UserDetailsService {
     }
 
     private void sendMessage(User user) {
-        if (!StringUtils.isEmpty(user.getEmail())) {
+        if (!StringUtils.isEmpty(user.getEmail())) {//Если строка адреса не пустая
             String message = String.format("Hello, %s! \n" +
                             "Verify your account link: " + serverAddress + "activate/%s",
                     user.getUsername(), user.getActivationCode());
-            mailSender.send(user.getEmail(), "Activation code", message);
+            mailSender.send(user.getEmail(), "Activation code", message);//Отправляем сообщение
         }
     }
 
     public boolean activateUser(String code) {
         User user = userRepo.findByActivationCode(code);
 
-        if (user == null) return false;
+        if (user == null) return false;//Если пользователь уже активирован, код активации = null
 
-        user.setActivationCode(null);
+        user.setActivationCode(null);//Удаляем код активации
         userRepo.save(user);
 
         return true;

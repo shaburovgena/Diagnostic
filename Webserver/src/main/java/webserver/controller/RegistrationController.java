@@ -80,8 +80,8 @@ public class RegistrationController {
 
     @GetMapping("/activate/{code}")
     public String activate(Model model, @PathVariable String code) {
-        boolean isActivated = userService.activateUser(code);
-        System.out.println(code);
+        boolean isActivated = userService.activateUser(code);//Активация пользователя по коду из письма
+
         if (isActivated) {
             model.addAttribute("message", "Активация аккаунта прошла успешно");
         } else {

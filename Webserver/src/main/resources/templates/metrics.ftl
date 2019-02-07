@@ -40,4 +40,5 @@
     </div>
     </#list>
     <@pager.pager url page />
+<#include "parts/bottompanel.ftl"/>
 </@common.page>

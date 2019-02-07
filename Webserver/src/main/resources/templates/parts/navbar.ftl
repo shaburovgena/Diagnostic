@@ -3,7 +3,7 @@
 
 <#--Панель навигации для lg (large) экранов в светлом стиле
 на маленьких экранах будет показан только этот элемент-->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand" href="#">Diagnostic</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"

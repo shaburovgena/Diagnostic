@@ -3,16 +3,20 @@ package webserver.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+//Класс будет просканирован как компонент Spring и помещен в контекст приложения
 //Аннотация для того чтобы spring создал этот класс автоматически без вызова из кода
 @Service
 public class MailSender {
 
-  @Autowired
+    @Autowired
     private JavaMailSender mailSender;
 
-    public void send (String emailTo, String subject, String message) {
+    //Метод будет асинхронно запущен в отдельном потоке
+    @Async
+    public void send(String emailTo, String subject, String message) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
 
         mailMessage.setFrom("diagnostic@tn.ru");
