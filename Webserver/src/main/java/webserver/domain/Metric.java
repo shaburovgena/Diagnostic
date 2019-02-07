@@ -8,7 +8,7 @@ import javax.persistence.Id;
 
 @Entity
 public class Metric {
-
+    // TODO: 07.02.2019 Добавить связь многого со многим метрики к группам
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

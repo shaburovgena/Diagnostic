@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -22,9 +23,9 @@ public class User implements UserDetails {
     @NotBlank(message = "Укажите пароль")
     private String password;
     //Поле passwordConfirm Hibernate не будет сохранять в базу и искать по базе
-//    @Transient
-//    @NotBlank(message = "Укажите пароль")
-//    private String passwordConfirm;
+    //    @Transient
+    //    @NotBlank(message = "Укажите пароль")
+    //    private String passwordConfirm;
 
     private boolean active;
 
@@ -32,6 +33,9 @@ public class User implements UserDetails {
     @NotBlank(message = "Укажите адрес")
     private String email;
     private String activationCode;
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Message> messages;
+
     //Создается доп таблица где каждому user_id соответствуе user_role
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     //Если ролей несколько, то и записей с одним user_id будет несколько
@@ -40,7 +44,22 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    public boolean isAdmin (){
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+
+
+    public boolean isAdmin() {
         return roles.contains(Role.ADMIN);
     }
 
@@ -123,6 +142,14 @@ public class User implements UserDetails {
 
     public void setActivationCode(String activationCode) {
         this.activationCode = activationCode;
+    }
+
+    public Set<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(Set<Message> messages) {
+        this.messages = messages;
     }
 
 }
