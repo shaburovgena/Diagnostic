@@ -73,7 +73,7 @@
             <button class="btn btn-primary" type="submit"><#if isRegisterForm>Create<#else>Sign In</#if></button>
         </div>
         <div>
-        <#--Если не находимся на странице регистрации отобрадается ссылка Sign Up-->
+        <#--Если не находимся на странице регистрации отображается ссылка Sign Up-->
     <#if !isRegisterForm><a href="/registration" class="ml-5 mt-2">Sign Up</a></#if>
         </div>
     </div>

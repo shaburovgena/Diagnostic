@@ -1,9 +1,9 @@
-<#--Отображаем кнопку на скрываемую группу со ссылкой на href="#collapseExample"-->
-<a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-    Сообщение
-</a>
+<#--Отображаем кнопку на скрываемую группу со ссылкой на href="#collapseExample", работает некорректно->
+<#--<a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">-->
+    <#--Сообщение-->
+<#--</a>-->
 <#--Скрываемая группа откликается по id="collapseExample"-->
-<div class="collapse <#if message??>show</#if>" id="collapseExample">
+<#--<div class="collapse <#if message??>show</#if>" id="collapseExample">-->
     <div class="form-group mt-3"><#--Отступ для всей группы на 2 вправо и на 3 сверху-->
         <form method="post" enctype="multipart/form-data">
             <div class="form-group"><#--Поле текста сообщения-->
@@ -42,4 +42,4 @@
             </div>
         </form>
     </div>
-</div>
+<#--</div>-->

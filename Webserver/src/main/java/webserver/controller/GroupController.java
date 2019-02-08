@@ -5,8 +5,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import webserver.domain.GroupMetric;
 import webserver.domain.User;
 import webserver.repos.GroupRepo;
@@ -16,19 +15,20 @@ import java.util.Map;
 
 // TODO: 07.02.2019 Добавить переход между группами
 @Controller
+@RequestMapping("/group")
 public class GroupController {
 
     @Autowired
     private GroupRepo groupRepo;
 
-    @GetMapping("/group")
+    @GetMapping
     public String viewGroups(Model model) {
         Iterable<GroupMetric> groups = groupRepo.findAll();
         model.addAttribute("groups", groups);
-        return "group";
+        return "groupList";
     }
 
-    @PostMapping("/group")
+    @PostMapping
     public String addGroup(
             @AuthenticationPrincipal User user,
             @Valid GroupMetric groupMetric,
@@ -45,7 +45,29 @@ public class GroupController {
         }
         Iterable<GroupMetric> groups = groupRepo.findAll();
         model.addAttribute("groups", groups);
-        return "group";
+        return "groupList";
     }
 
+    @PostMapping("delete/{group}")
+    public String delete(
+            @AuthenticationPrincipal User currentUser,
+            @PathVariable GroupMetric group,
+            Model model
+    ) {
+        if (group.getOwner().equals(currentUser)) {
+            groupRepo.delete(group);
+        }
+        Iterable<GroupMetric> groups = groupRepo.findAll();
+        model.addAttribute("groups", groups);
+        return "groupList";
+    }
+
+    @GetMapping("{group}")
+    public String group(
+            @PathVariable GroupMetric group,
+            Model model
+    ) {
+        model.addAttribute("group", group);
+        return "groupView";
+    }
 }

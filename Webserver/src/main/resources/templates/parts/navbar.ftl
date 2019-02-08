@@ -27,7 +27,7 @@ collapse- на маленьких экранах будет схлопывать
             </#if>
              <#if user?? && known><#--Просмотр метрик доступен только авторизованному пользователю-->
             <li class="nav-item">
-                <a class="nav-link" href="/agent">Метрики</a>
+                <a class="nav-link" href="/group">Группы</a>
             </li>
              </#if>
 
@@ -36,14 +36,15 @@ collapse- на маленьких экранах будет схлопывать
                 <a class="nav-link" href="/user">Пользователи</a>
             </li>
             </#if>
-             <#if user?? && known><#--Редактирование профиля доступно только авторизованному пользователю-->
-            <li class="nav-item">
-                <a class="nav-link" href="/user/profile">Профиль</a>
-            </li>
-             </#if>
+
 
         </ul>
     </div>
-    <div class="navbar-text mr-3">${name}</div>
+    <#if user?? && known><#--Редактирование профиля доступно только авторизованному пользователю-->
+            <li class="nav-item">
+                <a class="nav-link" style="color: aliceblue" href="/user/profile">${name}</a>
+            </li>
+    </#if>
+
     <@login.logout/>
 </nav>

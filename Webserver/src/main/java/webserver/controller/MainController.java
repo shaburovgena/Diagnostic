@@ -113,7 +113,7 @@ public class MainController {
     }
 
     @GetMapping("/user-messages/{user}")
-    public String userMessges(
+    public String userMessages(
             @AuthenticationPrincipal User currentUser,
             @PathVariable User user,
             Model model,

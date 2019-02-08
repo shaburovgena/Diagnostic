@@ -1,9 +1,8 @@
 <#import "parts/common.ftl" as common>
 <#import "parts/pager.ftl" as pager>
 
-
-
 <@common.page>
+<#macro metricAdd>
 <h5>Это страница с результатами</h5>
 
 <form action="/agent" method="post">
@@ -31,14 +30,17 @@
     </div>
     <input type="hidden" name="_csrf" value="${_csrf.token}"/>
 </form>
-    <@pager.pager url page />
-    <#list page.content  as metric>
+</#macro>
+<#macro metricsList>
+    <@pager.pager page url/>
+    <#list page.content as metric>
     <div class="my-5">
+        <#--br епревод на новую строку-->
         <span>${metric.time}</span><br/>
         <span>${metric.title}</span>
         <span>${metric.value}</span>
     </div>
     </#list>
-    <@pager.pager url page />
-<#include "parts/bottompanel.ftl"/>
+    <@pager.pager page url  />
+</#macro>
 </@common.page>
