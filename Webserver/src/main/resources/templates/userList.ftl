@@ -13,9 +13,11 @@ List of users
         <th></th>
     </tr>
     </thead>
+    <#--Тело таблицы-->
 <tbody>
  <#list users as user>
  <tr>
+     <#--Содержимое колонок-->
      <td>${user.username}</td>
      <td><#list user.roles as role>${role}<#sep>, </#list></td>
      <td><a href="/user/${user.id}">edit</a></td>

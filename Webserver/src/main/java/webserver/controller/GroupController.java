@@ -13,7 +13,7 @@ import webserver.repos.GroupRepo;
 import javax.validation.Valid;
 import java.util.Map;
 
-// TODO: 07.02.2019 Добавить переход между группами
+// TODO: 08.02.2019 Добавить отображение контента в соответствие с зависимостями
 @Controller
 @RequestMapping("/group")
 public class GroupController {
@@ -64,10 +64,13 @@ public class GroupController {
 
     @GetMapping("{group}")
     public String group(
+            @RequestParam Map<String, String> form,
             @PathVariable GroupMetric group,
             Model model
     ) {
         model.addAttribute("group", group);
+
+
         return "groupView";
     }
 }

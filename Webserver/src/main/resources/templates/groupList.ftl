@@ -25,11 +25,19 @@
                     </div>
 </#if>
         </div>
-
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-outline-primary">
+                <input type="radio" name="attribute" value="PRIVATE" id="PRIVATE" autocomplete="off" checked>PRIVATE
+            </label>
+            <label class="btn btn-outline-primary">
+                <input type="radio" name="attribute" value="PUBLIC" id="PUBLIC" autocomplete="off">PUBLIC
+            </label>
+        </div>
     <#--Скрытое поле с информацией о токене сессии пользователя
         позволяет избежать некоторых видов атак-->
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
         <div class="form-group">
+
         <#--Большая красивая кнопка-->
             <button type="submit" class="btn btn-primary">Создать</button>
         </div>
@@ -37,13 +45,15 @@
 </div>
 
 
-<div>
+<div class="container" align="center">
     <#list groups as group>
+<#if group.isPublic()||isAdmin||group.getOwner().getId()==currentUserId>
         <a href="/group/${group.id}"><img src="/static/folder.png" class="img-fluid"></a>
         <div class="m-2">
             <span>${group.groupName!"Безымянный"}</span><br/>
             <i>#${group.groupTag!"Без тега"}</i>
         </div>
+</#if>
     <#else>
         Нет групп
     </#list>

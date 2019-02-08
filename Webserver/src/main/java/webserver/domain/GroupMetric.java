@@ -16,13 +16,16 @@ public class GroupMetric {
     @NotBlank(message = "Укажите тег группы")
     private String groupTag;
 
+
+    private String attribute;
+
+
     //У группы должен быть владелец
     @ManyToOne(fetch = FetchType.EAGER)
     //Укаываем из какой колонки брать имя пользователя
     @JoinColumn(name = "user_id")
     private User owner;
 
-    // TODO: 07.02.2019 Добавить владельцев групп 
     public Long getId() {
         return id;
     }
@@ -53,5 +56,17 @@ public class GroupMetric {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public boolean isPublic() {
+        return getAttribute().equals("PUBLIC");
+    }
+
+    public String getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
     }
 }
