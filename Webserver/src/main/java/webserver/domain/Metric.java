@@ -1,10 +1,7 @@
 package webserver.domain;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Metric {
@@ -16,6 +13,13 @@ public class Metric {
     private Long time;
     private String title;
     private String value;
+
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    //Укаываем из какой колонки брать имя пользователя
+    @JoinColumn(name = "group_id")
+    private GroupMetric groupMetric;
+
 
     public Metric() {
     }
@@ -56,5 +60,13 @@ public class Metric {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public GroupMetric getGroupMetric() {
+        return groupMetric;
+    }
+
+    public void setGroupMetric(GroupMetric groupMetric) {
+        this.groupMetric = groupMetric;
     }
 }

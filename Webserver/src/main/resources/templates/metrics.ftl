@@ -2,7 +2,7 @@
 <#import "parts/pager.ftl" as pager>
 
 <@common.page>
-<#macro metricAdd>
+
 <h5>Это страница с результатами</h5>
 
 <form action="/agent" method="post">
@@ -30,17 +30,14 @@
     </div>
     <input type="hidden" name="_csrf" value="${_csrf.token}"/>
 </form>
-</#macro>
-<#macro metricsList>
     <@pager.pager page url/>
     <#list page.content as metric>
     <div class="my-5">
-        <#--br епревод на новую строку-->
+    <#--br епревод на новую строку-->
         <span>${metric.time}</span><br/>
         <span>${metric.title}</span>
         <span>${metric.value}</span>
     </div>
     </#list>
-    <@pager.pager page url  />
-</#macro>
+    <@pager.pager page url/>
 </@common.page>

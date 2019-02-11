@@ -33,6 +33,8 @@ public class User implements UserDetails {
     @NotBlank(message = "Укажите адрес")
     private String email;
     private String activationCode;
+
+    //У одного автора может быть много сообщений
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Message> messages;
 

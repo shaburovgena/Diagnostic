@@ -32,9 +32,9 @@ public class AgentController {
             Metric metric = new Metric(time, title, value);
             metricRepo.save(metric);
         }
-        Page<Metric> page = metricRepo.findAll(pageable);
-        model.addAttribute("url", "/agent");
-        model.addAttribute("page", page);
+//        Page<Metric> page = metricRepo.findAll(pageable);
+//        model.addAttribute("url", "/agent");
+//        model.addAttribute("page", page);
 
         return "metrics";
     }

@@ -1,17 +1,24 @@
 package webserver.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import webserver.domain.GroupMetric;
+import webserver.domain.Metric;
 import webserver.domain.User;
 import webserver.repos.GroupRepo;
+import webserver.repos.MetricRepo;
 
 import javax.validation.Valid;
 import java.util.Map;
+import java.util.Set;
 
 // TODO: 08.02.2019 Добавить отображение контента в соответствие с зависимостями
 @Controller
@@ -20,6 +27,8 @@ public class GroupController {
 
     @Autowired
     private GroupRepo groupRepo;
+    @Autowired
+    private MetricRepo metricRepo;
 
     @GetMapping
     public String viewGroups(Model model) {
@@ -64,13 +73,14 @@ public class GroupController {
 
     @GetMapping("{group}")
     public String group(
-            @RequestParam Map<String, String> form,
             @PathVariable GroupMetric group,
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC
+            ) Pageable pageable,
             Model model
     ) {
-        model.addAttribute("group", group);
 
-
+        Page<Metric> page = metricRepo.findByGroupMetric(group, pageable);
+        model.addAttribute("page", page);
         return "groupView";
     }
 }

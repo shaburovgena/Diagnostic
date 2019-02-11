@@ -2,6 +2,7 @@ package webserver.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Entity
 @Table(name = "groups")
@@ -25,6 +26,10 @@ public class GroupMetric {
     //Укаываем из какой колонки брать имя пользователя
     @JoinColumn(name = "user_id")
     private User owner;
+
+    //В одной группе может быть много метрик, мапиться будут по полю title
+    @OneToMany(mappedBy = "title", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Metric> metrics;
 
     public Long getId() {
         return id;
@@ -68,5 +73,13 @@ public class GroupMetric {
 
     public void setAttribute(String attribute) {
         this.attribute = attribute;
+    }
+
+    public Set<Metric> getMetrics() {
+        return metrics;
+    }
+
+    public void setMetrics(Set<Metric> metrics) {
+        this.metrics = metrics;
     }
 }
