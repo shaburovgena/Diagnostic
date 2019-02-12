@@ -20,6 +20,7 @@ public class GroupMetric {
 
     private String attribute;
 
+    private String filename;
 
     //У группы должен быть владелец
     @ManyToOne(fetch = FetchType.EAGER)
@@ -27,9 +28,7 @@ public class GroupMetric {
     @JoinColumn(name = "user_id")
     private User owner;
 
-    //В одной группе может быть много метрик, мапиться будут по полю title
-    @OneToMany(mappedBy = "title", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Metric> metrics;
+
 
     public Long getId() {
         return id;
@@ -75,11 +74,12 @@ public class GroupMetric {
         this.attribute = attribute;
     }
 
-    public Set<Metric> getMetrics() {
-        return metrics;
+
+    public String getFilename() {
+        return filename;
     }
 
-    public void setMetrics(Set<Metric> metrics) {
-        this.metrics = metrics;
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }

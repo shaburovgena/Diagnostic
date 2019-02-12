@@ -2,59 +2,34 @@
 <#include "/parts/security.ftl">
 
 <@common.page>
-   <h5>Список групп</h5>
-<div class="form-group mt-3">
-    <form method="post" action="/group">
-        <div class="form-group">
-            <input type="text" class="form-control ${(groupNameError??)?string('is-invalid', '')}"
-            <#--value="<#if group??>${group.groupName}</#if>"-->
-                   name="groupName" placeholder="Имя группы"/>
-<#if groupNameError??>
-                    <div class="invalid-feedback">
-                        ${groupNameError}
-                    </div>
-</#if>
-        </div>
-        <div class="form-group">
-            <input type="text" class="form-control ${(groupTagError??)?string('is-invalid', '')}"
-            <#--value="<#if group??>${group.groupTa}</#if>"-->
-                   name="groupTag" placeholder="Тег группы"/>
-<#if groupTagError??>
-                    <div class="invalid-feedback">
-                        ${groupTagError}
-                    </div>
-</#if>
-        </div>
-        <div class="btn-group" data-toggle="buttons">
-            <label class="btn btn-outline-primary">
-                <input type="radio" name="attribute" value="PRIVATE" id="PRIVATE" autocomplete="off" checked>PRIVATE
-            </label>
-            <label class="btn btn-outline-primary">
-                <input type="radio" name="attribute" value="PUBLIC" id="PUBLIC" autocomplete="off">PUBLIC
-            </label>
-        </div>
-    <#--Скрытое поле с информацией о токене сессии пользователя
-        позволяет избежать некоторых видов атак-->
-        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-        <div class="form-group">
 
-        <#--Большая красивая кнопка-->
-            <button type="submit" class="btn btn-primary">Создать</button>
-        </div>
-    </form>
-</div>
+ <div class="form-row">
+     <div class="form-group col-md-5">
+         <form method="get" action="/group" class="form-inline">
+             <input type="text" name="filter" class="form-control" value="${filter?ifExists}" placeholder="Поиск">
+             <button type="submit" class="btn btn-primary ml-3">Найти</button>
+         </form>
+     </div>
+ </div>
 
+<#include "parts/groupEdit.ftl"/>
 
-<div class="container" align="center">
+<div class="card-columns"><#--Расположение карт в столбики-->
     <#list groups as group>
-<#if group.isPublic()||isAdmin||group.getOwner().getId()==currentUserId>
-        <a href="/group/${group.id}"><img src="/static/folder.png" class="img-fluid"></a>
-        <div class="m-2">
-            <span>${group.groupName!"Безымянный"}</span><br/>
-            <i>#${group.groupTag!"Без тега"}</i>
+
+        <#if group.isPublic()||isAdmin||group.getOwner().getId()==currentUserId>
+        <div class="card my-3"><#--Отображение сообщений в виде карточек, отступ со всех сторон 3-->
+            <a href="/group/${group.id}"> <#if group.filename??>
+                <img src="/img/${group.filename}" class="card-img-top"><#--Изображение в топе карточки-->
+            <#else><img src="/static/folder.png" class="img-fluid"></#if></a>
+            <div class="m-2">
+                <span>${group.groupName!"Безымянный"}</span><br/>
+                <i>#${group.groupTag!"Без тега"}</i>
+            </div>
         </div>
-</#if>
-    <#else>
+        </#if>
+
+    <#else><#--Если в коллекции нет элементов отображать Нет групп-->
         Нет групп
     </#list>
 </div>

@@ -17,18 +17,14 @@ collapse- на маленьких экранах будет схлопывать
             <li class="nav-item">
                 <a class="nav-link" href="/">На главную</a>
             </li>
-            <#if user??>
-                <li class="nav-item">
-                    <a class="nav-link" href="/main">Сообщения</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/user-messages/${currentUserId}">Мои сообщения</a>
-                </li>
-            </#if>
+
              <#if user?? && known><#--Просмотр метрик доступен только авторизованному пользователю-->
             <li class="nav-item">
                 <a class="nav-link" href="/group">Группы</a>
             </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="/group/user-groups/${currentUserId}">Мои группы</a>
+              </li>
              </#if>
 
             <#if isAdmin><#--Список пользователей доступен только Админу-->

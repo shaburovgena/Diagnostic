@@ -37,7 +37,8 @@ public class User implements UserDetails {
     //У одного автора может быть много сообщений
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Message> messages;
-
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<GroupMetric> groups;
     //Создается доп таблица где каждому user_id соответствуе user_role
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     //Если ролей несколько, то и записей с одним user_id будет несколько
@@ -152,4 +153,11 @@ public class User implements UserDetails {
         this.messages = messages;
     }
 
+    public Set<GroupMetric> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Set<GroupMetric> groups) {
+        this.groups = groups;
+    }
 }

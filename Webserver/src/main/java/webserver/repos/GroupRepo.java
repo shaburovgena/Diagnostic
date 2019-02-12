@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface GroupRepo extends CrudRepository<GroupMetric, Long> {
     List<GroupMetric> findByGroupName(String name);
+
+    List<GroupMetric> findByGroupTag(String name);
 }
