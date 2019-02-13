@@ -1,6 +1,6 @@
 <#import "parts/common.ftl" as common>
 <#import "metrics.ftl" as metrics>
-<#include "/parts/security.ftl">
+<#include "parts/security.ftl">
 <#import "parts/pager.ftl" as pager>
 
 <@common.page>

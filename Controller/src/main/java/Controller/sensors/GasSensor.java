@@ -1,5 +1,6 @@
-package Controller;
+package Controller.sensors;
 
+import Controller.Sensor;
 import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CDevice;
 import com.pi4j.io.i2c.I2CFactory;
@@ -7,9 +8,10 @@ import com.pi4j.io.i2c.I2CFactory;
 import java.io.IOException;
 
 
-public class GasMeter {
+public class GasSensor implements Sensor {
     //Module ADC121C_MQ9
-    public static void gasCOMeter() throws IOException, I2CFactory.UnsupportedBusNumberException {
+    @Override
+    public String meter() throws IOException, I2CFactory.UnsupportedBusNumberException {
         // Create I2C bus
         I2CBus Bus = I2CFactory.getInstance(I2CBus.BUS_1);
         // Get I2C device, ADC121C_MQ9 I2C address is 0x50(80)
@@ -25,7 +27,7 @@ public class GasMeter {
         double ppm = ((1000.0 / 4096.0) * raw_adc) + 10;
 
         // Output data to screen
-        System.out.printf("Gas Concentration : %.2f ppm %n", ppm);
+        return String.format("Gas Concentration : %.2f ppm %n", ppm);
     }
 
     //Module  ADC121C_MQ4

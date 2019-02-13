@@ -1,14 +1,16 @@
-package Controller;
+package Controller.sensors;
 
+import Controller.Sensor;
 import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CDevice;
 import com.pi4j.io.i2c.I2CFactory;
 
 import java.io.IOException;
-//Module MCP9808
-public class Temp {
 
-    public static String term() throws IOException, I2CFactory.UnsupportedBusNumberException, InterruptedException {
+//Module MCP9808
+public class TemperatureSensor implements Sensor {
+    @Override
+    public String meter() throws IOException, I2CFactory.UnsupportedBusNumberException, InterruptedException {
         // Create I2C bus
         I2CBus Bus = I2CFactory.getInstance(I2CBus.BUS_1);
         // Get I2C device, MCP9808 I2C address is 0x18(24)
@@ -23,7 +25,7 @@ public class Temp {
         device.write(0x01, config, 0, 2);
         // Select resolution register
         // Resolution = +0.0625 / C
-        device.write(0x08, (byte)0x03);
+        device.write(0x08, (byte) 0x03);
         Thread.sleep(300);
 
         // Read 2 bytes of data from address 0x05(05)
@@ -33,8 +35,7 @@ public class Temp {
 
         // Convert the data to 13-bits
         int temp = ((data[0] & 0x1F) * 256 + (data[1] & 0xFF));
-        if(temp > 4095)
-        {
+        if (temp > 4095) {
             temp -= 8192;
         }
         double cTemp = temp * 0.0625;

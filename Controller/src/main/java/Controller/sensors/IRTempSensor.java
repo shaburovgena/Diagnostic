@@ -1,13 +1,15 @@
-package Controller;
+package Controller.sensors;
 
+import Controller.Sensor;
 import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CDevice;
 import com.pi4j.io.i2c.I2CFactory;
 
 import java.io.IOException;
 //Module TMP007
-public class IRTemp {
-    public static void term() throws IOException, I2CFactory.UnsupportedBusNumberException {
+public class IRTempSensor implements Sensor {
+    @Override
+    public String meter() throws IOException, I2CFactory.UnsupportedBusNumberException {
 // Create I2CBus
         I2CBus bus = I2CFactory.getInstance(I2CBus.BUS_1);
         // Get I2C device, TMP007 I2C address is 0x41(64)
@@ -33,8 +35,9 @@ public class IRTemp {
         double fTemp = cTemp * 1.8 + 32;
 
         // Output data to screen
-        System.out.printf("Temperature in Celsius : %.2f C %n", cTemp);
-        System.out.printf("Temperature in Fahrenheit : %.2f C %n", fTemp);
+        String result = String.format("Temperature in Celsius : %.2f C %n", cTemp);
+        result += String.format("Temperature in Fahrenheit : %.2f C %n", fTemp);
+        return result;
     }
 
 }

@@ -1,16 +1,15 @@
-package Controller;
+package Controller.sensors;
 
+import Controller.Sensor;
 import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CDevice;
 import com.pi4j.io.i2c.I2CFactory;
 
 import java.io.IOException;
 //Module TMG39931
-public class Proximity {
-
-    public static void proximityMeasure() throws IOException, I2CFactory.UnsupportedBusNumberException, InterruptedException {
-
-
+public class ProximitySensor implements Sensor {
+    @Override
+    public String meter() throws IOException, I2CFactory.UnsupportedBusNumberException, InterruptedException {
         // Create I2C bus
         I2CBus bus = I2CFactory.getInstance(I2CBus.BUS_1);
         // Get I2C device, TCS39931 I2C address is 0x39(57)
@@ -23,7 +22,7 @@ public class Proximity {
         // ATIME : 712ms, Max count = 65535 cycles
         device.write(0x81, (byte) 0x00);
         // Select enable register
-        // Power ON, ALS enable, Proximity enable, Wait enable
+        // Power ON, ALS enable, ProximitySensorFactory enable, Wait enable
         device.write(0x80, (byte) 0x0F);
         Thread.sleep(800);
 
@@ -40,10 +39,11 @@ public class Proximity {
         int proximity = data[8] & 0xFF;
 
         // Output data to screen
-        System.out.printf("InfraRed luminance : %d lux %n", cData);
-        System.out.printf("Red Color luminance : %d lux %n", red);
-        System.out.printf("Green Color luminance : %d lux %n", green);
-        System.out.printf("Blue Color luminance : %d lux %n", blue);
-        System.out.printf("Proximity of the device : %d %n", proximity);
+        String result = String.format("InfraRed luminance : %d lux %n", cData);
+        result += String.format("Red Color luminance : %d lux %n", red);
+        result += String.format("Green Color luminance : %d lux %n", green);
+        result += String.format("Blue Color luminance : %d lux %n", blue);
+        result += String.format("Proximity of the device : %d %n", proximity);
+        return result;
     }
 }

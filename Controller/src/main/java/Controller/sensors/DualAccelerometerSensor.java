@@ -1,13 +1,17 @@
-package Controller;
+package Controller.sensors;
 
+import Controller.Sensor;
 import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CDevice;
 import com.pi4j.io.i2c.I2CFactory;
+import com.sun.javafx.binding.StringFormatter;
+
 import java.io.IOException;
 
 //Module MXC6232xM
-public class DualAccelerometer {
-    public static void accelMeter() throws IOException, I2CFactory.UnsupportedBusNumberException, InterruptedException {
+public class DualAccelerometerSensor implements Sensor {
+    @Override
+    public  String meter() throws IOException, I2CFactory.UnsupportedBusNumberException, InterruptedException {
         // Create I2C bus
         I2CBus Bus = I2CFactory.getInstance(I2CBus.BUS_1);
         // Get I2C device, device I2C address is 0x10(16)
@@ -32,9 +36,9 @@ public class DualAccelerometer {
         if (yAccl > 2047) {
             yAccl = yAccl - 4096;
         }
-
+        String result = String.format("X-Axis : %d %n", xAccl);
+        result += String.format("Y-Axis : %d %n", yAccl);
         // Output data to screen
-        System.out.printf("X-Axis : %d %n", xAccl);
-        System.out.printf("Y-Axis : %d %n", yAccl);
+        return result;
     }
 }
