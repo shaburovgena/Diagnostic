@@ -1,11 +1,13 @@
 package webserver.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Metric {
-    // TODO: 07.02.2019 Добавить связь многого со многим метрики к группам
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

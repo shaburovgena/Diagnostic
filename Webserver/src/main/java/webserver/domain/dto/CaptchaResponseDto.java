@@ -1,4 +1,4 @@
-package webserver.domain;
+package webserver.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -8,7 +8,7 @@ import java.util.Set;
 
 //Игнорировать неизвестные поля
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CaptchaResponse {
+public class CaptchaResponseDto {
 
     private boolean success;
 

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
-import webserver.domain.CaptchaResponse;
+import webserver.domain.dto.CaptchaResponseDto;
 import webserver.domain.User;
 import webserver.service.UserService;
 
@@ -48,7 +48,7 @@ public class RegistrationController {
     ) {
 
         String url = String.format(CAPTCHA_URL, secret, captchaResponse);
-        CaptchaResponse response = restTemplate.postForObject(url, Collections.emptyList(), CaptchaResponse.class);
+        CaptchaResponseDto response = restTemplate.postForObject(url, Collections.emptyList(), CaptchaResponseDto.class);
 
         if (!response.isSuccess()) {
             model.addAttribute("captchaError", "Ошибка в капче");

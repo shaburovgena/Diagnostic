@@ -138,7 +138,7 @@ public class UserService implements UserDetailsService {
         if (!StringUtils.isEmpty(password)) {
             user.setPassword(password);
         }
-
+        //Если менялся адрес почты перевысылаем код активации
         userRepo.save(user);
         if (isEmailChanged) {
             sendMessage(user);
