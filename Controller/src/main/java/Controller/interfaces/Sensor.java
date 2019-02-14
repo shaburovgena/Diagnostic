@@ -1,4 +1,4 @@
-package Controller;
+package Controller.interfaces;
 
 import com.pi4j.io.i2c.I2CFactory;
 

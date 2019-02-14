@@ -1,7 +1,7 @@
 package Controller.factory;
 
-import Controller.Sensor;
-import Controller.SensorFactory;
+import Controller.interfaces.Sensor;
+import Controller.interfaces.SensorFactory;
 import Controller.sensors.GyroSensor;
 
 //Module LSM9DS0
