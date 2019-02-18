@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Metric {
+public class Sensor {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -18,15 +18,15 @@ public class Metric {
 
 
     @ManyToOne(fetch = FetchType.EAGER)
-    //Укаываем из какой колонки брать имя пользователя
+    //Укаываем из какой колонки брать принадлежность к группе
     @JoinColumn(name = "group_id")
     private GroupMetric groupMetric;
 
 
-    public Metric() {
+    public Sensor() {
     }
 
-    public Metric(Long time, String title, String value) {
+    public Sensor(Long time, String title, String value) {
         this.time = time;
         this.title = title;
         this.value = value;

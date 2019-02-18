@@ -31,12 +31,12 @@
     <input type="hidden" name="_csrf" value="${_csrf.token}"/>
 </form>
     <@pager.pager page url/>
-    <#list page.content as metric>
+    <#list page.content as sensor>
     <div class="my-5">
     <#--br епревод на новую строку-->
-        <span>${metric.time}</span><br/>
-        <span>${metric.title}</span>
-        <span>${metric.value}</span>
+        <span>${sensor.time}</span><br/>
+        <span>${sensor.title}</span>
+        <span>${sensor.value}</span>
     </div>
     </#list>
     <@pager.pager page url/>

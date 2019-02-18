@@ -4,12 +4,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import webserver.domain.GroupMetric;
-import webserver.domain.Metric;
+import webserver.domain.Sensor;
 
-public interface MetricRepo extends CrudRepository<Metric, Long> {
+public interface MetricRepo extends CrudRepository<Sensor, Long> {
 
-    Page<Metric> findAll(Pageable pageable);
+    Page<Sensor> findAll(Pageable pageable);
 
-    Page<Metric> findByGroupMetric(GroupMetric group, Pageable pageable);
+    Page<Sensor> findByGroupMetric(GroupMetric group, Pageable pageable);
 
 }

@@ -25,6 +25,9 @@ collapse- на маленьких экранах будет схлопывать
               <li class="nav-item">
                   <a class="nav-link" href="/group/user-groups/${currentUserId}">Мои группы</a>
               </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="/agent">Сенсоры</a>
+              </li>
              </#if>
 
             <#if isAdmin><#--Список пользователей доступен только Админу-->
