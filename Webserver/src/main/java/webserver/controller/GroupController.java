@@ -14,7 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import webserver.domain.GroupMetric;
-import webserver.domain.Sensor;
+import webserver.domain.Metric;
 import webserver.domain.User;
 import webserver.repos.GroupRepo;
 import webserver.repos.MetricRepo;
@@ -123,7 +123,7 @@ public class GroupController {
             Model model
     ) {
 
-        Page<Sensor> page = metricRepo.findByGroupMetric(group, pageable);
+        Page<Metric> page = metricRepo.findByGroupMetric(group, pageable);
         model.addAttribute("page", page);
         return "groupView";
     }

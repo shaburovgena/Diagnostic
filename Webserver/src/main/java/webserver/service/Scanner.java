@@ -1,21 +1,29 @@
 package webserver.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+import webserver.domain.Metric;
+import webserver.repos.MetricRepo;
 
 import java.io.IOException;
 import java.net.*;
+import java.time.LocalTime;
 import java.util.Enumeration;
 import java.util.Set;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
 
+@Service
 public class Scanner {
 
     //Сканирование подсети сервера для поиска сенсоров
     //Чтобы выдавать их списком при добавлении в группу
-
-    private Set<String> sensors;
+    @Autowired
+    private MetricRepo metricRepo;
+    private Set<Metric> metrics;
     private Set<String> interfaces;
+
+
+    private Metric metric;
 
     public void getAllInterfaces() throws SocketException {
         Enumeration e = NetworkInterface.getNetworkInterfaces();
@@ -31,33 +39,46 @@ public class Scanner {
     }
 
     @Async
-    public void scan() throws SocketException, UnknownHostException {
-
+    public void scan(String ipAddress, int port) throws SocketException, UnknownHostException {
         InetAddress localhost = InetAddress.getByName(Inet4Address.getLocalHost().getHostAddress());
         byte[] buf = localhost.getAddress();
+        metric = new Metric();
+        for (int i = 1; i < 255; i++) {
 
-        for (int i = 254; i > 0; i--) {
-            int port = 445;
             String host = (0xff & buf[0]) + "." + (0xff & buf[1]) + "." + (0xff & buf[2]) + "." + i;
             try {
                 Socket socket = new Socket();
                 socket.connect(new InetSocketAddress(host, port), 200);
-
                 socket.close();
                 System.out.println("Connect: " + host);
+
+                metric.setIpAddress(host);
+                metric.setGroupMetric(null);
+                metric.setTime(String.valueOf(LocalTime.now()));
+                metric.setTitle("metric" + i);
+                metric.setValue(String.valueOf(i));
+                metricRepo.save(metric);
             } catch (IOException e) {
                 System.out.println("Could not connect on port: " + port + " " + host);
-                // ...
             }
         }
     }
 
-    public Set<String> getSensors() {
-        return sensors;
+    public Set<Metric> getMetrics() {
+        return metrics;
     }
 
-    public void setSensors(Set<String> sensors) {
-        this.sensors = sensors;
+    public void setMetrics(Set<Metric> metrics) {
+        this.metrics = metrics;
     }
+
+    public Set<String> getInterfaces() {
+        return interfaces;
+    }
+
+    public void setInterfaces(Set<String> interfaces) {
+        this.interfaces = interfaces;
+    }
+
 
 }

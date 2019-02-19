@@ -3,30 +3,25 @@
 
 <@common.page>
 
-<h5>Это страница с результатами</h5>
+<h5>Это страница с сенсорами</h5>
 
 <form action="/agent" method="post">
     <div class="form-group">
         <input type="text" class="form-control"
-               name="time"
-               placeholder="Введите время"/>
+               name="ipAddress"
+               placeholder="Введите адрес"/>
 
     </div>
     <div class="form-group">
         <input type="text" class="form-control"
-               name="title"
-               placeholder="Введите имя сенсора"/>
+               name="port"
+               placeholder="Введите порт"/>
 
     </div>
-    <div class="form-group">
 
-        <input type="text" class="form-control"
-               name="value" placeholder="Значение"/>
-
-    </div>
     <div class="form-group">
     <#--Большая красивая кнопка-->
-        <button type="submit" class="btn btn-primary mt-3">Добавить</button>
+        <button type="submit" class="btn btn-primary mt-3">Сканировать</button>
     </div>
     <input type="hidden" name="_csrf" value="${_csrf.token}"/>
 </form>
