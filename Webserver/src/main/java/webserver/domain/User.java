@@ -34,9 +34,8 @@ public class User implements UserDetails {
     private String email;
     private String activationCode;
 
-    //У одного автора может быть много сообщений
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Message> messages;
+    //У одного владельца может быть много групп
+
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<GroupMetric> groups;
     //Создается доп таблица где каждому user_id соответствуе user_role
@@ -143,14 +142,6 @@ public class User implements UserDetails {
 
     public void setActivationCode(String activationCode) {
         this.activationCode = activationCode;
-    }
-
-    public Set<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(Set<Message> messages) {
-        this.messages = messages;
     }
 
     public Set<GroupMetric> getGroups() {

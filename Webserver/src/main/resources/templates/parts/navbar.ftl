@@ -26,7 +26,7 @@ collapse- на маленьких экранах будет схлопывать
                   <a class="nav-link" href="/group/user-groups/${currentUserId}">Мои группы</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="/agent">Сенсоры</a>
+                  <a class="nav-link" href="/metrics">Сенсоры</a>
               </li>
              </#if>
 

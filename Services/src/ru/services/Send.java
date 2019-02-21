@@ -13,6 +13,8 @@ import java.net.URL;
  * Обработка запрос/ответ
  * Открытие новой сцены
  */
+
+//Часть сервиса для работы клиента и агента, устарел
 public class Send {
 
     private int responseCode;

@@ -27,7 +27,7 @@
         </div>
         <div class="col-xs-12 col-sm-4" align="right">
     <#if isAdmin||group.getOwner().getId()==currentUserId>
-        <form method="post" action="/group/delete/${group.id}">
+        <form method="post" action="/group/${group.id}/delete">
             <input type="hidden" name="id" value="${group.id}"/>
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
             <button type="submit" class="btn btn-danger" align="left">Удалить</button>
@@ -39,38 +39,20 @@
 </div>
     <div><h5 align="center">${group.groupName!"Безымянный"}</h5>
     </div>
-<form action="/agent" method="post">
-    <div class="form-group">
-        <input type="text" class="form-control"
-               name="time"
-               placeholder="Введите время"/>
 
-    </div>
-    <div class="form-group">
-        <input type="text" class="form-control"
-               name="title"
-               placeholder="Введите имя сенсора"/>
 
-    </div>
-    <div class="form-group">
-
-        <input type="text" class="form-control"
-               name="value" placeholder="Значение"/>
-        <input type="hidden" name="id" value="${group.id}"/>
-    </div>
     <div class="form-group">
     <#--Большая красивая кнопка-->
-        <button type="submit" class="btn btn-primary mt-3">Добавить</button>
+        <a href="/group/${group.id}/scan" ><button type="submit" class="btn btn-primary mt-3">Добавить</button></a>
     </div>
     <input type="hidden" name="_csrf" value="${_csrf.token}"/>
 </form>
-    <@pager.pager page url/>
-    <#list page.content as sensor>
+    <#list page.content as metric>
     <div class="my-5">
     <#--br епревод на новую строку-->
-        <span>${sensor.time}</span><br/>
-        <span>${sensor.title}</span>
-        <span>${sensor.value}</span>
+        <span>${metric.time}</span><br/>
+        <span>${metric.title}</span>
+        <span>${metric.value}</span>
     </div>
     </#list>
     <@pager.pager page url/>

@@ -87,7 +87,7 @@ public class GroupController {
         return "groupList";
     }
 
-    @PostMapping("delete/{group}")
+    @PostMapping("{group}/delete")
     public String delete(
             @AuthenticationPrincipal User currentUser,
             @PathVariable GroupMetric group,

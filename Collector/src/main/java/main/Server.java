@@ -6,9 +6,10 @@ package main;
  * Created by Gena on 16.07.2018.
  */
 
-/*TODO:Миграция на spring webserver
-
+/*
+Сервер для приема данных с активных агентов
  */
+// TODO: 19.02.2019 Перенести на Webserver
 public class Server {
 
 

@@ -3,11 +3,8 @@ package ru.agent;
 import ru.services.Send;
 
 import java.io.IOException;
-/*TODO: Универсальный агент для RPi и Arduino
-Проверка подключенных сенсоров
-Удаленное включение компонентов
-Управление через response
-**/
+//Агент для работы на удаленных ПК
+// TODO: 19.02.2019 Данные должны запрашиваться с сервера
 public class Agent {
     public static void main(String[] args) {
         Metric testMetric = new TestMetric(5000);

@@ -7,11 +7,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import webserver.domain.GroupMetric;
 import webserver.domain.Metric;
 import webserver.repos.MetricRepo;
 import webserver.service.Scanner;
@@ -19,31 +17,31 @@ import webserver.service.Scanner;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
-@RequestMapping("/agent")
 @Controller
-public class AgentController {
+public class MetricController {
 
     @Autowired
     private MetricRepo metricRepo;
     @Autowired
     private RestTemplate restTemplate;
 
-    @GetMapping
-    public String sensorsView(Model model,
-                              @RequestParam(name = "time", required = false) Long time,
-                              @RequestParam(name = "title", required = false) String title,
-                              @RequestParam(name = "value", required = false) String value,
+    @GetMapping("/group/{group}/scan")
+    public String metricsView(Model model,
+                              @PathVariable GroupMetric group,
                               @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC
                               ) Pageable pageable
-    ) throws SocketException, UnknownHostException {
+    ){
         Page<Metric> page = metricRepo.findAll(pageable);
+        model.addAttribute("group", group);
         model.addAttribute("page", page);
-        return "sensors";
+
+        return "metrics";
     }
 
 
-    @PostMapping
+    @PostMapping("/group/{group}/scan")
     public String scaning(
+            @PathVariable GroupMetric group,
             Model model,
             @RequestParam(name = "ipAddress", required = false) String ipAddress,
             @RequestParam(name = "port", required = false) int port
@@ -51,7 +49,10 @@ public class AgentController {
     ) throws SocketException, UnknownHostException {
 
         Scanner scanner = new Scanner();
-        scanner.scan("", port);
-        return "redirect:/greeting";
+        scanner.scan(ipAddress, port);
+        Iterable<Metric> metrics = scanner.getMetrics();
+        model.addAttribute("metrics", metrics);
+        model.addAttribute("group", group);
+        return "metrics";
     }
 }

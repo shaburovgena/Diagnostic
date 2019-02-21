@@ -6,6 +6,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/*
+ Десктопный клиент, функционал перенесен в веб интерфейс
+ */
 public class Client extends Application {
 
     public static void main(String[] args) {
@@ -13,7 +16,7 @@ public class Client extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/samples/StartPage.fxml"));
         primaryStage.setTitle("Diagnostic Tool");
         primaryStage.setScene(new Scene(root));

@@ -9,7 +9,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-
+//Отправка пуш уведомлений с использованием firebase от google
 public class PushService {
     static final String SERVER_KEY = "AAAAwdY-Xhg:APA91bGxi6uBHz9FeylHx4ShyeFPpjTcBUbOWLVhmey6VG3gTnGxWBAncIfP892pqjN1PXumOyQO4hKPWnsjstEnHhRqj7NRo-aw6rZDfmDSo65kVYJN3hiZNafuVllV35LOu8QnDstx";//TODO: get firebase google server  key
     static final String ID_TOKEN = "3vfoqFGAwfeSO5ZskUEyMYXOHss1";  //TODO: get token

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.*;
 import java.time.LocalTime;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Set;
 
 @Service
@@ -24,6 +25,10 @@ public class Scanner {
 
 
     private Metric metric;
+
+    public Scanner() {
+        metrics = new HashSet<>();
+    }
 
     public void getAllInterfaces() throws SocketException {
         Enumeration e = NetworkInterface.getNetworkInterfaces();
@@ -40,26 +45,39 @@ public class Scanner {
 
     @Async
     public void scan(String ipAddress, int port) throws SocketException, UnknownHostException {
-        InetAddress localhost = InetAddress.getByName(Inet4Address.getLocalHost().getHostAddress());
-        byte[] buf = localhost.getAddress();
-        metric = new Metric();
-        for (int i = 1; i < 255; i++) {
+        InetAddress hostname = InetAddress.getByName(Inet4Address.getLocalHost().getHostAddress());
 
-            String host = (0xff & buf[0]) + "." + (0xff & buf[1]) + "." + (0xff & buf[2]) + "." + i;
+        if(!ipAddress.isEmpty()) {
+            hostname = InetAddress.getByName(ipAddress);
+        }
+        byte[] buf = hostname.getAddress();
+
+        if((0xff & buf[3]) !=0 && (0xff & buf[3])!=255){
+            String host = (0xff & buf[0]) + "." + (0xff & buf[1]) + "." + (0xff & buf[2]) + "." + (0xff & buf[3]);
             try {
                 Socket socket = new Socket();
-                socket.connect(new InetSocketAddress(host, port), 200);
+                socket.connect(new InetSocketAddress(host, port), 20);
                 socket.close();
                 System.out.println("Connect: " + host);
-
-                metric.setIpAddress(host);
-                metric.setGroupMetric(null);
-                metric.setTime(String.valueOf(LocalTime.now()));
-                metric.setTitle("metric" + i);
-                metric.setValue(String.valueOf(i));
-                metricRepo.save(metric);
+                metric = new Metric(host, String.valueOf(InetAddress.getByName(host)));
+                metrics.add(metric);
             } catch (IOException e) {
-                System.out.println("Could not connect on port: " + port + " " + host);
+                System.out.println("Could not connect to host " + host + " on port: " + port);
+            }
+        }else {
+            for (int i = 1; i < 255; i++) {
+
+                String host = (0xff & buf[0]) + "." + (0xff & buf[1]) + "." + (0xff & buf[2]) + "." + i;
+                try {
+                    Socket socket = new Socket();
+                    socket.connect(new InetSocketAddress(host, port), 20);
+                    socket.close();
+                    System.out.println("Connect: " + host);
+                    metric = new Metric(host, String.valueOf(InetAddress.getByName(host)));
+                    metrics.add(metric);
+                } catch (IOException e) {
+                    System.out.println("Could not connect to host " + host + " on port: " + port);
+                }
             }
         }
     }
