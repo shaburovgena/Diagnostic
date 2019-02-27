@@ -15,21 +15,15 @@ public class Metric {
 
     private String title;
     private String ipAddress;
-
-
+    private int port;
+    private boolean selected;
+    private String value;
     @ManyToOne(fetch = FetchType.EAGER)
     //Укаываем из какой колонки брать принадлежность к группе
     @JoinColumn(name = "group_id")
     private GroupMetric groupMetric;
 
 
-    public Metric() {
-    }
-
-    public Metric(String title, String ipAddress) {
-        this.title = title;
-        this.ipAddress = ipAddress;
-    }
 
     public Long getId() {
         return id;
@@ -39,6 +33,13 @@ public class Metric {
         this.id = id;
     }
 
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
 
     public String getTitle() {
         return title;
@@ -61,6 +62,23 @@ public class Metric {
     }
 
     public void setIpAddress(String ipAddress) {
+
         this.ipAddress = ipAddress;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
     }
 }

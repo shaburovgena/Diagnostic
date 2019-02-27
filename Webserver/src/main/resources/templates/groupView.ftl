@@ -1,5 +1,5 @@
 <#import "parts/common.ftl" as common>
-<#import "metrics.ftl" as metrics>
+<#import "sensors.ftl" as sensors>
 <#include "parts/security.ftl">
 <#import "parts/pager.ftl" as pager>
 
@@ -37,23 +37,31 @@
     </div>
 
 </div>
-    <div><h5 align="center">${group.groupName!"Безымянный"}</h5>
+    <div>
+        <h5 align="center">${group.groupName!"Без имени"}</h5>
     </div>
 
 
-    <div class="form-group">
-    <#--Большая красивая кнопка-->
-        <a href="/group/${group.id}/scan" ><button type="submit" class="btn btn-primary mt-3">Добавить</button></a>
-    </div>
     <input type="hidden" name="_csrf" value="${_csrf.token}"/>
 </form>
+    <@pager.pager page url/>
     <#list page.content as metric>
     <div class="my-5">
-    <#--br епревод на новую строку-->
-        <span>${metric.time}</span><br/>
+    <#--br перевод на новую строку-->
         <span>${metric.title}</span>
-        <span>${metric.value}</span>
+        <span><#if metric.value??> ${metric.value}<#else> No data</#if></span>
     </div>
     </#list>
-    <@pager.pager page url/>
+<div>
+
+    <#if isAdmin||group.getOwner().getId()==currentUserId>
+        <div class="form-group">
+        <#--Большая красивая кнопка-->
+            <a href="/group/${group.id}/scan">
+                <button type="submit" class="btn btn-primary mt-3">Добавить</button>
+            </a>
+        </div>
+    </#if>
+
+</div>
 </@common.page>

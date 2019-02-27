@@ -1,32 +1,28 @@
 package webserver.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import webserver.domain.Metric;
-import webserver.repos.MetricRepo;
 
 import java.io.IOException;
 import java.net.*;
-import java.time.LocalTime;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class Scanner {
+public class FindSensorHelper {
 
     //Сканирование подсети сервера для поиска сенсоров
     //Чтобы выдавать их списком при добавлении в группу
-    @Autowired
-    private MetricRepo metricRepo;
+
     private Set<Metric> metrics;
     private Set<String> interfaces;
 
 
     private Metric metric;
 
-    public Scanner() {
+    public FindSensorHelper() {
         metrics = new HashSet<>();
     }
 
@@ -44,27 +40,30 @@ public class Scanner {
     }
 
     @Async
-    public void scan(String ipAddress, int port) throws SocketException, UnknownHostException {
+    public void scanNetwork(String ipAddress, int port) throws  UnknownHostException {
         InetAddress hostname = InetAddress.getByName(Inet4Address.getLocalHost().getHostAddress());
 
-        if(!ipAddress.isEmpty()) {
+        if (!ipAddress.isEmpty()) {
             hostname = InetAddress.getByName(ipAddress);
         }
         byte[] buf = hostname.getAddress();
 
-        if((0xff & buf[3]) !=0 && (0xff & buf[3])!=255){
+        if ((0xff & buf[3]) != 0 && (0xff & buf[3]) != 255) {
             String host = (0xff & buf[0]) + "." + (0xff & buf[1]) + "." + (0xff & buf[2]) + "." + (0xff & buf[3]);
             try {
                 Socket socket = new Socket();
                 socket.connect(new InetSocketAddress(host, port), 20);
                 socket.close();
                 System.out.println("Connect: " + host);
-                metric = new Metric(host, String.valueOf(InetAddress.getByName(host)));
+                metric = new Metric();
+                metric.setIpAddress(host);
+                metric.setTitle(host);
+                metric.setPort(port);
                 metrics.add(metric);
             } catch (IOException e) {
                 System.out.println("Could not connect to host " + host + " on port: " + port);
             }
-        }else {
+        } else {
             for (int i = 1; i < 255; i++) {
 
                 String host = (0xff & buf[0]) + "." + (0xff & buf[1]) + "." + (0xff & buf[2]) + "." + i;
@@ -72,8 +71,11 @@ public class Scanner {
                     Socket socket = new Socket();
                     socket.connect(new InetSocketAddress(host, port), 20);
                     socket.close();
-                    System.out.println("Connect: " + host);
-                    metric = new Metric(host, String.valueOf(InetAddress.getByName(host)));
+                    System.out.println("Connect: " + host +":"+ port);
+                    metric = new Metric();
+                    metric.setIpAddress(host);
+                    metric.setTitle(host);
+                    metric.setPort(port);
                     metrics.add(metric);
                 } catch (IOException e) {
                     System.out.println("Could not connect to host " + host + " on port: " + port);
@@ -81,6 +83,8 @@ public class Scanner {
             }
         }
     }
+
+
 
     public Set<Metric> getMetrics() {
         return metrics;

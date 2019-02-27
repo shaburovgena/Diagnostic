@@ -1,4 +1,3 @@
-
 <h5>Добавить группу</h5>
 <div class="form-group mt-3">
     <form method="post" action="/group" enctype="multipart/form-data">

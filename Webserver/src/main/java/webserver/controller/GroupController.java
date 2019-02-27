@@ -18,6 +18,7 @@ import webserver.domain.Metric;
 import webserver.domain.User;
 import webserver.repos.GroupRepo;
 import webserver.repos.MetricRepo;
+import webserver.service.QueryMetrics;
 
 import javax.validation.Valid;
 import java.io.File;
@@ -38,18 +39,18 @@ public class GroupController {
     private GroupRepo groupRepo;
     @Autowired
     private MetricRepo metricRepo;
+    @Autowired
+    private QueryMetrics queryMetrics;
+
 
     @GetMapping
     public String viewGroups(
             @RequestParam(required = false, defaultValue = "") String filter,
-                             Model model
+            Model model
     ) {
         Iterable<GroupMetric> groups = null;
 
-        //Добавляем в коллекцию все сообщения из БД
-
-
-        //Если указан фильтр ищем сообщения по тегу
+        //Если указан фильтр ищем группы по тегу
         if (filter != null && !filter.isEmpty()) {
             groups = groupRepo.findByGroupTag(filter);
         } else {
@@ -93,13 +94,15 @@ public class GroupController {
             @PathVariable GroupMetric group,
             Model model
     ) {
-        if (group.getOwner().equals(currentUser)||currentUser.isAdmin()) {
+        if (group.getOwner().equals(currentUser) || currentUser.isAdmin()) {
+            metricRepo.deleteAllByGroupMetric(group.getId());
             groupRepo.delete(group);
         }
         Iterable<GroupMetric> groups = groupRepo.findAll();
         model.addAttribute("groups", groups);
         return "groupList";
     }
+
     @GetMapping("user-groups/{user}")
     public String userGroups(
             @AuthenticationPrincipal User currentUser,
@@ -115,6 +118,7 @@ public class GroupController {
 
         return "groupList";
     }
+
     @GetMapping("{group}")
     public String group(
             @PathVariable GroupMetric group,
@@ -123,6 +127,8 @@ public class GroupController {
             Model model
     ) {
 
+        Iterable<Metric> metricsInGroup = metricRepo.findByGroupMetric(group);
+        queryMetrics.sendRequest(metricsInGroup);
         Page<Metric> page = metricRepo.findByGroupMetric(group, pageable);
         model.addAttribute("page", page);
         return "groupView";
@@ -147,6 +153,7 @@ public class GroupController {
             groupMetric.setFilename(resultFilename);
         }
     }
+
     @PostMapping("/user-group/{user}")
     public String updateGroup(
             @AuthenticationPrincipal User currentUser,

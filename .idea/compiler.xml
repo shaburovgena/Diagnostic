@@ -6,12 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Collector" />
+        <module name="CapController" />
         <module name="Controller" />
         <module name="Webserver" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="CapController" target="1.5" />
       <module name="Collector" target="1.8" />
       <module name="Controller" target="1.8" />
       <module name="server" target="1.8" />

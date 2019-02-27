@@ -25,24 +25,32 @@
 
     <input type="hidden" name="_csrf" value="${_csrf.token}"/>
 </form>
-    <#if page??>
+<#--<#if page??>-->
 
-        <#list page.content as metric>
-        <div class="my-5">
-        <#--br епревод на новую строку-->
-            <span>${metric.title}</span>
-            <span>${metric.ipAddress}</span>
-        </div>
-        </#list>
-        <@pager.pager page url/>
-    <#else>
+<#--<#list page.content as metric>-->
+<#--<div class="my-5">-->
+<#--&lt;#&ndash;br епревод на новую строку&ndash;&gt;-->
+<#--<span>${metric.title}</span>-->
+<#--<span>${metric.ipAddress}</span>-->
+<#--</div>-->
+<#--</#list>-->
+<#--<@pager.pager page url/>-->
+<#--<#else>-->
+    <#if metrics??>
         <#list metrics as metric>
             <div class="my-5">
             <#--br епревод на новую строку-->
-                <span>${metric.title}</span>
-                <span>${metric.ipAddress}</span>
+                <form action="/group/${group.id}/metric" method="post">
+                        <input type="hidden" name="title" value="${metric.title}">
+                    <input type="hidden" name="group" value="${group}">
+                    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                        <button type="submit" class=<#if metric.isSelected()>"btn btn-danger mt-3"<#else>"btn
+                    btn-primary mt-3"></#if><span>${metric.title}</span></button>
+                </form>
             </div>
         </#list>
+    <#else>
+            No metrics
     </#if>
 
 
