@@ -21,7 +21,9 @@ public class MetricController {
     private MetricRepo metricRepo;
     @Autowired
     private FindSensorHelper scanner;
-
+// Корявый фронтэнд не умеет передавать скрытый input типа number,
+// а строкой передает с хз каким разделителем.
+// Пришлось объявлять переменную для записи в бд
     private int port;
     private Iterable<Metric> metrics;
 

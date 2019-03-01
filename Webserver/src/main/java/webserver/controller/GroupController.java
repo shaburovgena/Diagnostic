@@ -95,7 +95,8 @@ public class GroupController {
             Model model
     ) {
         if (group.getOwner().equals(currentUser) || currentUser.isAdmin()) {
-            metricRepo.deleteAllByGroupMetric(group.getId());
+            //Так как между таблицами есть связи сначала удаляем метрики привязанные к группе
+            metricRepo.deleteAllByGroupMetric(group);
             groupRepo.delete(group);
         }
         Iterable<GroupMetric> groups = groupRepo.findAll();

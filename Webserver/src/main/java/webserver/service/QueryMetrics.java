@@ -22,7 +22,8 @@ public class QueryMetrics {
     public QueryMetrics() {
 
     }
-@Async
+
+    @Async
     public void sendRequest(Iterable<Metric> metrics) {
         Iterator<Metric> metricsIterator = metrics.iterator();
         while (metricsIterator.hasNext()) {
@@ -34,9 +35,9 @@ public class QueryMetrics {
                 metric.setValue(response.getValue());
                 metricRepo.save(metric);
             } catch (ResourceAccessException e) {
-
+                e.printStackTrace();
             } catch (HttpClientErrorException e) {
-
+                e.printStackTrace();
             }
         }
     }
