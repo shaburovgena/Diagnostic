@@ -17,7 +17,6 @@ collapse- на маленьких экранах будет схлопывать
             <li class="nav-item">
                 <a class="nav-link" href="/">На главную</a>
             </li>
-
              <#if user?? && known><#--Просмотр метрик доступен только авторизованному пользователю-->
             <li class="nav-item">
                 <a class="nav-link" href="/group">Группы</a>

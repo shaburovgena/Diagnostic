@@ -30,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
 //                .requestMatcher(new AntPathRequestMatcher("/agent")).csrf().disable()
                 .authorizeRequests()//Авторизовывать все запросы, кроме указанных ниже
-                .antMatchers("/", "/registration", "/static/**", "/activate/*", "/agent").permitAll()
+                .antMatchers("/", "/registration", "/static/**", "/activate/*", "/agent", "/messages/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
 //                .authorizeRequests()
