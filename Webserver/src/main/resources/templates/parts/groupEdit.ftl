@@ -38,7 +38,7 @@
         </div>
     <#--Скрытое поле с информацией о токене сессии пользователя
         позволяет избежать некоторых видов атак-->
-        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+        <#--<input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
         <div class="form-group">
 
         <#--Большая красивая кнопка-->

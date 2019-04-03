@@ -23,7 +23,7 @@
         <button type="submit" class="btn btn-primary mt-3">Сканировать</button>
     </div>
 
-    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+    <#--<input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
 </form>
 <#--<#if page??>-->
 
@@ -43,7 +43,7 @@
                 <form action="/group/${group.id}/metric" method="post">
                         <input type="hidden" name="title" value="${metric.title}">
                     <input type="hidden" name="group" value="${group}">
-                    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                    <#--<input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
                         <button type="submit" class=<#if metric.isSelected()>"btn btn-danger mt-3"<#else>"btn
                     btn-primary mt-3"></#if><span>${metric.title}</span></button>
                 </form>

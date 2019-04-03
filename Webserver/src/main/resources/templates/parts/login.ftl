@@ -66,7 +66,7 @@
         </#if>
     </div>
     </#if>
-    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+    <#--<input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
     <div class="form-group row">
         <div class="col-sm-2">
         <#--Если находимся в форме регистрации кнопка Sign In меняется на Create-->
@@ -82,7 +82,7 @@
 
 <#macro logout>
 <form action="/logout" method="post">
-    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+    <#--<input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
     <button class="btn btn-primary" type="submit"><#if user?? && known>Sign Out<#else>Log In</#if></button>
 </form>
 </#macro>

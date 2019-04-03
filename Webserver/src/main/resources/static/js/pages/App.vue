@@ -1,7 +1,7 @@
 <template>
 
     <div v-bind:title="'This is my Vue'">
-        <h1>{{ message + ' ' + id}}</h1>
+        <a href="/group" ><h1>Вернуться к группам</h1></a>
         <div :title="message">
             Error message {{message}}
         </div>

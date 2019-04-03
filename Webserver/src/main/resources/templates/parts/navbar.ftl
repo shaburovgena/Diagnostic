@@ -15,7 +15,7 @@ collapse- на маленьких экранах будет схлопывать
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/">На главную</a>
+                <a class="nav-link" href="/">Панель</a>
             </li>
              <#if user?? && known><#--Просмотр метрик доступен только авторизованному пользователю-->
             <li class="nav-item">

@@ -29,14 +29,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
 //                .requestMatcher(new AntPathRequestMatcher("/agent")).csrf().disable()
+                .antMatcher("/**")
                 .authorizeRequests()//Авторизовывать все запросы, кроме указанных ниже
-                .antMatchers("/", "/registration", "/static/**", "/activate/*", "/agent", "/messages/**").permitAll()
+                .antMatchers("/", "/registration", "/static/**", "/activate/*", "/agent", "/message/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-//                .authorizeRequests()
-//                .antMatchers(HttpMethod.POST, "/agent").anonymous()
-//                .anyRequest().authenticated()
-//                .and()
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
@@ -44,7 +41,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .rememberMe()
                 .and()
                 .logout()
-                .permitAll();
+                .permitAll()
+                .and()
+                .csrf().disable();//Отключен временно, пока не разберусь с Vue
     }
 
     @Override
