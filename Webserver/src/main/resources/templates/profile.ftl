@@ -21,7 +21,7 @@
             <input type="email" name="email" class="form-control" placeholder="email@example.com" value="${email!''}"/>
         </div>
     </div>
-    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+    <#--<input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
     <div class="form-group row">
         <div class="col-sm-2">
         <#--Если находимся в форме регистрации кнопка Sign In меняется на Create-->

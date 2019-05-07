@@ -33,7 +33,7 @@ public class MainController {
     public String main(
             Model model,
             @AuthenticationPrincipal User user
-    ) throws JsonProcessingException {
+    ) {
         HashMap<Object, Object> data = new HashMap<>();
         if (user != null) {
             data.put("profile", user);

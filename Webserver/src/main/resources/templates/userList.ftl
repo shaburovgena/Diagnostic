@@ -1,4 +1,4 @@
-<#include "/parts/security.ftl">
+<#include "parts/security.ftl">
 <#import "parts/common.ftl" as common>
 <@common.page>
 List of users

@@ -1,4 +1,4 @@
-<#include "/parts/security.ftl">
+<#include "security.ftl">
 <#macro login path isRegisterForm>
 
 <#--При вызове макроса ссылка передается в качестве параметра path-->

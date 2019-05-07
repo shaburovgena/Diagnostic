@@ -1,4 +1,4 @@
-<#include "/parts/security.ftl">
+<#include "../parts/security.ftl">
 <#import "login.ftl" as login>
 
 <div>
