@@ -2,22 +2,30 @@ package webserver.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
 
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
+
 public class Metric {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(Views.Id.class)
     private Long id;
 
-
+    @JsonView(Views.IdTitle.class)
     private String title;
+    @JsonView(Views.FullMetric.class)
     private String ipAddress;
+    @JsonView(Views.FullMetric.class)
     private int port;
+    @JsonView(Views.FullMetric.class)
     private boolean selected;
+    @JsonView(Views.FullMetric.class)
     private String value;
+    @JsonView(Views.FullMetric.class)
     @ManyToOne(fetch = FetchType.EAGER)
     //Укаываем из какой колонки брать принадлежность к группе
     @JoinColumn(name = "group_id")

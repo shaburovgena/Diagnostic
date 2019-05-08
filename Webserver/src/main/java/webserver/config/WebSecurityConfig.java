@@ -1,8 +1,13 @@
 package webserver.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.server.ErrorPage;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
+import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -30,7 +35,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
 //                .requestMatcher(new AntPathRequestMatcher("/agent")).csrf().disable()
                 .authorizeRequests()//Авторизовывать все запросы, кроме указанных ниже
-                .antMatchers("/", "/registration", "/static/**", "/activate/*", "/agent").permitAll()
+                .antMatchers("/", "/registration", "/static/**", "/activate/*", "/agent"
+                        , "/login**", "/js/**", "/error**", "/sensor**").permitAll()
                 .anyRequest().authenticated()
                 .and()
 //                .authorizeRequests()
@@ -43,10 +49,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .rememberMe()
                 .and()
-                .logout()
-                .permitAll();
+                .logout().logoutSuccessUrl("/logout").permitAll()
+                .and()
+                .csrf().disable();//csrf disabled temporarily
     }
-
+//    @Bean
+//    public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> webServerCustomizer (){
+//        return container -> {
+//            //Если страница не найдена будет возвращать адрес "/" главную страницу, но URL останется
+//            container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/"));
+//        };
+//    }
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 

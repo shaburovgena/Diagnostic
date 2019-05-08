@@ -13,6 +13,7 @@ import webserver.repos.MetricRepo;
 import webserver.service.FindSensorHelper;
 
 import java.net.UnknownHostException;
+import java.util.List;
 
 @Controller
 public class MetricController {
@@ -26,6 +27,7 @@ public class MetricController {
 // Пришлось объявлять переменную для записи в бд
     private int port;
     private Iterable<Metric> metrics;
+
 
     @GetMapping("/group/{group}/scan")
     public String metricsView(Model model,

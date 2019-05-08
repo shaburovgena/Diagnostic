@@ -29,7 +29,7 @@
     <#if isAdmin||group.getOwner().getId()==currentUserId>
         <form method="post" action="/group/${group.id}/delete">
             <input type="hidden" name="id" value="${group.id}"/>
-            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+            <#--<input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
             <button type="submit" class="btn btn-danger" align="left">Удалить</button>
         </form>
     </#if>
@@ -42,7 +42,7 @@
     </div>
 
 
-    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+    <#--<input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
 </form>
     <@pager.pager page url/>
     <#list page.content as metric>

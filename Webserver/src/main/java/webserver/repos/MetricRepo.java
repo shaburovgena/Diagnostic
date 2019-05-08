@@ -17,6 +17,8 @@ public interface MetricRepo extends CrudRepository<Metric, Long> {
 
     Page<Metric> findAll(Pageable pageable);
 
+    Iterable<Metric> findAll();
+
     Page<Metric> findByGroupMetric(GroupMetric group, Pageable pageable);
 
     Set<Metric> findByGroupMetric(GroupMetric group);
