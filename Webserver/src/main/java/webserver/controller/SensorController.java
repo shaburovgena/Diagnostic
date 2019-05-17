@@ -24,7 +24,7 @@ public class SensorController {
         this.metricRepo = metricRepo;
     }
 @GetMapping
-@JsonView(Views.IdTitle.class)
+@JsonView(Views.FullMetric.class)
     public List<Metric> allMetricsView(
             @AuthenticationPrincipal User user
     ) {

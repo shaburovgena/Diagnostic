@@ -1,14 +1,16 @@
 package webserver.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
+import org.springframework.context.annotation.Bean;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
-
 public class Metric {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,7 +32,30 @@ public class Metric {
     //Укаываем из какой колонки брать принадлежность к группе
     @JoinColumn(name = "group_id")
     private GroupMetric groupMetric;
+    //Время сканирования
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonView(Views.FullMetric.class)
+    private LocalDateTime scanningDate;
+    @JsonView(Views.FullMetric.class)
+    private Long scanningInterval;
 
+
+    public Long getScanningInterval() {
+        return scanningInterval;
+    }
+
+    public void setScanningInterval(Long scanningInterval) {
+        this.scanningInterval = scanningInterval;
+    }
+
+
+    public LocalDateTime getScanningDate() {
+        return scanningDate;
+    }
+
+    public void setScanningDate(LocalDateTime scanningDate) {
+        this.scanningDate = scanningDate;
+    }
 
 
     public Long getId() {

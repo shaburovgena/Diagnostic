@@ -13,7 +13,6 @@ import webserver.repos.MetricRepo;
 import webserver.service.FindSensorHelper;
 
 import java.net.UnknownHostException;
-import java.util.List;
 
 @Controller
 public class MetricController {
