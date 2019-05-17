@@ -1,15 +1,18 @@
 package webserver.domain;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 @Entity
 @Table(name = "groups")
-public class GroupMetric {
+public class GroupSensor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(Views.Id.class)
     private Long id;
 
     @NotBlank(message = "Укажите имя группы")

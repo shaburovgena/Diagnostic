@@ -14,7 +14,7 @@ public class MainServlet extends HttpServlet {
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws IOException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("value", 555);
+        jsonObject.put("value", 777);
         response.setStatus(200);
         response.setContentType("application/json");
         response.getWriter().print(jsonObject);

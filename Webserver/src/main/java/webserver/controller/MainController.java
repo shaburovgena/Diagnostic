@@ -7,22 +7,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import webserver.domain.Metric;
+import webserver.domain.Sensor;
 import webserver.domain.User;
-import webserver.repos.MetricRepo;
+import webserver.repos.SensorRepo;
 
 @Controller
 @RequestMapping("/")
 public class MainController {
 
-    private final MetricRepo metricRepo;
+    private final SensorRepo sensorRepo;
 
     @Value("${spring.profiles.active}")
     private String profile;
 
     @Autowired
-    public MainController(MetricRepo metricRepo) {
-        this.metricRepo = metricRepo;
+    public MainController(SensorRepo sensorRepo) {
+        this.sensorRepo = sensorRepo;
 
     }
 
@@ -32,7 +32,7 @@ public class MainController {
             @AuthenticationPrincipal User user
     ) {
         if (user != null) {
-            Iterable<Metric>sensors = metricRepo.findAll();
+            Iterable<Sensor>sensors = sensorRepo.findAll();
             model.addAttribute("sensors", sensors);
         }else {
             model.addAttribute("sensors", "[Sensors is undefined]");

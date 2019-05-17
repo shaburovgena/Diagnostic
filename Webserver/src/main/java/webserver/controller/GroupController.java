@@ -13,11 +13,11 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import webserver.domain.GroupMetric;
-import webserver.domain.Metric;
+import webserver.domain.GroupSensor;
+import webserver.domain.Sensor;
 import webserver.domain.User;
 import webserver.repos.GroupRepo;
-import webserver.repos.MetricRepo;
+import webserver.repos.SensorRepo;
 import webserver.service.QueryMetrics;
 
 import javax.validation.Valid;
@@ -38,7 +38,7 @@ public class GroupController {
     @Autowired
     private GroupRepo groupRepo;
     @Autowired
-    private MetricRepo metricRepo;
+    private SensorRepo sensorRepo;
     @Autowired
     private QueryMetrics queryMetrics;
 
@@ -48,7 +48,7 @@ public class GroupController {
             @RequestParam(required = false, defaultValue = "") String filter,
             Model model
     ) {
-        Iterable<GroupMetric> groups = null;
+        Iterable<GroupSensor> groups = null;
 
         //Если указан фильтр ищем группы по тегу
         if (filter != null && !filter.isEmpty()) {
@@ -70,20 +70,20 @@ public class GroupController {
     public String addGroup(
             @AuthenticationPrincipal User user,
             @RequestParam("file") MultipartFile file,
-            @Valid GroupMetric groupMetric,
+            @Valid GroupSensor groupSensor,
             BindingResult bindingResult,
             Model model
     ) throws IOException {
         if (bindingResult.hasErrors()) {
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errorsMap);
-            model.addAttribute("group", groupMetric);
+            model.addAttribute("group", groupSensor);
         } else {
-            saveFile(groupMetric, file);
-            groupMetric.setOwner(user);
-            groupRepo.save(groupMetric);
+            saveFile(groupSensor, file);
+            groupSensor.setOwner(user);
+            groupRepo.save(groupSensor);
         }
-        Iterable<GroupMetric> groups = groupRepo.findAll();
+        Iterable<GroupSensor> groups = groupRepo.findAll();
         model.addAttribute("groups", groups);
         return "groupList";
     }
@@ -91,15 +91,15 @@ public class GroupController {
     @PostMapping("{group}/delete")
     public String delete(
             @AuthenticationPrincipal User currentUser,
-            @PathVariable GroupMetric group,
+            @PathVariable GroupSensor group,
             Model model
     ) {
         if (group.getOwner().equals(currentUser) || currentUser.isAdmin()) {
             //Так как между таблицами есть связи сначала удаляем метрики привязанные к группе
-            metricRepo.deleteAllByGroupMetric(group);
+            sensorRepo.deleteAllByGroupSensor(group);
             groupRepo.delete(group);
         }
-        Iterable<GroupMetric> groups = groupRepo.findAll();
+        Iterable<GroupSensor> groups = groupRepo.findAll();
         model.addAttribute("groups", groups);
         return "groupList";
     }
@@ -109,9 +109,9 @@ public class GroupController {
             @AuthenticationPrincipal User currentUser,
             @PathVariable User user,
             Model model,
-            @RequestParam(required = false) GroupMetric group
+            @RequestParam(required = false) GroupSensor group
     ) {
-        Set<GroupMetric> groups = user.getGroups();
+        Set<GroupSensor> groups = user.getGroups();
 
         model.addAttribute("groups", groups);
         model.addAttribute("group", group);
@@ -122,20 +122,20 @@ public class GroupController {
 
     @GetMapping("{group}")
     public String group(
-            @PathVariable GroupMetric group,
+            @PathVariable GroupSensor group,
             @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC
             ) Pageable pageable,
             Model model
     ) {
 
-        Iterable<Metric> metricsInGroup = metricRepo.findByGroupMetric(group);
-        queryMetrics.sendRequest(metricsInGroup);
-        Page<Metric> page = metricRepo.findByGroupMetric(group, pageable);
+        Iterable<Sensor> sensorsInGroup = sensorRepo.findByGroupSensor(group);
+        queryMetrics.sendRequest(sensorsInGroup);
+        Page<Sensor> page = sensorRepo.findByGroupSensor(group, pageable);
         model.addAttribute("page", page);
         return "groupView";
     }
 
-    private void saveFile(@Valid GroupMetric groupMetric, @RequestParam("file") MultipartFile file) throws IOException {
+    private void saveFile(@Valid GroupSensor groupSensor, @RequestParam("file") MultipartFile file) throws IOException {
         if (file != null && !file.getOriginalFilename().isEmpty()) {
             File uploadDir = new File(uploadPath);
 
@@ -151,7 +151,7 @@ public class GroupController {
             //Записываем полученный через форму файл
             file.transferTo(new File(uploadPath + "/" + resultFilename));
 
-            groupMetric.setFilename(resultFilename);
+            groupSensor.setFilename(resultFilename);
         }
     }
 
@@ -159,7 +159,7 @@ public class GroupController {
     public String updateGroup(
             @AuthenticationPrincipal User currentUser,
             @PathVariable Long user,
-            @RequestParam("id") GroupMetric group,
+            @RequestParam("id") GroupSensor group,
             @RequestParam("text") String text,
             @RequestParam("tag") String tag,
             @RequestParam("file") MultipartFile file

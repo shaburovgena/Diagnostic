@@ -10,7 +10,7 @@
     <#--Вся ширина делится на col-xs-12 и под элемент отводится col-sm-4 -->
         <div class="col-xs-12 col-sm-4" align="left">
             <a href="/group">
-                <button class="btn btn-warning">Назад</button>
+                <button class="btn btn-warning">Back</button>
             </a>
         </div>
         <div class="col-xs-12 col-sm-4" align="center">
@@ -30,7 +30,7 @@
         <form method="post" action="/group/${group.id}/delete">
             <input type="hidden" name="id" value="${group.id}"/>
             <#--<input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
-            <button type="submit" class="btn btn-danger" align="left">Удалить</button>
+            <button type="submit" class="btn btn-danger" align="left">Delete</button>
         </form>
     </#if>
         </div>
@@ -45,11 +45,11 @@
     <#--<input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
 </form>
     <@pager.pager page url/>
-    <#list page.content as metric>
+    <#list page.content as sensor>
     <div class="my-5">
     <#--br перевод на новую строку-->
-        <span>${metric.title}</span>
-        <span><#if metric.value??> ${metric.value}<#else> No data</#if></span>
+        <span>${sensor.title}</span>
+        <span><#if sensor.value??> ${sensor.value}<#else> No data</#if></span>
     </div>
     </#list>
 <div>
@@ -58,7 +58,7 @@
         <div class="form-group">
         <#--Большая красивая кнопка-->
             <a href="/group/${group.id}/scan">
-                <button type="submit" class="btn btn-primary mt-3">Добавить</button>
+                <button type="submit" class="btn btn-primary mt-3">Add</button>
             </a>
         </div>
     </#if>

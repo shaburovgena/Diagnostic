@@ -7,8 +7,11 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import webserver.domain.Metric;
+import webserver.domain.Sensor;
 import webserver.repos.MetricRepo;
+import webserver.repos.SensorRepo;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Iterator;
 
@@ -17,6 +20,8 @@ public class QueryMetrics {
     @Autowired
     private MetricRepo metricRepo;
     @Autowired
+    private SensorRepo sensorRepo;
+    @Autowired
     private RestTemplate restTemplate;
 
     public QueryMetrics() {
@@ -24,16 +29,17 @@ public class QueryMetrics {
     }
 
     @Async
-    public void sendRequest(Iterable<Metric> metrics) {
-        Iterator<Metric> metricsIterator = metrics.iterator();
-        while (metricsIterator.hasNext()) {
-            Metric metric = metricsIterator.next();
-            System.out.println("Sending request to IP:" + metric.getIpAddress() + ":" + metric.getPort());
-            String url = String.format("http://" + metric.getIpAddress() + ":" + metric.getPort());
+    public void sendRequest(Iterable<Sensor> sensors) {
+        Iterator<Sensor> sensorIterator = sensors.iterator();
+        while (sensorIterator.hasNext()) {
+            Sensor sensor = sensorIterator.next();
+            String url = "";
+            System.out.println( url = String.format("http://" + sensor.getIpAddress() + ":" + sensor.getPort()));
             try {
-                Metric response = restTemplate.postForObject(url, Collections.emptyList(), Metric.class);
-                metric.setValue(response.getValue());
-                metricRepo.save(metric);
+                Sensor response = restTemplate.postForObject(url, Collections.emptyList(), Sensor.class);
+                sensor.setValue(response.getValue());
+                metricRepo.save(new Metric(response.getValue(), sensor, LocalDateTime.now()));
+                sensorRepo.save(sensor);
             } catch (ResourceAccessException e) {
                 e.printStackTrace();
             } catch (HttpClientErrorException e) {

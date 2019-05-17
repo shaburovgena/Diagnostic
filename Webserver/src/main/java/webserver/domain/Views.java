@@ -12,8 +12,21 @@ public final class Views {
     public interface IdTitle extends Id {
     }
 
+    public interface IdTitleValue extends IdTitle {
+
+    }
+
+    public interface IdTitleValueGroup extends IdTitleValue {
+
+    }
+
     //Показывает сообщение (и id и name)
     public interface FullMetric extends IdTitle {
     }
+
+    //Показывает сообщение (и id и name)
+    public interface FullSensor extends IdTitle {
+    }
+
 
 }

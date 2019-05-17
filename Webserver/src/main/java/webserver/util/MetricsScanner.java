@@ -14,9 +14,10 @@ public class MetricsScanner {
     public MetricsScanner() {
     }
 
-    @Async
-    @Scheduled(fixedRate = 6000)
+//    @Async
+//    @Scheduled(fixedRate = 6000)
     void metricsScan() {
-        System.out.println("Scanning");
+
+//        System.out.println("Scanning");
     }
 }

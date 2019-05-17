@@ -1,79 +1,35 @@
 package webserver.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import webserver.domain.GroupMetric;
-import webserver.domain.Metric;
-import webserver.repos.MetricRepo;
-import webserver.service.FindSensorHelper;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import webserver.domain.Sensor;
+import webserver.domain.User;
+import webserver.domain.Views;
+import webserver.repos.SensorRepo;
 
-import java.net.UnknownHostException;
+import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("sensor")
 public class MetricController {
 
+    private final SensorRepo sensorRepo;
+
     @Autowired
-    private MetricRepo metricRepo;
-    @Autowired
-    private FindSensorHelper scanner;
-// Корявый фронтэнд не умеет передавать скрытый input типа number,
-// а строкой передает с хз каким разделителем.
-// Пришлось объявлять переменную для записи в бд
-    private int port;
-    private Iterable<Metric> metrics;
+    public MetricController(SensorRepo sensorRepo) {
+        this.sensorRepo = sensorRepo;
+    }
 
-
-    @GetMapping("/group/{group}/scan")
-    public String metricsView(Model model,
-                              @PathVariable GroupMetric group
+    @GetMapping
+    @JsonView(Views.IdTitleValueGroup.class)
+    public List<Sensor> allSensorsView(
+            @AuthenticationPrincipal User user
     ) {
-
-        model.addAttribute("metrics", metrics);
-        model.addAttribute("group", group);
-        return "sensors";
+        return (List<Sensor>) sensorRepo.findAll();
     }
 
-
-    @PostMapping("/group/{group}/scan")
-    public String scaning(
-            @PathVariable GroupMetric group,
-            Model model,
-            @RequestParam(name = "ipAddress", required = false) String ipAddress,
-            @RequestParam(name = "port", required = false) int port
-
-    ) throws UnknownHostException {
-
-        scanner = new FindSensorHelper();
-        this.port = port;
-        scanner.scanNetwork(ipAddress, port);
-        metrics = scanner.getMetrics();
-        model.addAttribute("metrics", metrics);
-        model.addAttribute("group", group);
-        return "sensors";
-    }
-
-    @PostMapping("/group/{group}/metric")
-    public String metricAdd(Model model,
-                            @PathVariable GroupMetric group,
-                            @RequestParam String title
-    ) {
-        // TODO: 26.02.2019 Изменить выбор через чекбоксы
-        Metric metric = new Metric();
-        metric.setTitle(title);
-        metric.setPort(port);
-        metric.setSelected(true);
-        metric.setIpAddress(title);
-        metric.setGroupMetric(group);
-        metricRepo.save(metric);
-
-        model.addAttribute("metrics", metrics);
-        model.addAttribute("group", group);
-
-        return "redirect:/group/{group}/scan";
-    }
 }

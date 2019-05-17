@@ -38,7 +38,7 @@ public class User implements UserDetails {
     //У одного владельца может быть много групп
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<GroupMetric> groups;
+    private Set<GroupSensor> groups;
     //Создается доп таблица где каждому user_id соответствуе user_role
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     //Если ролей несколько, то и записей с одним user_id будет несколько
@@ -145,11 +145,11 @@ public class User implements UserDetails {
         this.activationCode = activationCode;
     }
 
-    public Set<GroupMetric> getGroups() {
+    public Set<GroupSensor> getGroups() {
         return groups;
     }
 
-    public void setGroups(Set<GroupMetric> groups) {
+    public void setGroups(Set<GroupSensor> groups) {
         this.groups = groups;
     }
 }

@@ -2,7 +2,7 @@ package webserver.service;
 
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import webserver.domain.Metric;
+import webserver.domain.Sensor;
 
 import java.io.IOException;
 import java.net.*;
@@ -16,14 +16,14 @@ public class FindSensorHelper {
     //Сканирование подсети сервера для поиска сенсоров
     //Чтобы выдавать их списком при добавлении в группу
 
-    private Set<Metric> metrics;
+    private Set<Sensor> sensors;
     private Set<String> interfaces;
     private InetAddress hostname;
     private byte[] buf;
-    private Metric metric;
+    private Sensor sensor;
 
     public FindSensorHelper() {
-        metrics = new HashSet<>();
+        sensors = new HashSet<>();
     }
 
     //Получение всех интерфейсов для определения какую подсеть сканировать
@@ -63,11 +63,11 @@ public class FindSensorHelper {
             socket.connect(new InetSocketAddress(host, port), 20);
             socket.close();
             System.out.println("Connect: " + host + ":" + port);
-            metric = new Metric();
-            metric.setIpAddress(host);
-            metric.setTitle(host);
-            metric.setPort(port);
-            metrics.add(metric);
+            sensor = new Sensor();
+            sensor.setIpAddress(host);
+            sensor.setTitle(host);
+            sensor.setPort(port);
+            sensors.add(sensor);
         } catch (IOException e) {
             System.out.println("Could not connect to host " + host + " on port: " + port);
         }
@@ -84,12 +84,12 @@ public class FindSensorHelper {
     }
 
 
-    public Set<Metric> getMetrics() {
-        return metrics;
+    public Set<Sensor> getSensors() {
+        return sensors;
     }
 
-    public void setMetrics(Set<Metric> metrics) {
-        this.metrics = metrics;
+    public void setSensors(Set<Sensor> sensors) {
+        this.sensors = sensors;
     }
 
     public Set<String> getInterfaces() {

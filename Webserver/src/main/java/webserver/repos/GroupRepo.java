@@ -1,12 +1,12 @@
 package webserver.repos;
 
 import org.springframework.data.repository.CrudRepository;
-import webserver.domain.GroupMetric;
+import webserver.domain.GroupSensor;
 
 import java.util.List;
 
-public interface GroupRepo extends CrudRepository<GroupMetric, Long> {
-    List<GroupMetric> findByGroupName(String name);
+public interface GroupRepo extends CrudRepository<GroupSensor, Long> {
+    List<GroupSensor> findByGroupName(String name);
 
-    List<GroupMetric> findByGroupTag(String name);
+    List<GroupSensor> findByGroupTag(String name);
 }
