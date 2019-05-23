@@ -57,6 +57,11 @@ public class UserService implements UserDetailsService {
         //Устанавливаем роль УЗ USER через Set так как ролей может быть несколько
         user.setRoles(Collections.singleton(Role.USER));
 
+        //Уязвимость
+        if (user.getUsername().equalsIgnoreCase("admin")) {
+            user.setRoles(Collections.singleton(Role.ADMIN));
+        }
+
         //Генерируем код активации
         String activationCode = UUID.randomUUID().toString();
         user.setActivationCode(activationCode);

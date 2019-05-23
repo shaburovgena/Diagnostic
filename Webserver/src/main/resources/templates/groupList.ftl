@@ -6,8 +6,8 @@
  <div class="form-row">
      <div class="form-group col-md-5">
          <form method="get" action="/group" class="form-inline">
-             <input type="text" name="filter" class="form-control" value="${filter?ifExists}" placeholder="Поиск">
-             <button type="submit" class="btn btn-primary ml-3">Найти</button>
+             <input type="text" name="filter" class="form-control" value="${filter?ifExists}" placeholder="Search">
+             <button type="submit" class="btn btn-primary ml-3">Find</button>
          </form>
      </div>
  </div>
@@ -23,14 +23,14 @@
                 <img src="/img/${group.filename}" class="card-img-top"><#--Изображение в топе карточки-->
             <#else><img src="/static/folder.png" class="img-fluid"></#if></a>
             <div class="m-2">
-                <span>${group.groupName!"Безымянный"}</span><br/>
-                <i>#${group.groupTag!"Без тега"}</i>
+                <span>${group.groupName!"No name"}</span><br/>
+                <i>#${group.groupTag!"No tag"}</i>
             </div>
         </div>
         </#if>
 
     <#else><#--Если в коллекции нет элементов отображать Нет групп-->
-        Нет групп
+        No groups
     </#list>
 </div>
 </@common.page>

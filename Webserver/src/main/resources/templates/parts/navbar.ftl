@@ -15,22 +15,22 @@ collapse- на маленьких экранах будет схлопывать
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/">Панель</a>
+                <a class="nav-link" href="/">Panel</a>
             </li>
 
              <#if user?? && known><#--Просмотр метрик доступен только авторизованному пользователю-->
             <li class="nav-item">
-                <a class="nav-link" href="/group">Группы</a>
+                <a class="nav-link" href="/group">Groups</a>
             </li>
               <li class="nav-item">
-                  <a class="nav-link" href="/group/user-groups/${currentUserId}">Мои группы</a>
+                  <a class="nav-link" href="/group/user-groups/${currentUserId}">My groups</a>
               </li>
 
              </#if>
 
             <#if isAdmin><#--Список пользователей доступен только Админу-->
             <li class="nav-item">
-                <a class="nav-link" href="/user">Пользователи</a>
+                <a class="nav-link" href="/user">Admin Panel</a>
             </li>
             </#if>
 

@@ -15,17 +15,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("sensor")
-public class MetricController {
+public class PanelController {
 
     private final SensorRepo sensorRepo;
 
     @Autowired
-    public MetricController(SensorRepo sensorRepo) {
+    public PanelController(SensorRepo sensorRepo) {
         this.sensorRepo = sensorRepo;
     }
 
     @GetMapping
-    @JsonView(Views.IdTitleValueGroup.class)
+    @JsonView(Views.IdTitleValueGroupPort.class)
     public List<Sensor> allSensorsView(
             @AuthenticationPrincipal User user
     ) {

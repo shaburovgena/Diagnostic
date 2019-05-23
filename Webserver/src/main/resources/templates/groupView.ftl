@@ -48,8 +48,8 @@
     <#list page.content as sensor>
     <div class="my-5">
     <#--br перевод на новую строку-->
-        <span>${sensor.title}</span>
-        <span><#if sensor.value??> ${sensor.value}<#else> No data</#if></span>
+        <span>${sensor.title}:${sensor.port}</span>
+        <span><#if sensor.value??>Value ${sensor.value}<#else> No data</#if></span>
     </div>
     </#list>
 <div>

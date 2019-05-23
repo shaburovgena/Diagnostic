@@ -20,7 +20,7 @@
             <ul class="pagination col justify-content-center">
                 <div class="col-xs-12 col-sm-6" align="left">
                     <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1">Страницы</a>
+                        <a class="page-link" href="#" tabindex="-1">Pages</a>
                     </li>
             <#list body as p>
                 <#if (p - 1) == page.getNumber()>
@@ -40,7 +40,7 @@
                 </div>
                 <div class="col-xs-12 col-sm-6" align="right">
                     <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1">Элементов на странице</a>
+                        <a class="page-link" href="#" tabindex="-1">Items on page</a>
                     </li>
             <#list [5, 10, 25, 50] as c>
                 <#if c == page.getSize()>

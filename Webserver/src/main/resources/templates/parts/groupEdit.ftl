@@ -1,10 +1,10 @@
-<h5>Добавить группу</h5>
+<h5>Add group</h5>
 <div class="form-group mt-3">
     <form method="post" action="/group" enctype="multipart/form-data">
         <div class="form-group">
             <input type="text" class="form-control ${(groupNameError??)?string('is-invalid', '')}"
             <#--value="<#if group??>${group.groupName}</#if>"-->
-                   name="groupName" placeholder="Имя группы"/>
+                   name="groupName" placeholder="Group name"/>
 <#if groupNameError??>
                     <div class="invalid-feedback">
                         ${groupNameError}
@@ -14,7 +14,7 @@
         <div class="form-group">
             <input type="text" class="form-control ${(groupTagError??)?string('is-invalid', '')}"
             <#--value="<#if group??>${group.groupTa}</#if>"-->
-                   name="groupTag" placeholder="Тег группы"/>
+                   name="groupTag" placeholder="Group tag"/>
 <#if groupTagError??>
                     <div class="invalid-feedback">
                         ${groupTagError}
@@ -24,7 +24,7 @@
         <div class="form-group">
             <div class="custom-file">
                 <input type="file" name="file" id="customFile"> <#--Поле для загрузки файла-->
-                <label class="custom-file-label" for="customFile">Выберите файл</label> <#--Часть поля
+                <label class="custom-file-label" for="customFile">Select file</label> <#--Часть поля
                             с отдельным лейблом-->
             </div>
         </div>
@@ -42,7 +42,7 @@
         <div class="form-group">
 
         <#--Большая красивая кнопка-->
-            <button type="submit" class="btn btn-primary">Создать</button>
+            <button type="submit" class="btn btn-primary">Create group</button>
         </div>
     </form>
 </div>

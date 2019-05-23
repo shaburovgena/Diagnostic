@@ -8,7 +8,7 @@ public final class Views {
     public interface Id {
     }
 
-    //Показывает и id и name
+    //Показывает и id и title
     public interface IdTitle extends Id {
     }
 
@@ -17,6 +17,10 @@ public final class Views {
     }
 
     public interface IdTitleValueGroup extends IdTitleValue {
+
+
+    }
+    public interface IdTitleValueGroupPort extends IdTitleValueGroup {
 
     }
 

@@ -1,26 +1,25 @@
 <template>
-    <div >
-        <div v-for="sensor in sensors"><a href="/group">{{sensor.title}}</a></div>
+    <div>
+        <div>
+            <sensors-list/>
+        </div>
+        <v-spacer></v-spacer>
+        <div>
+            <Tmp/>
+        </div>
+
     </div>
+
 </template>
 
 <script>
 
+    import Tmp from '../components/Tmp.vue'
+    import SensorsList from '../components/SensorsList.vue'
 
     export default {
-        data(){
-            return{
-                sensors:[]
-            }
-        },
+        components: {Tmp, SensorsList},
 
-        created: function () {//Действия выполняемые при создании app
-            const sensorsApi = Vue.resource('/sensor{/id}')
-           sensorsApi.get().then(result =>
-           result.json().then(data =>
-           data.forEach(sensor => this.sensors.push(sensor)))
-           )
-        },
     }
 </script>
 

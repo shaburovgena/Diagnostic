@@ -21,7 +21,7 @@ public class Sensor {
     private String value;
     @JsonView(Views.FullMetric.class)
     private String ipAddress;
-    @JsonView(Views.FullMetric.class)
+    @JsonView(Views.IdTitleValueGroupPort.class)
     private int port;
     @JsonView(Views.FullMetric.class)
     private boolean selected;

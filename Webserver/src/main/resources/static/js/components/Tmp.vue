@@ -1,7 +1,5 @@
 <template>
-
     <div v-bind:title="'This is my Vue'">
-        <a href="/group"><h1>Вернуться к группам</h1></a>
         <div :title="message">
             Error message {{message}}
         </div>
@@ -40,10 +38,12 @@
         </div>
         <div>
             <button type="button" @click="getCity">
-                Get
+                Get city
             </button>
             <ul>
-                <li v-for="city in cities">{{ city.region }}</li>
+                <li v-for="city in cities">
+                    <a v-bind:href="urlSearch+city.region">{{ city.region }}</a>
+                </li>
             </ul>
 
         </div>
@@ -52,26 +52,31 @@
                    @keyup.enter="revers (textSearch)"/>
         </div>
         <div>
-            <h5>
+            <h5 v-on:click="revers (textSearch)">
                 {{ textSearch }}
             </h5>
         </div>
-        <div v-for="message in messages">{{ message.title }}> </div>
-
 
     </div>
 
 </template>
 
 <script>
-    import sensors from "../api/sensors";
-
+    //Импортируем в компонент другие компоненты
+    // import sensors from "../api/sensors";
+    //Делаем компонент Vue экспортируетмым
     export default {
+
+        //Компонент Vue принимает на вход параметры с помощью props
         props: ['messages',
             'profile'],
-        data() {
-            return {
+        //Такая запись означает, что этот экземпляр Vue будет использовать (соответственно и менять) данные и других экземпляров
+        /*data: {
 
+        }*/
+        //Такая запись означает, что у этого экземпляра Vue будет свой набор данных
+        data: function () {
+            return {
                 list: ['one', 'two', 'three'],
                 users: [{
                     id: 1,
@@ -84,24 +89,26 @@
                 ],
                 message: 'Hello Gennadi',
                 textSearch: '',
+                urlCity: '',
                 status: true,
                 id: 10,
                 isActive: true,
                 isBtn: true,
                 width: 1000,
                 cities: [],
-                url: 'https://dka-develop.ru/api?type=city'
+                url: 'https://dka-develop.ru/api?type=city',
+                urlSearch:'https://www.google.com/search?q=',
+                urlMap: 'https://www.google.com/maps/place/',
             }
         },
         watch: {//Отслеживание изменений через v-model
             textSearch: function () {
                 if (this.textSearch != 0)
                     this.textSearch = textSearch
-            }
+            },
+
         },
         created: function () {//Действия выполняемые при создании app
-            sensors.page().then(result =>
-                console.log(result))
             // console.log(frontendData.profile.login)
             // alert(frontendData.profile.login)//Всплывающее окно
         },
@@ -116,7 +123,8 @@
                 axios.get(this.url).then((response) => {
                     this.cities = response.data;
                 })
-            }
+            },
+
         }
     }
 </script>
