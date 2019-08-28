@@ -22,23 +22,23 @@ public class SensorController {
     @Autowired
     private FindSensorHelper scanner;
     // Корявый фронтэнд не умеет передавать скрытый input типа number,
-// а строкой передает с хз каким разделителем.
-// Пришлось объявлять переменную для записи в бд
+    // а строкой передает с хз каким разделителем.
+    // Пришлось объявлять переменную для записи в бд
     private int port;
     private Iterable<Sensor> sensors;
 
-
+    //Страница сканирования
     @GetMapping("/group/{group}/scan")
     public String sensorsView(Model model,
                               @PathVariable GroupSensor group
     ) {
-//Имя sensors занято в пространстве имен FTL, пришлось использовать другое имя
+    //Имя sensors занято в пространстве имен FTL, пришлось использовать другое имя
         model.addAttribute("sensors1", sensors);
         model.addAttribute("group", group);
         return "sensors";
     }
 
-
+    //Поиск устройств в сети
     @PostMapping("/group/{group}/scan")
     public String scaning(
             @PathVariable GroupSensor group,
@@ -57,6 +57,7 @@ public class SensorController {
         return "sensors";
     }
 
+    //Выбор обнаруженных устройств
     @PostMapping("/group/{group}/sensor")
     public String sensorAdd(Model model,
                             @PathVariable GroupSensor group,
@@ -75,5 +76,23 @@ public class SensorController {
         model.addAttribute("group", group);
 
         return "redirect:/group/{group}/scan";
+    }
+
+    @GetMapping("/group/{group}/setting/{sensor}")
+    public String  sensorSetting(Model model,
+                                 @PathVariable GroupSensor group,
+                                 @PathVariable Sensor sensor){
+
+        model.addAttribute("sensor", sensor);
+        model.addAttribute("group", group );
+        return "sensorSetting";
+    }
+
+    @PostMapping("/group/{group}/delete/{sensor}")
+    public String sensorDelete(@PathVariable Sensor sensor,
+                               @PathVariable GroupSensor group,
+                               Model model){
+        sensorRepo.delete(sensor);
+        return "redirect:/group/{group}";
     }
 }

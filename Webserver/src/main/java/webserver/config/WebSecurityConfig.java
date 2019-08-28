@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .rememberMe()
                 .and()
-                .logout().logoutSuccessUrl("/logout").permitAll()
+                .logout().logoutSuccessUrl("/login").permitAll()
                 .and()
                 .csrf().disable();//csrf disabled temporarily
     }

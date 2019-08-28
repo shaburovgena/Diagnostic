@@ -1,5 +1,7 @@
 package webserver.domain;
-
+/*
+Физическое устройство
+ */
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -32,7 +34,7 @@ public class Sensor {
     private GroupSensor groupSensor;
     /*Одному сенсору соответствует несколько метрик
        маппить с таблицей
-       при удалении сообщения все связанные комментарии удаляются*/
+       при удалении сообщения все связанные записи удаляются*/
     @OneToMany(mappedBy = "sensor", orphanRemoval = true )
     @JsonView(Views.FullMetric.class)
     private List<Metric> metrics;

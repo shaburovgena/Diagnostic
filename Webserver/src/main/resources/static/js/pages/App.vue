@@ -4,10 +4,9 @@
             <sensors-list/>
         </div>
         <v-spacer></v-spacer>
-        <div>
-            <Tmp/>
-        </div>
-
+        <!--<div>-->
+            <!--<Tmp/>-->
+        <!--</div>-->
     </div>
 
 </template>

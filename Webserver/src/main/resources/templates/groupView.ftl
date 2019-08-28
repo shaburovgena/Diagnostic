@@ -1,7 +1,7 @@
 <#import "parts/common.ftl" as common>
 <#import "sensors.ftl" as sensors>
-<#include "parts/security.ftl">
 <#import "parts/pager.ftl" as pager>
+<#include "parts/security.ftl">
 
 <@common.page>
 
@@ -29,7 +29,7 @@
     <#if isAdmin||group.getOwner().getId()==currentUserId>
         <form method="post" action="/group/${group.id}/delete">
             <input type="hidden" name="id" value="${group.id}"/>
-            <#--<input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
+        <#--<input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
             <button type="submit" class="btn btn-danger" align="left">Delete</button>
         </form>
     </#if>
@@ -42,14 +42,20 @@
     </div>
 
 
-    <#--<input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
-</form>
+<#--<input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
+
     <@pager.pager page url/>
     <#list page.content as sensor>
     <div class="my-5">
     <#--br перевод на новую строку-->
-        <span>${sensor.title}:${sensor.port}</span>
-        <span><#if sensor.value??>Value ${sensor.value}<#else> No data</#if></span>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-secondary"><span><#if sensor.value??>Value ${sensor.value}<#else> No data</#if></span>
+            </button>
+            <a href="/group/${group.id}/setting/${sensor.id}">
+                <button type="button" class="btn btn-primary"><span>${sensor.title}</span></button>
+            </a>
+
+        </div>
     </div>
     </#list>
 <div>
