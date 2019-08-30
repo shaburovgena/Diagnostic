@@ -9,7 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="CapController" />
         <module name="Controller" />
-        <module name="Webserver" />
+        <module name="webserver" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -18,7 +18,7 @@
       <module name="Controller" target="1.8" />
       <module name="server" target="1.8" />
       <module name="WebApp" target="1.6" />
-      <module name="Webserver" target="1.8" />
+      <module name="webserver" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

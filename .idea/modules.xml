@@ -6,7 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/CapController/CapController.iml" filepath="$PROJECT_DIR$/CapController/CapController.iml" />
       <module fileurl="file://$PROJECT_DIR$/Controller/Controller.iml" filepath="$PROJECT_DIR$/Controller/Controller.iml" />
       <module fileurl="file://$PROJECT_DIR$/Services/Services.iml" filepath="$PROJECT_DIR$/Services/Services.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Webserver/Webserver.iml" filepath="$PROJECT_DIR$/Webserver/Webserver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/webserver/webserver.iml" filepath="$PROJECT_DIR$/webserver/webserver.iml" />
     </modules>
   </component>
 </project>
