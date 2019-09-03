@@ -79,9 +79,6 @@ public class Sensor {
         return groupSensor;
     }
 
-    public void setGroupSensor(GroupSensor groupSensor) {
-        this.groupSensor = groupSensor;
-    }
 
     public String getIpAddress() {
         return ipAddress;
@@ -118,5 +115,17 @@ public class Sensor {
 
     public String getPasswordCredentials() {
         return passwordCredentials;
+    }
+
+    public void setGroupSensor(GroupSensor groupSensor) {
+        this.groupSensor = groupSensor;
+    }
+
+    public List<Metric> getMetrics() {
+        return metrics;
+    }
+
+    public void setMetrics(List<Metric> metrics) {
+        this.metrics = metrics;
     }
 }

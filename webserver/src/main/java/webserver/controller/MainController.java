@@ -7,32 +7,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import webserver.domain.User;
-import webserver.repos.GroupRepo;
 
-import java.util.ArrayList;
+import webserver.domain.User;
+import webserver.repos.SensorRepo;
+
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/")
 
 public class MainController {
 
-    private final GroupRepo groupRepo;
+    private final SensorRepo sensorRepo;
 
     @Value("${spring.profiles.active}")
     private String profile;
-    private List<Map<String, String>> groups = new ArrayList<Map<String, String>>() {{
-        add(new HashMap<String, String>() {{ put("id", "1"); put("groupName", "First group"); }});
-        add(new HashMap<String, String>() {{ put("id", "2"); put("groupName", "Second group"); }});
-        add(new HashMap<String, String>() {{ put("id", "3"); put("groupName", "Third group"); }});
-    }};
-    @Autowired
-    public MainController(GroupRepo groupRepo) {
-        this.groupRepo = groupRepo;
 
+    @Autowired
+    public MainController(SensorRepo sensorRepo) {
+        this.sensorRepo = sensorRepo;
     }
 
     @GetMapping
@@ -40,7 +33,14 @@ public class MainController {
             Model model,
             @AuthenticationPrincipal User user
     ) {
-        model.addAttribute("groups", groups);
+        HashMap<Object, Object> data = new HashMap<>();
+if(user != null) {
+    data.put("profile", user);
+    data.put("sensors", sensorRepo.findAll());
+}else{
+    data.put("sensors","");
+}
+        model.addAttribute("frontendData", data);
         model.addAttribute("isDevMode", "dev".equals(profile));
         return "index";
     }

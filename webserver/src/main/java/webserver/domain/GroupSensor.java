@@ -1,6 +1,8 @@
 package webserver.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
@@ -9,6 +11,10 @@ import javax.validation.constraints.NotBlank;
 @Entity
 @Table(name = "groups")
 @JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIdentityInfo(
+//        property = "id",
+//        generator = ObjectIdGenerators.PropertyGenerator.class
+//)
 public class GroupSensor {
 
     @Id
@@ -31,6 +37,7 @@ public class GroupSensor {
     //У группы должен быть владелец
     @JsonView(Views.IdNameValueGroup.class)
     @ManyToOne(fetch = FetchType.EAGER)
+    @JsonManagedReference
     //Укаываем из какой колонки брать имя пользователя
     @JoinColumn(name = "user_id")
     private User owner;

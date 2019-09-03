@@ -1,49 +1,56 @@
 <template>
-    <div>
-        <div>
-            <h1><a href="/group">Main page</a></h1>
-        </div>
-        <!--<div>-->
-            <!--<group-list/>-->
-        <!--</div>-->
-        <div v-for="group in groups">
-            <div>
-                <h1>{{group.groupName}}</h1>
-            </div>
-        </div>
+    <v-app>
+        <v-app-bar app>
+            <v-btn v-if = "profile" icon href="/group" flat>
+                <v-icon>{{homeBtn}}</v-icon>
+            </v-btn>
+            <v-spacer></v-spacer>
+            <v-toolbar-title>Graph panel</v-toolbar-title>
+            <v-btn v-if = "profile" icon href="/" flat>
+                <v-icon>{{refreshBtn}}</v-icon>
+            </v-btn>
+            <v-spacer></v-spacer>
 
-        <!--<div>-->
-            <!--<Tmp/>-->
-        <!--</div>-->
-    </div>
+            <v-btn v-if = "profile" icon href="/logout" flat>
+                <v-icon>{{logout}}</v-icon>
+            </v-btn>
+
+        </v-app-bar>
+
+        <v-content>
+            <v-container  v-if="!profile">
+                <a href="/login">Необходимо авторизоваться</a>
+            </v-container >
+            <v-container v-if = "profile">
+                <sensors-list :sensors="sensors"/>
+            </v-container >
+        </v-content>
+
+    </v-app>
+
 </template>
 
 <script>
-
-    import GroupList from '../components/GroupList.vue'
-    import { addHandler } from 'util/ws'
-    import { getIndex } from 'util/collections'
+    import { mdiExitToApp } from '@mdi/js'
+    import { mdiHome } from '@mdi/js'
+    import { mdiRefresh } from '@mdi/js'
+    import SensorsList from '../components/SensorsList.vue'
     export default {
-        components: {
-            GroupList
-        },
+        components: { SensorsList},
         data() {
             return {
-                groups: groups,
+                sensors: frontendData.sensors,
+                profile: frontendData.profile,
+                logout: mdiExitToApp,
+                homeBtn: mdiHome,
+                refreshBtn :mdiRefresh
             }
         },
-        created() {
-            addHandler(data => {
-                let index = getIndex(this.groups, data.id)
-                if (index > -1) {
-                    this.groups.splice(index, 1, data)
-                } else {
-                    this.groups.push(data)
-                }
-            })
-        }
     }
 </script>
 
 <style>
+    .main-app {
+        color: red;
+    }
 </style>
