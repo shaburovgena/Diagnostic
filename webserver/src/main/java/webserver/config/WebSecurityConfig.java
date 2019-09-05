@@ -1,6 +1,7 @@
 package webserver.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
@@ -15,6 +16,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import webserver.domain.User;
+import webserver.repos.UserRepo;
 import webserver.service.UserService;
 
 @Configuration
@@ -34,8 +37,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()//Авторизовывать все запросы, кроме указанных ниже
-                .antMatchers("/", "/registration", "/static/**", "/activate/*", "/agent"
-                        , "/login**", "/js/**", "/error**", "/panel**").permitAll()
+                .mvcMatchers("/", "/registration", "/static/**", "/activate/*", "/agent"
+                        , "/login**", "/js/**", "/error**", "/panel**", "/signin**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -44,11 +47,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .rememberMe()
                 .and()
-                .logout().logoutSuccessUrl("/login").permitAll()
+                .logout().logoutSuccessUrl("/").permitAll()
                 .and()
                 .csrf().disable();//csrf disabled temporarily
     }
-//    @Bean
+
+    //    @Bean
 //    public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> webServerCustomizer (){
 //        return container -> {
 //            //Если страница не найдена будет возвращать адрес "/" главную страницу, но URL останется
@@ -70,4 +74,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .authoritiesByUsernameQuery("select u.username, ur.roles from usr u inner join user_role ur on u.id = ur.user_id where u.username=?");
 
     }
+
+    @Bean
+    public PrincipalExtractor principalExtractor(UserRepo userRepo) {
+        return map -> {
+            String username = (String) map.get("username");
+            String password = (String) map.get("password");
+            User user = userRepo.findByUsername(username);
+            if (user != null && user.getPassword().equals(password)) {
+
+                return user;
+            }else {
+                return null;
+            }
+        };
+    }
+
 }

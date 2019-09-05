@@ -13,6 +13,7 @@ import webserver.domain.User;
 import webserver.domain.Views;
 import webserver.repos.GroupRepo;
 import webserver.repos.SensorRepo;
+import webserver.repos.UserRepo;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class PanelController {
 
     private final SensorRepo sensorRepo;
     private final GroupRepo groupRepo;
+
 
     @Autowired
     public PanelController(SensorRepo sensorRepo, GroupRepo groupRepo) {
@@ -46,5 +48,6 @@ public class PanelController {
     ) {
         return (List<GroupSensor>) groupRepo.findAll();
     }
+
 
 }

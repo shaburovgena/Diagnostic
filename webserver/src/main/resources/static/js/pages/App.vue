@@ -1,51 +1,73 @@
 <template>
     <v-app>
         <v-app-bar app>
-            <v-btn v-if = "profile" icon href="/group" flat>
+            <v-btn v-if="profile" icon href="/group">
                 <v-icon>{{homeBtn}}</v-icon>
             </v-btn>
             <v-spacer></v-spacer>
             <v-toolbar-title>Graph panel</v-toolbar-title>
-            <v-btn v-if = "profile" icon href="/" flat>
+            <v-btn v-if="profile" icon href="/">
                 <v-icon>{{refreshBtn}}</v-icon>
             </v-btn>
             <v-spacer></v-spacer>
-
-            <v-btn v-if = "profile" icon href="/logout" flat>
-                <v-icon>{{logout}}</v-icon>
-            </v-btn>
-
+            <div v-if="profile">
+                <v-text>{{profile.username}}&nbsp</v-text>
+                <v-btn icon href="/logout">
+                    <v-icon>{{logoutBtn}}</v-icon>
+                </v-btn>
+            </div>
+            <div v-else>
+                <v-btn icon @click="loginPage">
+                    <v-icon>{{loginBtn}}</v-icon>
+                </v-btn>
+            </div>
         </v-app-bar>
 
-        <v-content>
-            <v-container  v-if="!profile">
-                <a href="/login">Необходимо авторизоваться</a>
-            </v-container >
-            <v-container v-if = "profile">
-                <sensors-list :sensors="sensors"/>
-            </v-container >
-        </v-content>
 
+        <v-container grid-list-lg mt-12>
+            <v-layout align-start justify-end row wrap>
+                <v-flex lg3 d-flex v-if="isLogin">
+                    <login-page/>
+                </v-flex>
+                <v-flex lg12 v-if="profile">
+                    <sensors-list :sensors="sensors"/>
+                </v-flex>
+            </v-layout>
+        </v-container>
     </v-app>
-
 </template>
 
 <script>
-    import { mdiExitToApp } from '@mdi/js'
-    import { mdiHome } from '@mdi/js'
-    import { mdiRefresh } from '@mdi/js'
+    import {mdiLogout} from '@mdi/js'
+    import {mdiLogin} from '@mdi/js'
+    import {mdiHome} from '@mdi/js'
+    import {mdiRefresh} from '@mdi/js'
     import SensorsList from '../components/SensorsList.vue'
+    import LoginPage from '../components/LoginPage.vue'
+    import Tmp from '../components/Tmp.vue'
+
     export default {
-        components: { SensorsList},
+        components: {SensorsList, LoginPage, Tmp},
         data() {
             return {
                 sensors: frontendData.sensors,
                 profile: frontendData.profile,
-                logout: mdiExitToApp,
+                logoutBtn: mdiLogout,
+                loginBtn: mdiLogin,
                 homeBtn: mdiHome,
-                refreshBtn :mdiRefresh
+                refreshBtn: mdiRefresh,
+                isLogin: false
             }
         },
+        methods: {
+            loginPage: function () {
+                if (!this.isLogin) {
+                    this.isLogin = true
+                } else {
+                    this.isLogin = false
+                }
+            }
+        }
     }
 </script>
 

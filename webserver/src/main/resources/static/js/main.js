@@ -4,7 +4,6 @@ import VueResource from 'vue-resource'
 import VueRouter from 'vue-router'
 import 'vuetify/dist/vuetify.min.css'
 import vuetify from './plugin/vuetify'
-// import Vuetify from 'vuetify'
 import {connect} from "./util/ws";
 
 if (frontendData.profile) {
@@ -12,7 +11,6 @@ if (frontendData.profile) {
 }
 Vue.use(VueRouter)
 Vue.use(VueResource)
-// Vue.use(vuetify,{ iconfont: 'mdiSvg' })
 new Vue({
     el: '#app',
     vuetify,
