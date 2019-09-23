@@ -5,7 +5,7 @@
                 <v-icon>{{homeBtn}}</v-icon>
             </v-btn>
             <v-spacer></v-spacer>
-            <v-toolbar-title>Graph panel</v-toolbar-title>
+            <v-toolbar-title>Graphic panel</v-toolbar-title>
             <v-btn v-if="profile" icon href="/">
                 <v-icon>{{refreshBtn}}</v-icon>
             </v-btn>
@@ -20,6 +20,9 @@
                 <v-btn icon @click="loginPage">
                     <v-icon>{{loginBtn}}</v-icon>
                 </v-btn>
+                <v-btn icon @click="registerPage">
+                    <v-icon>{{registerBtn}}</v-icon>
+                </v-btn>
             </div>
         </v-app-bar>
 
@@ -29,11 +32,24 @@
                 <v-flex lg3 d-flex v-if="isLogin">
                     <login-page/>
                 </v-flex>
+                <v-flex lg3 d-flex v-if="isRegister">
+                    <register-page/>
+                </v-flex>
                 <v-flex lg12 v-if="profile">
                     <sensors-list :sensors="sensors"/>
                 </v-flex>
             </v-layout>
         </v-container>
+        <v-container>
+
+        </v-container>
+        <v-bottom-navigation absolute>
+            <div></div>
+            <v-spacer></v-spacer>
+            <v-btn v-if="profile" icon @click="groupAdd">
+                <v-icon>{{groupPlusBtn}}</v-icon>
+            </v-btn>
+        </v-bottom-navigation>
     </v-app>
 </template>
 
@@ -42,31 +58,54 @@
     import {mdiLogin} from '@mdi/js'
     import {mdiHome} from '@mdi/js'
     import {mdiRefresh} from '@mdi/js'
+    import {mdiFolderPlusOutline} from '@mdi/js'
+    import {mdiAccountPlusOutline} from '@mdi/js'
     import SensorsList from '../components/SensorsList.vue'
     import LoginPage from '../components/LoginPage.vue'
+    import RegisterPage from '../components/RegisterPage.vue'
     import Tmp from '../components/Tmp.vue'
 
     export default {
-        components: {SensorsList, LoginPage, Tmp},
+        components: {SensorsList, LoginPage, RegisterPage, Tmp},
         data() {
             return {
                 sensors: frontendData.sensors,
                 profile: frontendData.profile,
                 logoutBtn: mdiLogout,
                 loginBtn: mdiLogin,
+                registerBtn: mdiAccountPlusOutline,
                 homeBtn: mdiHome,
                 refreshBtn: mdiRefresh,
-                isLogin: false
+                groupPlusBtn: mdiFolderPlusOutline,
+                isLogin: false,
+                isRegister: false
             }
         },
         methods: {
             loginPage: function () {
                 if (!this.isLogin) {
                     this.isLogin = true
+                    this.isRegister = false
                 } else {
                     this.isLogin = false
                 }
+            },
+            registerPage: function () {
+                if (!this.isRegister) {
+                    this.isRegister = true
+                    this.isLogin = false
+                } else {
+                    this.isRegister = false
+                }
+            },
+            groupAdd: function () {
+                if (!this.isAddingGroup) {
+                    this.isAddingGroup = true
+                } else {
+                    this.isAddingGroup = false
+                }
             }
+
         }
     }
 </script>

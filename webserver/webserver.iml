@@ -10,6 +10,10 @@
           <file>file://$MODULE_DIR$/src/main/java/webserver/config/MvcConfig.java</file>
           <file>file://$MODULE_DIR$/src/main/java/webserver/config/WebSocketConfig.java</file>
         </fileset>
+        <fileset id="fileset2" name="Spring Application Context (2)" removed="false">
+          <file>file://$MODULE_DIR$/src/main/resources/application-dev.properties</file>
+          <file>file://$MODULE_DIR$/src/main/resources/application.properties</file>
+        </fileset>
       </configuration>
     </facet>
     <facet type="web" name="Web">

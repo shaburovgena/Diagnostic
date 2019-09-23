@@ -24,8 +24,6 @@ import webserver.service.UserService;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    //    @Autowired
-//    private DataSource dataSource;
     @Autowired
     private UserService userService;
 
@@ -37,8 +35,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()//Авторизовывать все запросы, кроме указанных ниже
-                .mvcMatchers("/", "/registration", "/static/**", "/activate/*", "/agent"
-                        , "/login**", "/js/**", "/error**", "/panel**", "/signin**").permitAll()
+                .mvcMatchers("/", "/registration", "/register", "/static/**", "/activate/*"
+                        , "/login**", "/js/**", "/error**", "/panel**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -52,42 +50,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable();//csrf disabled temporarily
     }
 
-    //    @Bean
-//    public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> webServerCustomizer (){
-//        return container -> {
-//            //Если страница не найдена будет возвращать адрес "/" главную страницу, но URL останется
-//            container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/"));
-//        };
-//    }
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
         auth.userDetailsService(userService)
                 .passwordEncoder(passwordEncoder);
-
-
-// В случае поиска пользователя напрямую в базе
-//  auth.jdbcAuthentication()
-//                .dataSource(dataSource)
-//                .passwordEncoder(NoOpPasswordEncoder.getInstance());
-//                .usersByUsernameQuery("select username, password, active from usr where username=?")
-//                .authoritiesByUsernameQuery("select u.username, ur.roles from usr u inner join user_role ur on u.id = ur.user_id where u.username=?");
-
-    }
-
-    @Bean
-    public PrincipalExtractor principalExtractor(UserRepo userRepo) {
-        return map -> {
-            String username = (String) map.get("username");
-            String password = (String) map.get("password");
-            User user = userRepo.findByUsername(username);
-            if (user != null && user.getPassword().equals(password)) {
-
-                return user;
-            }else {
-                return null;
-            }
-        };
     }
 
 }

@@ -19,7 +19,7 @@ public class MailSender {
     public void send(String emailTo, String subject, String message) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
 
-        mailMessage.setFrom("diagnostic@tn.ru");
+        mailMessage.setFrom("shaburovgena@yandex.ru");
         mailMessage.setTo(emailTo);
         mailMessage.setSubject(subject);
         mailMessage.setText(message);

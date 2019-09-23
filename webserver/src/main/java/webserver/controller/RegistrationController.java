@@ -83,11 +83,35 @@ public class RegistrationController {
         boolean isActivated = userService.activateUser(code);//Активация пользователя по коду из письма
 
         if (isActivated) {
-            model.addAttribute("message", "Активация аккаунта прошла успешно");
+            System.out.println("Активация аккаунта прошла успешно");
+            return "redirect:/";
         } else {
-            model.addAttribute("message", "Активация аккаунта не выполнена");
+            System.out.println("Активация аккаунта не выполнена");
+            return "redirect:/login?error";
         }
-
-        return "login";
     }
+
+    @PostMapping("/register")
+    public String register(@RequestParam("passwordConfirm") String passwordConfirm,
+                           @RequestParam("password") String password,
+                           @RequestParam("username") String username,
+                           @RequestParam("email") String email,
+                           @Valid User user) {
+
+        System.out.println(username);
+        System.out.println(password);
+        System.out.println(passwordConfirm);
+        System.out.println(email);
+        System.out.println(user.getUsername());
+
+        if (user.getPassword() == null || passwordConfirm == null ||
+                !user.getPassword().equals(passwordConfirm)) {
+            return "redirect:/login?error";
+        }
+        if (userService.addUser(user) != null) {
+            return "redirect:/login?error";
+        }
+        return "redirect:/";
+    }
+
 }

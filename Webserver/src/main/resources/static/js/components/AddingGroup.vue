@@ -4,23 +4,22 @@
             <v-content>
                 <v-layout column wrap>
                     <v-text-field
-                            name="username"
+                            name="groupName"
                             autofocus solo type="text"
-                            placeholder="Username"
+                            placeholder="Group Name"
                             @keyup.enter="submit"/>
                     <v-text-field
-                            name="password"
+                            name="groupTag"
                             solo type="password"
-                            placeholder="Password"
+                            placeholder="Group Tag"
                             @keyup.enter="submit"/>
-
                 </v-layout>
             </v-content>
             <v-content>
                 <v-layout justify-center row wrap>
-                    <v-btn type="submit">Sign In</v-btn>
+                    <v-btn type="submit">Add</v-btn>
                     <v-spacer></v-spacer>
-
+                    <v-btn >Cancel</v-btn>
                 </v-layout>
             </v-content>
         </form>
@@ -28,12 +27,8 @@
 </template>
 
 <script>
-
     export default {
-        name: "LoginPage",
-        data() {
-            return {}
-        },
+        name: "AddingGroup"
     }
 </script>
 
