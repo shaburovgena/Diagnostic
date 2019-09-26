@@ -7,13 +7,16 @@
                             name="username"
                             autofocus solo type="text"
                             placeholder="Username"
-                            @keyup.enter="submit"/>
+                            v-model="username"
+                            :rules="[usernameEmpty,  userFound]"
+                            @keyup.enter="submit"
+                    />
                     <v-text-field
                             name="password"
                             solo type="password"
                             placeholder="Password"
-                            @keyup.enter="submit"/>
-
+                            @keyup.enter="submit"
+                            @focus="checkUsername"/>
                 </v-layout>
             </v-content>
             <v-content>
@@ -32,8 +35,62 @@
     export default {
         name: "LoginPage",
         data() {
-            return {}
+            return {
+                url: 'http://localhost:8080/checkUser',
+                validUsername: false,
+                username: '',
+
+            }
         },
+        computed: {
+            usernameEmpty() {
+                return v => !!v || 'Enter a username'
+            },
+            userFound() {
+                return () => this.validUsername || 'User not found'
+            },
+        },
+        methods: {
+            checkUsername() {
+                axios.post(this.url, this.username)
+                    .then((response) => {
+                        if (response.data === true) {
+                            console.log(`Rule  found is ${this.userFound()} ${this.username}`)
+                            this.validUsername = response.data;
+                        } else {
+                            console.log(`Rule  found is ${this.userFound()} ${this.username}`)
+                            this.validUsername = null;
+                        }
+
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
+        },
+        watch: {//Отслеживание изменений через v-model
+            // username: function () {
+            //     if (this.username != 0)
+            //         this.username = username
+            // },
+            //     checkUsername() {
+            //         axios.post(this.url, this.checkUsername)
+            //             .then((response) => {
+            //                 if (response.data === true) {
+            //                     console.log(`Rule  found is ${this.userFound()}`)
+            //                     this.validUsername = response.data;
+            //                 } else {
+            //                     console.log(`Rule  found is ${this.userFound()}`)
+            //                     this.validUsername = null
+            //                 }
+            //
+            //             })
+            //             .catch((error) => {
+            //                 console.log(error);
+            //             });
+            //     }
+        }
+
     }
 </script>
 

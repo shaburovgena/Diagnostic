@@ -1,4 +1,4 @@
-package webserver.controller;
+package webserver.restController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import webserver.domain.User;
 import webserver.domain.Views;
 import webserver.repos.GroupRepo;
 import webserver.repos.SensorRepo;
-import webserver.repos.UserRepo;
 
 import java.util.List;
 
@@ -44,7 +43,7 @@ public class PanelController {
     @GetMapping("panel")
     @JsonView(Views.IdName.class)
     public List<GroupSensor> groupsView(
-            GroupSensor group
+
     ) {
         return (List<GroupSensor>) groupRepo.findAll();
     }

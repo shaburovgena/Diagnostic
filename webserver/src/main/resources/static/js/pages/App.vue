@@ -29,7 +29,7 @@
 
         <v-container grid-list-lg mt-12>
             <v-layout align-start justify-end row wrap>
-                <v-flex lg3 d-flex v-if="isLogin">
+                <v-flex lg3 d-flex v-if="isLogin && !profile">
                     <login-page/>
                 </v-flex>
                 <v-flex lg3 d-flex v-if="isRegister">
@@ -40,14 +40,19 @@
                 </v-flex>
             </v-layout>
         </v-container>
-        <v-container>
-
+        <v-container grid-list-lg mt-12>
+            <v-layout align-start justify-end row wrap mb-12>
+                <v-flex lg3 d-flex v-if="isAddingGroup">
+                <adding-group/>
+                </v-flex>
+            </v-layout>
         </v-container>
         <v-bottom-navigation absolute>
             <div></div>
             <v-spacer></v-spacer>
             <v-btn v-if="profile" icon @click="groupAdd">
-                <v-icon>{{groupPlusBtn}}</v-icon>
+                <v-icon v-if="!isAddingGroup">{{groupPlusBtn}}</v-icon>
+                <v-icon v-else>{{groupRemoveBtn}}</v-icon>
             </v-btn>
         </v-bottom-navigation>
     </v-app>
@@ -59,14 +64,16 @@
     import {mdiHome} from '@mdi/js'
     import {mdiRefresh} from '@mdi/js'
     import {mdiFolderPlusOutline} from '@mdi/js'
+    import {mdiFolderRemoveOutline} from '@mdi/js'
     import {mdiAccountPlusOutline} from '@mdi/js'
     import SensorsList from '../components/SensorsList.vue'
     import LoginPage from '../components/LoginPage.vue'
     import RegisterPage from '../components/RegisterPage.vue'
+    import AddingGroup from '../components/AddingGroup.vue'
     import Tmp from '../components/Tmp.vue'
 
     export default {
-        components: {SensorsList, LoginPage, RegisterPage, Tmp},
+        components: {SensorsList, LoginPage, RegisterPage, Tmp, AddingGroup},
         data() {
             return {
                 sensors: frontendData.sensors,
@@ -77,8 +84,10 @@
                 homeBtn: mdiHome,
                 refreshBtn: mdiRefresh,
                 groupPlusBtn: mdiFolderPlusOutline,
-                isLogin: false,
-                isRegister: false
+                groupRemoveBtn: mdiFolderRemoveOutline,
+                isLogin: true,
+                isRegister: false,
+                isAddingGroup: false
             }
         },
         methods: {
@@ -111,7 +120,5 @@
 </script>
 
 <style>
-    .main-app {
-        color: red;
-    }
+
 </style>

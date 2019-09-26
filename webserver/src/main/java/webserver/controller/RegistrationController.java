@@ -2,6 +2,7 @@ package webserver.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,7 @@ import webserver.service.UserService;
 
 import javax.validation.Valid;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -91,27 +93,6 @@ public class RegistrationController {
         }
     }
 
-    @PostMapping("/register")
-    public String register(@RequestParam("passwordConfirm") String passwordConfirm,
-                           @RequestParam("password") String password,
-                           @RequestParam("username") String username,
-                           @RequestParam("email") String email,
-                           @Valid User user) {
 
-        System.out.println(username);
-        System.out.println(password);
-        System.out.println(passwordConfirm);
-        System.out.println(email);
-        System.out.println(user.getUsername());
-
-        if (user.getPassword() == null || passwordConfirm == null ||
-                !user.getPassword().equals(passwordConfirm)) {
-            return "redirect:/login?error";
-        }
-        if (userService.addUser(user) != null) {
-            return "redirect:/login?error";
-        }
-        return "redirect:/";
-    }
 
 }

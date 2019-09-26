@@ -8,7 +8,6 @@
                     {{sensor.groupSensor.id}}
                     <!--<a v-bind:href="url + sensor.groupSensor.id">-->
                         <!--</a>-->
-
                 </v-card>
             </template>
         </v-hover>
