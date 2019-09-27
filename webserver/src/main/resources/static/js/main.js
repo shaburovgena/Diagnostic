@@ -6,7 +6,7 @@ import 'vuetify/dist/vuetify.min.css'
 import vuetify from './plugin/vuetify'
 import {connect} from "./util/ws";
 
-if (frontendData.profile) {
+if (profile) {
     connect()
 }
 Vue.use(VueRouter)

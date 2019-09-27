@@ -1,9 +1,6 @@
 package webserver.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -18,7 +15,10 @@ import java.util.Set;
 @Entity
 @Table(name = "usr")
 @JsonIgnoreProperties(ignoreUnknown = true)
-
+//@JsonIdentityInfo(
+//        property = "username",
+//        generator = ObjectIdGenerators.PropertyGenerator.class
+//)
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,7 +37,7 @@ public class User implements UserDetails {
 
     private boolean active;
 
-    @Email(message = "Некорректный адрес")
+//    @Email(message = "Некорректный адрес")
     @NotBlank(message = "Укажите адрес")
     private String email;
     private String activationCode;
@@ -45,13 +45,14 @@ public class User implements UserDetails {
     //У одного владельца может быть много групп
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonBackReference
+//    @JsonIgnore
     private Set<GroupSensor> groups;
     //Создается доп таблица где каждому user_id соответствуе user_role
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     //Если ролей несколько, то и записей с одним user_id будет несколько
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     //Тип хранимых данных
+    @JsonView(Views.IdNameRoles.class)
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 

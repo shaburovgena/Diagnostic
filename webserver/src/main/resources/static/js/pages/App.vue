@@ -76,8 +76,8 @@
         components: {SensorsList, LoginPage, RegisterPage, Tmp, AddingGroup},
         data() {
             return {
-                sensors: frontendData.sensors,
-                profile: frontendData.profile,
+                sensors: sensors,
+                profile: profile,
                 logoutBtn: mdiLogout,
                 loginBtn: mdiLogin,
                 registerBtn: mdiAccountPlusOutline,
@@ -85,8 +85,8 @@
                 refreshBtn: mdiRefresh,
                 groupPlusBtn: mdiFolderPlusOutline,
                 groupRemoveBtn: mdiFolderRemoveOutline,
-                isLogin: true,
-                isRegister: false,
+                isLogin: frontendData.isLoginForm,
+                isRegister: frontendData.isRegisterForm,
                 isAddingGroup: false
             }
         },
@@ -115,7 +115,8 @@
                 }
             }
 
-        }
+        },
+
     }
 </script>
 

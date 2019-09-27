@@ -7,7 +7,7 @@
                             name="username"
                             autofocus solo type="text"
                             placeholder="Username"
-                            v-model="username"
+                            v-model="checkUsername"
                             :rules="[usernameEmpty,  userFound]"
                             @keyup.enter="submit"
                     />
@@ -16,7 +16,7 @@
                             solo type="password"
                             placeholder="Password"
                             @keyup.enter="submit"
-                            @focus="checkUsername"/>
+                            />
                 </v-layout>
             </v-content>
             <v-content>
@@ -38,7 +38,7 @@
             return {
                 url: 'http://localhost:8080/checkUser',
                 validUsername: false,
-                username: '',
+                checkUsername: '',
 
             }
         },
@@ -50,45 +50,20 @@
                 return () => this.validUsername || 'User not found'
             },
         },
-        methods: {
-            checkUsername() {
-                axios.post(this.url, this.username)
-                    .then((response) => {
-                        if (response.data === true) {
-                            console.log(`Rule  found is ${this.userFound()} ${this.username}`)
-                            this.validUsername = response.data;
-                        } else {
-                            console.log(`Rule  found is ${this.userFound()} ${this.username}`)
-                            this.validUsername = null;
-                        }
 
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
-            }
-        },
         watch: {//Отслеживание изменений через v-model
-            // username: function () {
-            //     if (this.username != 0)
-            //         this.username = username
-            // },
-            //     checkUsername() {
-            //         axios.post(this.url, this.checkUsername)
-            //             .then((response) => {
-            //                 if (response.data === true) {
-            //                     console.log(`Rule  found is ${this.userFound()}`)
-            //                     this.validUsername = response.data;
-            //                 } else {
-            //                     console.log(`Rule  found is ${this.userFound()}`)
-            //                     this.validUsername = null
-            //                 }
-            //
-            //             })
-            //             .catch((error) => {
-            //                 console.log(error);
-            //             });
-            //     }
+              checkUsername() {
+                   axios.post(this.url, this.checkUsername)
+                        .then((response) => {
+                            console.log(response.data)
+                            this.validUsername = response.data
+                            return response.data
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+
+                }
         }
 
     }

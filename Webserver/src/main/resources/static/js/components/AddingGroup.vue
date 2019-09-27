@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <form class="form" action="/login" method="post">
+        <form class="form" action="/group" method="post">
             <v-content>
                 <v-layout column wrap>
                     <v-text-field
@@ -10,7 +10,7 @@
                             @keyup.enter="submit"/>
                     <v-text-field
                             name="groupTag"
-                            solo type="password"
+                            solo type="text"
                             placeholder="Group Tag"
                             @keyup.enter="submit"/>
                 </v-layout>
@@ -19,7 +19,6 @@
                 <v-layout justify-center row wrap>
                     <v-btn type="submit">Add</v-btn>
                     <v-spacer></v-spacer>
-                    <v-btn >Cancel</v-btn>
                 </v-layout>
             </v-content>
         </form>

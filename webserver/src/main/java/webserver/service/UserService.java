@@ -73,7 +73,7 @@ public class UserService implements UserDetailsService {
         //Сохраняем пользователя в базе
         userRepo.save(user);
         //Если поле mail не пустое отправить код активации
-        sendMessage(user);
+//        sendMessage(user);
         return null;
     }
 

@@ -16,10 +16,19 @@ public final class Views {
 
     }
 
+    public interface IdNameValueAttribute extends IdNameValue {
+
+    }
+
+    public interface IdNameRoles extends IdName {
+
+    }
+
     public interface IdNameValueGroup extends IdNameValue {
 
 
     }
+
     public interface IdNameValueGroupPort extends IdNameValueGroup {
 
     }

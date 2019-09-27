@@ -62,7 +62,7 @@ isAddingMetric = false
               </div>
           </div>
           <div class="form-group row">
-              <label class="col-sm-3 col-form-label">Title:</label>
+              <label class="col-sm-3 col-form-label">Password:</label>
               <div class="col-sm-9 ">
                   <input class="form-control" type="password" name="passwordCredentials"
                          value="${sensor.passwordCredentials!""}"/>
