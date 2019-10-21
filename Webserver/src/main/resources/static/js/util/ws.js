@@ -10,8 +10,8 @@ export function connect() {
     stompClient = Stomp.over(socket)
     stompClient.connect({}, frame => {
         console.log('Connected: ' + frame)
-        stompClient.subscribe('/topic/activity', group => {
-            handlers.forEach(handler => handler(JSON.parse(group.body)))
+        stompClient.subscribe('/topic/activity', groups => {
+            handlers.forEach(handler => handler(JSON.parse(groups.body)))
         })
     })
 }
@@ -25,4 +25,7 @@ export function disconnect() {
         stompClient.disconnect()
     }
     console.log("Disconnected")
+}
+export function sendGroup(group) {
+    stompClient.send("/app/changeGroup", {}, JSON.stringify(group))
 }

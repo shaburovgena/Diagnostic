@@ -17,10 +17,6 @@ public class CheckController {
 
     @PostMapping("/checkUser")
     public boolean checkUser (@RequestBody String username){
-        if(userRepo.findByUsername(username.replace("=", "")) != null) {
-            return true;
-        }else{
-            return false;
-        }
+        return userRepo.findByUsername(username.replace("=", "")) != null;
     }
 }
