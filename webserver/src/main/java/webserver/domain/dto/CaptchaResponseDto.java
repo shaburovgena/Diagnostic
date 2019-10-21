@@ -17,7 +17,7 @@ public class CaptchaResponseDto {
     private Set<String> errorCodes;
 
     public boolean isSuccess() {
-        return success;
+        return !success;
     }
 
     public void setSuccess(boolean success) {

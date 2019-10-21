@@ -76,7 +76,7 @@ public class GroupSensor {
         return getAttribute().equals("PUBLIC");
     }
 
-    public String getAttribute() {
+    private String getAttribute() {
         return attribute;
     }
 

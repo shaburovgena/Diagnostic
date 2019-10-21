@@ -18,9 +18,7 @@ public class FindSensorHelper {
 
     private Set<Sensor> sensors;
     private Set<String> interfaces;
-    private InetAddress hostname;
     private byte[] buf;
-    private Sensor sensor;
 
     public FindSensorHelper() {
         sensors = new HashSet<>();
@@ -63,7 +61,7 @@ public class FindSensorHelper {
             socket.connect(new InetSocketAddress(host, port), 2);
             socket.close();
             System.out.println("Connect: " + host + ":" + port);
-            sensor = new Sensor();
+            Sensor sensor = new Sensor();
             sensor.setIpAddress(host);
             sensor.setTitle(host);
             sensor.setPort(port);
@@ -74,7 +72,7 @@ public class FindSensorHelper {
     }
 
     private void getHostname(String ipAddress) throws UnknownHostException {
-        hostname = InetAddress.getByName(Inet4Address.getLocalHost().getHostAddress());
+        InetAddress hostname = InetAddress.getByName(Inet4Address.getLocalHost().getHostAddress());
 
         if (!ipAddress.isEmpty()) {
             hostname = InetAddress.getByName(ipAddress);

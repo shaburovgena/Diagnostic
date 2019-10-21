@@ -22,6 +22,7 @@ import java.util.HashMap;
 public class MainController {
 
     private final SensorRepo sensorRepo;
+    private final ObjectWriter sensorWriter;
     @Value("${spring.profiles.active}")
     private String profile;
     private final ObjectWriter groupWriter;
@@ -40,6 +41,8 @@ public class MainController {
                 .setConfig(mapper.getSerializationConfig());
         this.groupWriter = objectMapper
                 .writerWithView(Views.IdNameValueAttribute.class);
+        this.sensorWriter = objectMapper
+                .writerWithView(Views.IdNameValueAttribute.class);
         this.profileWriter = objectMapper
                 .writerWithView(Views.IdNameRoles.class);
 
@@ -53,7 +56,7 @@ public class MainController {
         HashMap<Object, Object> data = new HashMap<>();
         if (user != null && user.getActivationCode() == null) {
             model.addAttribute("profile", profileWriter.writeValueAsString(user));
-            model.addAttribute("sensors", sensorRepo.findAll());
+            model.addAttribute("sensors", sensorWriter.writeValueAsString(sensorRepo.findAll()));
             model.addAttribute("groups", groupWriter.writeValueAsString(groupRepo.findAll()));
             data.put("errorMessage", "Hello");
             model.addAttribute("frontendData", data);

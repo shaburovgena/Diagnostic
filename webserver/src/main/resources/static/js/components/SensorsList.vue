@@ -4,8 +4,7 @@
             <v-hover v-for="sensor in sensors">
             <template v-slot="{ hover }">
                 <v-card :elevation="hover ? 24 : 6"
-                        class="ma-3 mx-auto pa-6" >{{sensor.title}}:{{sensor.port}} in Group
-                    {{sensor.groupSensor.id}}
+                        class="ma-3 mx-auto pa-6" >{{sensor.title}}:{{sensor.port}}
                     <!--<a v-bind:href="url + sensor.groupSensor.id">-->
                         <!--</a>-->
                 </v-card>

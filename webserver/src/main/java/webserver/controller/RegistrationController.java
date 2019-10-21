@@ -2,7 +2,6 @@ package webserver.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,7 +16,6 @@ import webserver.service.UserService;
 
 import javax.validation.Valid;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -52,12 +50,12 @@ public class RegistrationController {
         String url = String.format(CAPTCHA_URL, secret, captchaResponse);
         CaptchaResponseDto response = restTemplate.postForObject(url, Collections.emptyList(), CaptchaResponseDto.class);
 
-        if (!response.isSuccess()) {
+        if (response.isSuccess()) {
             model.addAttribute("captchaError", "Ошибка в капче");
         }
 
         if (user.getPassword() == null || passwordConfirm == null ||
-                !user.getPassword().equals(passwordConfirm) || !response.isSuccess()) {
+                !user.getPassword().equals(passwordConfirm) || response.isSuccess()) {
             model.addAttribute("passwordError", "Пароли указаны с ошибкой");
         }
 

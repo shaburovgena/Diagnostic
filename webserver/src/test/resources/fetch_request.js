@@ -35,3 +35,8 @@ fetch(
 
 // DELETE existing
 fetch('/group/4', { method: 'DELETE' }).then(result => console.log(result))
+
+
+$ curl -i -X POST -H "Content-Type:application/json" -d '{"firstName": "Frodo", "lastName": "Baggins"}' http://localhost:8080/people
+HTTP/1.1 201 Created
+Server: Apache-Coyote/1.1
